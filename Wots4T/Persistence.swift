@@ -13,10 +13,24 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-        }
+        
+        let spagbogUUID = UUID()
+        let lasagneUUID = UUID()
+        let vegCurryUUID = UUID()
+        let chickenStirFryUUID = UUID()
+        let today = DayNumber.today
+        
+        let meals: [MealMO] = [
+            MealMO(context: viewContext, mealId: spagbogUUID, name: "Spaghetti Bolognaise", desc: "Spaghetti with a beef mince sauce", url: URL(string: "https://www.bbc.co.uk/food/recipes/spaghettibolognese_67868")),
+            MealMO(context: viewContext, mealId: lasagneUUID, name: "Lasagne", desc: "Layers of pasta and mince with cheese", url: URL(string: "https://www.bbc.co.uk/food/recipes/express_lasagne_51375")),
+            MealMO(context: viewContext, mealId: vegCurryUUID, name: "Vegetable Curry", desc: "Mixed vegetables in a spicy sauce", url: URL(string: "https://www.bbc.co.uk/food/recipes/mushroom_chickpea_and_71193")),
+            MealMO(context: viewContext, mealId: chickenStirFryUUID, name: "Chicken Stir Fry", desc: "Chicken with stir fried vegetables", url: URL(string: "https://www.bbc.co.uk/food/recipes/vegetablechickenstir_76805"))
+        ]
+
+        let allocations: [AllocationMO] = [
+            AllocationMO(context: viewContext, dayNumber: today, slot: 0, mealId: chickenStirFryUUID),
+            AllocationMO(context: viewContext, dayNumber: today + 2, slot: 0, mealId: vegCurryUUID)
+        ]
         do {
             try viewContext.save()
         } catch {
@@ -25,6 +39,7 @@ struct PersistenceController {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
+
         return result
     }()
 
@@ -51,5 +66,33 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
+        if !inMemory {
+            
+            /*
+            let viewContext = container.viewContext
+             
+            let spagbogUUID = UUID()
+            let lasagneUUID = UUID()
+            let vegCurryUUID = UUID()
+            let chickenStirFryUUID = UUID()
+            let today = DayNumber(from: Date())
+            
+            let _ = [
+             MealMO(context: viewContext, mealId: spagbogUUID, name: "Spaghetti Bolognaise", desc: "Spaghetti with a beef mince sauce", url: URL(string: "https://www.bbc.co.uk/food/recipes/spaghettibolognese_67868")),
+             MealMO(context: viewContext, mealId: lasagneUUID, name: "Lasagne", desc: "Layers of pasta and mince with cheese", url: URL(string: "https://www.bbc.co.uk/food/recipes/express_lasagne_51375")),
+             MealMO(context: viewContext, mealId: vegCurryUUID, name: "Vegetable Curry", desc: "Mixed vegetables in a spicy sauce", url: URL(string: "https://www.bbc.co.uk/food/recipes/mushroom_chickpea_and_71193")),
+             MealMO(context: viewContext, mealId: chickenStirFryUUID, name: "Chicken Stir Fry", desc: "Chicken with stir fried vegetables", url: URL(string: "https://www.bbc.co.uk/food/recipes/vegetablechickenstir_76805"))
+            ]
+            let _ = [
+                AllocationMO(context: viewContext, dayNumber: today, slot: 0, mealId: chickenStirFryUUID),
+                AllocationMO(context: viewContext, dayNumber: today + 2, slot: 0, mealId: vegCurryUUID)
+            ]
+            do {
+                try viewContext.save()
+            } catch {
+            }
+            */
+        }
     }
 }

@@ -9,12 +9,17 @@ import SwiftUI
 
 @main
 struct Wots4TApp: App {
-    let persistenceController = PersistenceController.shared
+    let context = PersistenceController.shared.container.viewContext
 
+    init() {
+        CoreData.context = context
+        DataModel.shared.load()
+    }
+    
     var body: some Scene {
+        
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            CalendarView()
         }
     }
 }
