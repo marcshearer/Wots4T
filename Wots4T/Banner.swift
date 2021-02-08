@@ -10,7 +10,7 @@ import SwiftUI
 struct Banner: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    var title: String
+    @Binding var title: String
     var back: Bool = true
     var menuImage: AnyView?
     var menuAction: (()->())?

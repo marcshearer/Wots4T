@@ -11,14 +11,17 @@ struct MealListView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @State var linkToAdd = false
+    @State var linkToEdit = false
+    @State var linkToEditMeal: MealViewModel?
 
-    var title: String
+    @State var title: String
     var allocateDayNumber: DayNumber?
     var allocateSlot: Int?
     
+    
     var body: some View {
         VStack {
-            Banner(title: title,
+            Banner(title: $title,
                    menuImage: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
                    menuAction: { self.linkToAdd = true })
             LazyVStack {
@@ -27,7 +30,8 @@ struct MealListView: View {
                         .frame(height: 80)
                         .onTapGesture {
                             if allocateDayNumber == nil {
-                                
+                                self.linkToEditMeal = meal
+                                self.linkToEdit = true
                             } else {
                                 self.allocate(meal: meal)
                                 self.presentationMode.wrappedValue.dismiss()
@@ -41,6 +45,7 @@ struct MealListView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
+        NavigationLink(destination: MealEditView(meal: self.linkToEditMeal ?? MealViewModel()), isActive: $linkToEdit) { EmptyView() }
     }
     
     private func allocate(meal: MealViewModel) {

@@ -13,6 +13,7 @@ import LinkPresentation
 struct CalendarView: View {
     @State var startAt: Int? = -1
     @State var linkEditMeals = false
+    @State var title = appName
     
     @ObservedObject var data = DataModel.shared
     
@@ -21,7 +22,7 @@ struct CalendarView: View {
             VStack(spacing: 0) {
                 let today = DayNumber.today
                 
-                Banner(title: appName, back: false, menuOptions: [(text: "Edit Meals", action: { self.linkEditMeals = true })])
+                Banner(title: $title, back: false, menuOptions: [(text: editMealsName, action: { self.linkEditMeals = true })])
 
                 ScrollView {
                     ScrollViewReader { scrollViewProxy in
@@ -41,7 +42,7 @@ struct CalendarView: View {
                 }
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
-                NavigationLink(destination: MealListView(title: "Edit Meals"), isActive: $linkEditMeals) { EmptyView() }
+                NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
             }
             .onAppear {
                 Utility.mainThread {
@@ -52,7 +53,7 @@ struct CalendarView: View {
     }
     
     func date(offset: Int) -> String {
-        return (DayNumber.today + offset).date.toString(format: "EEEE d MMMM", localized: false)
+        return (DayNumber.today + offset).date.toString(format: dateFormat, localized: false)
     }
 }
 
@@ -94,7 +95,7 @@ fileprivate struct CalendarView_AllocationTitle: View {
     var body: some View {
         HStack {
             Spacer().frame(width: 32)
-            Text(dayNumber.date.toString(format: "EEEE d MMMM"))
+            Text(dayNumber.date.toString(format: dateFormat))
                 .font(.headline)
                 .foregroundColor(self.highlight ? .red : .blue)
             Spacer()
