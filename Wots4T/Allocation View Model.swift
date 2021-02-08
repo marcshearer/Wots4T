@@ -40,6 +40,13 @@ public class AllocationViewModel : ObservableObject, Identifiable {
         self.setupMappings()
     }
     
+    public init(dayNumber: DayNumber, slot: Int = 0, meal: MealViewModel) {
+        self.dayNumber = dayNumber
+        self.slot = slot
+        self.meal = meal
+        self.setupMappings()
+    }
+    
     private func setupMappings() {
         
     }

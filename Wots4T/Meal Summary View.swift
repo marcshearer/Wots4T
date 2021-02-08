@@ -49,16 +49,16 @@ public struct MealSummaryView: View {
             }
         }.onAppear {
             if let url = meal.url {
-                if let thumbnail = meal.thumbnail {
-                    // Used cached thumbnail
-                    self.image = UIImage(data: thumbnail)
+                if let image = meal.urlImageCache {
+                    // Used cached image
+                    self.image = UIImage(data: image)
                 } else {
-                    // No cached thumbnail - derive from URL
-                    LinkPresentation.getImage(url: url) { (result) in
+                    // No cached image - derive from URL
+                    LinkPresentation.getImage(url: URL(string: url)!) { (result) in
                         switch result {
                         case .success(let image):
                             self.image = image
-                            meal.saveThumbnail(image: image)
+                            meal.saveimageCache(image: image)
                         default:
                             break
                         }

@@ -16,7 +16,7 @@ public enum EditMode: Int {
 // Localisable names
 
 public let appName = "Wots4T"
-public let chooseName = "Choose a meal..."
+public let chooseName = "Choose a Meal"
 public let breakfastName = "breakfast"
 public let slotName = [ "dinner" ]
 public let mealName = "meal"

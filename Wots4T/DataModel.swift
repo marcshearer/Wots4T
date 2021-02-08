@@ -7,28 +7,28 @@
 
 import Foundation
 
-class DataModel {
+class DataModel: ObservableObject {
     
     public static let shared = DataModel()
     
-    private(set) var meals: [MealViewModel] = []
-    private(set) var allocations: [AllocationViewModel] = []
+    @Published private(set) var meals: [MealViewModel] = []
+    @Published private(set) var allocations: [AllocationViewModel] = []
     
     public func load() {
         
         /// **Builds in-memory mirror of meals and their ingredients with pointers to managed objects**
         //  Note that this infers that there will only ever be 1 instance of the app accessing the database
         
-        let mealMOList = CoreData.fetch(from: "Meal", sort: (key: #keyPath(MealMO.lastDate), direction: .ascending)) as! [MealMO]
-        let ingredientMOList = CoreData.fetch(from: "Ingredient") as! [IngredientMO]
+        let mealMOList = CoreData.fetch(from: MealMO.tableName, sort: (key: #keyPath(MealMO.lastDate), direction: .ascending)) as! [MealMO]
+        let ingredientMOList = CoreData.fetch(from: MealIngredientMO.tableName) as! [MealIngredientMO]
 
         self.meals = []
         for mealMO in mealMOList {
             let ingredients = ingredientMOList.filter( { $0.mealId == mealMO.mealId } )
-            self.meals.append(MealViewModel(mealMO: mealMO, ingredientMO: Set<IngredientMO>(ingredients)))
+            self.meals.append(MealViewModel(mealMO: mealMO, ingredientMO: Set<MealIngredientMO>(ingredients)))
         }
         
-        let allocationMOList = CoreData.fetch(from: "Allocation", sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending)) as! [AllocationMO]
+        let allocationMOList = CoreData.fetch(from: AllocationMO.entity().name!, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending)) as! [AllocationMO]
 
         self.allocations = []
         for allocationMO in allocationMOList {
@@ -39,7 +39,7 @@ class DataModel {
     /// Methods for meals and ingredients
     
     public func insert(meal: MealViewModel) {
-        assert(meal.mealMO == nil && meal.ingredientMO.isEmpty, "Cannot insert a \(mealName) which already has managed objects")
+        assert(meal.mealMO == nil && meal.mealIngredientMO.isEmpty, "Cannot insert a \(mealName) which already has managed objects")
         CoreData.update(updateLogic: {
             meal.mealMO = MealMO(context: CoreData.context, mealId: meal.mealId, name: meal.name, desc: meal.desc, lastDate: meal.lastDate)
             self.updateMO(meal: meal)
@@ -51,7 +51,7 @@ class DataModel {
         assert(meal.mealMO != nil, "Cannot remove a \(mealName) which doesn't already have managed objects")
         if let index = self.meals.firstIndex(where: { $0.mealId == meal.mealId }) {
             CoreData.update(updateLogic: {
-                if !meal.ingredientMO.isEmpty {
+                if !meal.mealIngredientMO.isEmpty {
                     // Delete ingredients
                     self.updateIngredientsMO(meal: meal, ingredients: [])
                 }
@@ -75,19 +75,19 @@ class DataModel {
     private func updateIngredientsMO(meal: MealViewModel, ingredients: Set<UUID>? = nil) {
         let ingredients = ingredients ?? meal.ingredients ?? []
         // First remove any MOs not in MO but not in ingredients
-        for ingredient in meal.ingredientMO {
+        for ingredient in meal.mealIngredientMO {
             if !ingredients.contains(ingredient.ingredientId) {
-                meal.ingredientMO.remove(ingredient)
+                meal.mealIngredientMO.remove(ingredient)
                 CoreData.delete(record: ingredient)
 
             }
         }
         // Now add any MOs in ingredients but not in MO
         if !ingredients.isEmpty {
-            let existingIngredients = meal.ingredientMO.map{$0.ingredientId}
+            let existingIngredients = meal.mealIngredientMO.map{$0.ingredientId}
             for ingredientId in ingredients {
                 if !existingIngredients.contains(ingredientId) {
-                    meal.ingredientMO.insert(IngredientMO(context: CoreData.context, mealId: meal.mealId, ingredientID: ingredientId))
+                    meal.mealIngredientMO.insert(MealIngredientMO(context: CoreData.context, mealId: meal.mealId, ingredientID: ingredientId))
                 }
             }
         }

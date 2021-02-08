@@ -16,6 +16,9 @@
 		B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B225CAC3C300EA1948 /* Day Number.swift */; };
 		B256F1B725CC3E1D00EA1948 /* Link Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */; };
 		B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BB25CC710700EA1948 /* Meal Summary View.swift */; };
+		B256F1BF25CD451600EA1948 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BE25CD451600EA1948 /* Utility.swift */; };
+		B256F1C225CD4C4400EA1948 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1C125CD4C4400EA1948 /* Banner.swift */; };
+		B256F1C925CDA42000EA1948 /* Meal Edit View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1C825CDA42000EA1948 /* Meal Edit View.swift */; };
 		B26BA08125C827E500C26B69 /* Allocation Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */; };
 		B26BA08525C82AAE00C26B69 /* Declarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08425C82AAE00C26B69 /* Declarations.swift */; };
 		B26BA08925C82E9A00C26B69 /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08825C82E9A00C26B69 /* String Extensions.swift */; };
@@ -25,7 +28,7 @@
 		B26BA09825C96E3E00C26B69 /* Allocation View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */; };
 		B2844F7725B5F6370010A04C /* Meal View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F7625B5F6370010A04C /* Meal View Model.swift */; };
 		B2844F9625B5FF010010A04C /* Meal Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9425B5FF010010A04C /* Meal Managed Object.swift */; };
-		B2844FA025B6DFAB0010A04C /* Ingredient Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Ingredient Managed Object.swift */; };
+		B2844FA025B6DFAB0010A04C /* Meal Ingredient Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Ingredient Managed Object.swift */; };
 		B2844FA825B99F300010A04C /* Core Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FA725B99F300010A04C /* Core Data.swift */; };
 		B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* DataModel.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +45,9 @@
 		B256F1B225CAC3C300EA1948 /* Day Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day Number.swift"; sourceTree = "<group>"; };
 		B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Link Presentation.swift"; sourceTree = "<group>"; };
 		B256F1BB25CC710700EA1948 /* Meal Summary View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Summary View.swift"; sourceTree = "<group>"; };
+		B256F1BE25CD451600EA1948 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		B256F1C125CD4C4400EA1948 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		B256F1C825CDA42000EA1948 /* Meal Edit View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Edit View.swift"; sourceTree = "<group>"; };
 		B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Allocation Managed Object.swift"; sourceTree = "<group>"; };
 		B26BA08425C82AAE00C26B69 /* Declarations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Declarations.swift; sourceTree = "<group>"; };
 		B26BA08825C82E9A00C26B69 /* String Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String Extensions.swift"; sourceTree = "<group>"; };
@@ -51,7 +57,7 @@
 		B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Allocation View Model.swift"; sourceTree = "<group>"; };
 		B2844F7625B5F6370010A04C /* Meal View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal View Model.swift"; sourceTree = "<group>"; };
 		B2844F9425B5FF010010A04C /* Meal Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Managed Object.swift"; sourceTree = SOURCE_ROOT; };
-		B2844F9E25B6DFAB0010A04C /* Ingredient Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ingredient Managed Object.swift"; sourceTree = SOURCE_ROOT; };
+		B2844F9E25B6DFAB0010A04C /* Meal Ingredient Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Ingredient Managed Object.swift"; sourceTree = SOURCE_ROOT; };
 		B2844FA725B99F300010A04C /* Core Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Data.swift"; sourceTree = "<group>"; };
 		B2844FAB25B9A0220010A04C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,7 +95,8 @@
 				B2844F6C25B5F3CB0010A04C /* Standard Components */,
 				B26BA08325C82A7F00C26B69 /* Shared */,
 				B26BA07E25C8142700C26B69 /* Allocations */,
-				B2844F7525B5F6090010A04C /* Menus & Ingredients */,
+				B2844F7525B5F6090010A04C /* Meals & Meal Ingredients */,
+				B256F1C525CD4C7800EA1948 /* Reuseable UI Components */,
 				B2844FAA25B99F360010A04C /* Libraries */,
 				B212868125B1B29800557221 /* Preview Content */,
 			);
@@ -102,6 +109,14 @@
 				B212868225B1B29800557221 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B256F1C525CD4C7800EA1948 /* Reuseable UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				B256F1C125CD4C4400EA1948 /* Banner.swift */,
+			);
+			name = "Reuseable UI Components";
 			sourceTree = "<group>";
 		};
 		B26BA07E25C8142700C26B69 /* Allocations */ = {
@@ -135,16 +150,17 @@
 			name = "Standard Components";
 			sourceTree = "<group>";
 		};
-		B2844F7525B5F6090010A04C /* Menus & Ingredients */ = {
+		B2844F7525B5F6090010A04C /* Meals & Meal Ingredients */ = {
 			isa = PBXGroup;
 			children = (
-				B2844F9E25B6DFAB0010A04C /* Ingredient Managed Object.swift */,
+				B2844F9E25B6DFAB0010A04C /* Meal Ingredient Managed Object.swift */,
 				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
 				B2844F7625B5F6370010A04C /* Meal View Model.swift */,
 				B212867D25B1B29700557221 /* Meal List View.swift */,
 				B256F1BB25CC710700EA1948 /* Meal Summary View.swift */,
+				B256F1C825CDA42000EA1948 /* Meal Edit View.swift */,
 			);
-			name = "Menus & Ingredients";
+			name = "Meals & Meal Ingredients";
 			sourceTree = "<group>";
 		};
 		B2844FAA25B99F360010A04C /* Libraries */ = {
@@ -156,6 +172,7 @@
 				B26BA09425C861FC00C26B69 /* Date Extensions.swift */,
 				B256F1B225CAC3C300EA1948 /* Day Number.swift */,
 				B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */,
+				B256F1BE25CD451600EA1948 /* Utility.swift */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -229,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B256F1BF25CD451600EA1948 /* Utility.swift in Sources */,
 				B256F1B725CC3E1D00EA1948 /* Link Presentation.swift in Sources */,
 				B2844F9625B5FF010010A04C /* Meal Managed Object.swift in Sources */,
 				B212868825B1B29800557221 /* Wots4T.xcdatamodeld in Sources */,
@@ -239,7 +257,9 @@
 				B26BA09525C861FC00C26B69 /* Date Extensions.swift in Sources */,
 				B26BA08925C82E9A00C26B69 /* String Extensions.swift in Sources */,
 				B26BA09825C96E3E00C26B69 /* Allocation View Model.swift in Sources */,
+				B256F1C925CDA42000EA1948 /* Meal Edit View.swift in Sources */,
 				B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */,
+				B256F1C225CD4C4400EA1948 /* Banner.swift in Sources */,
 				B2844F7725B5F6370010A04C /* Meal View Model.swift in Sources */,
 				B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */,
 				B212867E25B1B29700557221 /* Meal List View.swift in Sources */,
@@ -247,7 +267,7 @@
 				B26BA08125C827E500C26B69 /* Allocation Managed Object.swift in Sources */,
 				B2844FA825B99F300010A04C /* Core Data.swift in Sources */,
 				B212867C25B1B29700557221 /* Wots4TApp.swift in Sources */,
-				B2844FA025B6DFAB0010A04C /* Ingredient Managed Object.swift in Sources */,
+				B2844FA025B6DFAB0010A04C /* Meal Ingredient Managed Object.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

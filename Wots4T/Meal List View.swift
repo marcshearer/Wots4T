@@ -9,70 +9,43 @@ import SwiftUI
 
 struct MealListView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @State var linkToAdd = false
 
     var title: String
+    var allocateDayNumber: DayNumber?
+    var allocateSlot: Int?
     
     var body: some View {
         VStack {
-            /*
-            HStack {
-                Spacer().frame(width: 16)
-                Text(mealNamePlural.capitalized).font(.largeTitle)
-                Spacer()
-                Menu {
-                    Button {
-                        // style = 0
-                    } label: {
-                        Text("Linear")
-                        Image(systemName: "arrow.down.right.circle")
-                    }.menuStyle(DefaultMenuStyle())
-                    Button {
-                        // style = 1
-                    } label: {
-                        Text("Radial")
-                        Image(systemName: "arrow.up.and.down.circle")
-                    }
-                } label: {
-                    Image(systemName: "line.horizontal.3").font(.largeTitle)
-                        .foregroundColor(.black)
+            Banner(title: title,
+                   menuImage: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
+                   menuAction: { self.linkToAdd = true })
+            LazyVStack {
+                ForEach(DataModel.shared.meals) { meal in
+                    MealSummaryView(meal: meal, imageWidth: 100)
+                        .frame(height: 80)
+                        .onTapGesture {
+                            if allocateDayNumber == nil {
+                                
+                            } else {
+                                self.allocate(meal: meal)
+                                self.presentationMode.wrappedValue.dismiss()
+                            }
+                        }
                 }
-                Spacer().frame(width: 16)
+                .onDelete(perform: deleteItems)
             }
- */
-            VStack {
-                Banner(title: title)
-                LazyVStack {
-                    ForEach(DataModel.shared.meals) { meal in
-                        MealSummaryView(meal: meal, imageWidth: 100)
-                            .frame(height: 80)
-                    }
-                    .onDelete(perform: deleteItems)
-                }
-                Spacer()
-            }
+            Spacer()
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
     }
-       
-    var addButton: some View {
-        Button(action: {
-            // TODO
-        }, label: {
-            ZStack(alignment: .trailing) {
-                Rectangle() // 3
-                    .fill(Color.red.opacity(0.0001)) // 4
-                    .frame(width: 40, height: 40)
-                Image(systemName: "plus")
-            }
-        })
-    }
     
-    private func addItem() {
-        withAnimation {
-            
-        }
+    private func allocate(meal: MealViewModel) {
+        let allocation = AllocationViewModel(dayNumber: self.allocateDayNumber!, slot: self.allocateSlot!, meal: meal)
+        allocation.insert()
     }
 
     private func deleteItems(offsets: IndexSet) {

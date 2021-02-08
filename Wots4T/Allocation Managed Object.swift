@@ -10,6 +10,8 @@ import CoreData
 @objc(AllocationMO)
 public class AllocationMO: NSManagedObject {
 
+    public static let tableName = "Allocation"
+    
     @NSManaged public var dayNumber64: Int64
     @NSManaged public var slot16: Int16
     @NSManaged public var mealId: UUID
