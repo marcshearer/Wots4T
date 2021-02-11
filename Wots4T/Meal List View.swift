@@ -29,9 +29,10 @@ struct MealListView: View {
                         BannerOption(
                             image: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
                             action: {
-                                    self.linkToAdd = true
-                                    self.linkToEdit = true
-                                })])
+                                self.linkToEditMeal = nil
+                                self.linkToAdd = true
+                                self.linkToEdit = true
+                            })])
             LazyVStack {
                 ForEach(DataModel.shared.meals) { meal in
                     MealSummaryView(meal: meal, imageWidth: 100)

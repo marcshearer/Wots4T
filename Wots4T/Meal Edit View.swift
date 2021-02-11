@@ -27,8 +27,17 @@ struct MealEditView: View {
                         BannerOption(
                             image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(.red)),
                             action: {
-                                confirmDelete = true
-                                })])
+                                if self.meal.mealMO == nil {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                } else {
+                                    confirmDelete = true
+                                }
+                            })
+                   ])
+                    .alert(isPresented: $confirmDelete, content: {
+                        self.delete()
+                    })
+
             ScrollView {
                 Input(title: nameTitle.capitalized, field: $meal.name, topSpace: 0)
                 Input(title: descTitle.capitalized, field: $meal.desc, height: 60)
@@ -36,16 +45,13 @@ struct MealEditView: View {
                 Input(title: urlTitle.capitalized, field: $meal.url, height: 60)
                 Input(title: notesTitle.capitalized, field: $meal.notes, height: 180)
                 Spacer()
-                
             }
+            .alert(isPresented: $saveError, content: {
+                Alert(title: Text("Error!"),
+                      message: Text(meal.saveMessage))
+            })
+
         }
-        .alert(isPresented: $confirmDelete, content: {
-            self.delete()
-        })
-        .alert(isPresented: $saveError, content: {
-            Alert(title: Text("Error!"),
-                  message: Text(meal.saveMessage))
-        })
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
