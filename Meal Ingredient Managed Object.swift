@@ -21,5 +21,4 @@ public class MealIngredientMO: NSManagedObject {
         self.mealId = mealId
         self.ingredientId = ingredientId
     }
-    
 }

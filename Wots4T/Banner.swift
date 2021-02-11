@@ -54,7 +54,7 @@ struct Banner: View {
                 }
             }
         }
-        .frame(height: 80)
+        .frame(height: 70)
     }
     
     var backButton: some View {

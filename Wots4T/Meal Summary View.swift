@@ -19,13 +19,17 @@ public struct MealSummaryView: View {
             if let imageData = $meal.image.wrappedValue, let image = UIImage(data: imageData) {
                 VStack {
                     Spacer()
-                    Image(uiImage: image).resizable().aspectRatio(contentMode: .fit)
+                    Image(uiImage: image)
+                        .resizable()
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
                 }.frame(maxWidth: self.imageWidth ?? 80)
                 Spacer()
             } else if let image = self.urlImage {
                 VStack {
                     Spacer()
-                    Image(uiImage: image).resizable()
+                    Image(uiImage: image)
+                        .resizable()
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
                 }.frame(maxWidth: self.imageWidth ?? 80)
                 Spacer()
             }

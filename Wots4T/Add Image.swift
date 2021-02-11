@@ -36,11 +36,20 @@ struct AddImage : View {
                         captureImage = (source != nil)
                     })
                 } else {
+                    if let uiImage = UIImage(data: image!) {
+                        VStack {
+                            Spacer()
+                            Image(uiImage: uiImage).resizable().aspectRatio(contentMode: .fit)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            Spacer()
+                        }.frame(maxWidth: 50)
+                        Spacer().frame(width: 8)
+                    }
                     AddImage_Button(text: "Replace", systemImage: "arrow.triangle.2.circlepath.camera", action: { (source) in
                         self.source = source
                         captureImage = (source != nil)
                     })
-                    Spacer().frame(width: 16)
+                    Spacer().frame(width: 8)
                     AddImage_Button(text: "Remove", systemImage: "trash", capture: false, action: { (source) in
                         self.image = nil
                     })
@@ -60,7 +69,7 @@ struct AddImage_Button : View {
     var text: String
     var systemImage: String?
     var capture = true
-    var width: CGFloat = 110
+    var width: CGFloat = 102
     var height: CGFloat = 32
     var action: (UIImagePickerController.SourceType?)->()
     
@@ -115,9 +124,9 @@ struct AddImage_Button_Content : View {
                 Spacer().frame(width: 8)
                 Image(systemName: systemImage)
                     .foregroundColor(.white)
-                    .font(.callout)
+                    .font(.caption)
             }
-            Spacer().frame(width: 8)
+            Spacer()
             Text(text)
                 .foregroundColor(.white)
                 .font(.callout)

@@ -13,7 +13,7 @@ struct MealListView: View {
     @State var linkToAdd = false
     @State var linkToEdit = false
     @State var linkToEditMeal: MealViewModel?
-    @State var editMode: EditMode = .transient
+    @State var linkToEditTitle: String?
 
     @State var title: String
     var allocateDayNumber: DayNumber?
@@ -29,9 +29,10 @@ struct MealListView: View {
                         BannerOption(
                             image: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
                             action: {
-                                self.linkToEditMeal = nil
                                 self.linkToAdd = true
                                 self.linkToEdit = true
+                                self.linkToEditTitle = "New \(mealName.capitalized)"
+                                self.linkToEditMeal = nil
                             })])
             LazyVStack {
                 ForEach(DataModel.shared.meals) { meal in
@@ -39,6 +40,8 @@ struct MealListView: View {
                         .frame(height: 80)
                         .onTapGesture {
                             if allocateDayNumber == nil {
+                                self.linkToAdd = false
+                                self.linkToEditTitle = "Edit \(mealName.capitalized)"
                                 self.linkToEditMeal = meal
                                 self.linkToEdit = true
                             } else {
@@ -47,13 +50,13 @@ struct MealListView: View {
                             }
                         }
                 }
-            }.environment(\.editMode, $editMode)
+            }
             Spacer()
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
-        NavigationLink(destination: MealEditView(meal: self.linkToEditMeal ?? MealViewModel()), isActive: $linkToEdit) { EmptyView() }
+        NavigationLink(destination: MealEditView(meal: self.linkToEditMeal ?? MealViewModel(), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
     }
     
     private func allocate(meal: MealViewModel) {

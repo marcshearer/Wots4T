@@ -12,6 +12,7 @@ import Foundation
 public let appName = "Wots4T"
 public let chooseName = "Choose a Meal"
 public let editMealsName = "Edit Meals"
+public let editIngredientsName = "Setup Ingredients"
 
 public let mealName = "meal"
 public let mealNamePlural = "meals"

@@ -13,14 +13,19 @@ struct MealEditView: View {
     @ObservedObject var meal: MealViewModel
     @State var confirmDelete = false
     @State var saveError = false
-    
+    @State var title: String
+     
     var body: some View {
         VStack {
-            Banner(title: $meal.name,
+            Banner(title: $title,
                    backCheck: {
-                        if meal.canSave { self.meal.save() }
-                        saveError = !meal.canSave
-                        return !saveError
+                        if meal.mealMO == nil && meal.name == "" {
+                            return true
+                        } else {
+                            if meal.canSave { self.meal.save() }
+                            saveError = !meal.canSave
+                            return !saveError
+                        }
                    },
                    optionMode: .buttons,
                    options: [
@@ -73,7 +78,7 @@ struct MealEditView: View {
 struct MealEditView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MealEditView(meal: MealViewModel(name: "Macaroni Cheese", desc: "James Martin's ultimate macaroni cheese", url: "https://www.bbc.co.uk/food/recipes/james_martins_ultimate_60657", notes: ""))
+            MealEditView(meal: MealViewModel(name: "Macaroni Cheese", desc: "James Martin's ultimate macaroni cheese", url: "https://www.bbc.co.uk/food/recipes/james_martins_ultimate_60657", notes: ""), title: "Edit Meal")
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
             DataModel.shared.load()

@@ -13,6 +13,7 @@ import LinkPresentation
 struct CalendarView: View {
     @State var startAt: Int? = -1
     @State var linkEditMeals = false
+    @State var linkEditIngredients = false
     @State var title = appName
     
     @ObservedObject var data = DataModel.shared
@@ -24,8 +25,10 @@ struct CalendarView: View {
                 
                 Banner(title: $title, back: false,
                        optionMode: .menu,
-                       options: [BannerOption(text: editMealsName, action: { self.linkEditMeals = true })])
+                       options: [BannerOption(text: editMealsName,  action: { self.linkEditMeals = true }),
+                                 BannerOption(text: editIngredientsName, action: { self.linkEditIngredients = true })])
 
+                Spacer().frame(height: 10)
                 ScrollView {
                     ScrollViewReader { scrollViewProxy in
                         VStack {
@@ -45,6 +48,7 @@ struct CalendarView: View {
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
                 NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
+                NavigationLink(destination: IngredientListView(title: editIngredientsName), isActive: $linkSetupIngredients) { EmptyView() }
             }
             .onAppear {
                 Utility.mainThread {
