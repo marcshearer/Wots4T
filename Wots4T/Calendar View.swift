@@ -22,7 +22,9 @@ struct CalendarView: View {
             VStack(spacing: 0) {
                 let today = DayNumber.today
                 
-                Banner(title: $title, back: false, menuOptions: [(text: editMealsName, action: { self.linkEditMeals = true })])
+                Banner(title: $title, back: false,
+                       optionMode: .menu,
+                       options: [BannerOption(text: editMealsName, action: { self.linkEditMeals = true })])
 
                 ScrollView {
                     ScrollViewReader { scrollViewProxy in

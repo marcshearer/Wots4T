@@ -69,7 +69,14 @@ class DataModel: ObservableObject {
     }
     
     private func updateMO(meal: MealViewModel) {
-            meal.mealMO!.mealId = meal.mealId
+        meal.mealMO!.mealId = meal.mealId
+        meal.mealMO!.name = meal.name
+        meal.mealMO!.desc = meal.desc
+        meal.mealMO!.url = meal.url
+        meal.mealMO!.urlImageCache = meal.urlImageCache
+        meal.mealMO!.notes = meal.notes
+        meal.mealMO!.image = meal.image
+        meal.mealMO!.lastDate = meal.lastDate
     }
     
     private func updateIngredientsMO(meal: MealViewModel, ingredients: Set<UUID>? = nil) {

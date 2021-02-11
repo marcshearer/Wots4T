@@ -14,10 +14,10 @@ public class MealViewModel : ObservableObject, Identifiable {
     // Properties in core data model
     public var id: UUID { self.mealId }
     private(set) var mealId: UUID!
-    @Published public var name: String!
-    @Published public var desc: String!
-    @Published public var url: String!
-    @Published public var notes: String!
+    @Published public var name: String = ""
+    @Published public var desc: String = ""
+    @Published public var url: String = ""
+    @Published public var notes: String = ""
     @Published public var image: Data?
     @Published public var urlImageCache: Data?
     @Published public var lastDate: Date?
@@ -28,11 +28,9 @@ public class MealViewModel : ObservableObject, Identifiable {
     internal var mealIngredientMO: Set<MealIngredientMO> = []
     
     // Other properties
-    @Published private(set) var nameError: String = ""
+    @Published private(set) var saveMessage: String = ""
     @Published private(set) var canSave: Bool = false
     
-    var mirror: Mirror!
-
     // Auto-cleanup
     private var cancellableSet: Set<AnyCancellable> = []
     
@@ -64,7 +62,7 @@ public class MealViewModel : ObservableObject, Identifiable {
         self.setupMappings()
     }
     
-    public init(name: String, desc: String? = "", url: String? = "", notes: String? = "", image: Data? = nil) {
+    public init(name: String, desc: String = "", url: String = "", notes: String = "", image: Data? = nil) {
         self.mealId = UUID()
         self.name = name
         self.desc = desc
@@ -74,15 +72,29 @@ public class MealViewModel : ObservableObject, Identifiable {
     }
     
     private func setupMappings() {
-        mirror = Mirror(reflecting: self)
+        $name
+            .receive(on: RunLoop.main)
+            .map { (name) in
+                return (name == "" ? "\(mealName.capitalized) \(nameTitle) must not be left blank. Either enter a valid \(mealName) \(nameTitle) or delete this \(mealName)." : "")
+            }
+        .assign(to: \.saveMessage, on: self)
+        .store(in: &cancellableSet)
+        
+        $saveMessage
+            .receive(on: RunLoop.main)
+            .map { (nameError) in
+                return (nameError == "")
+            }
+        .assign(to: \.canSave, on: self)
+        .store(in: &cancellableSet)
     }
     
     private func revert() {
         self.mealId = mealMO?.mealId ?? UUID()
-        self.name = self.mealMO?.name
-        self.desc = self.mealMO?.desc
-        self.url = self.mealMO?.url
-        self.notes = self.mealMO?.notes
+        self.name = self.mealMO?.name ?? ""
+        self.desc = self.mealMO?.desc ?? ""
+        self.url = self.mealMO?.url ?? ""
+        self.notes = self.mealMO?.notes ?? ""
         self.image = self.mealMO?.image
         self.urlImageCache = self.mealMO?.urlImageCache
         self.lastDate = self.mealMO?.lastDate
@@ -93,7 +105,11 @@ public class MealViewModel : ObservableObject, Identifiable {
     }
     
     public func save() {
-        DataModel.shared.save(meal: self)
+        if self.mealMO == nil {
+            DataModel.shared.insert(meal: self)
+        } else {
+            DataModel.shared.save(meal: self)
+        }
     }
     
     public func insert() {

@@ -8,54 +8,59 @@
 import SwiftUI
 
 struct MealEditView: View {
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     @ObservedObject var meal: MealViewModel
+    @State var confirmDelete = false
+    @State var saveError = false
     
     var body: some View {
         VStack {
-            Banner(title: $meal.name)
-            Input(title: nameTitle, field: $meal.name)
-            Input(title: descTitle, field: $meal.desc, height: 60)
-            Input(title: urlTitle, field: $meal.url, height: 60)
-            Input(title: notesTitle, field: $meal.notes, height: 180)
-            Spacer()
+            Banner(title: $meal.name,
+                   backCheck: {
+                        if meal.canSave { self.meal.save() }
+                        saveError = !meal.canSave
+                        return !saveError
+                   },
+                   optionMode: .buttons,
+                   options: [
+                        BannerOption(
+                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(.red)),
+                            action: {
+                                confirmDelete = true
+                                })])
+            ScrollView {
+                Input(title: nameTitle.capitalized, field: $meal.name, topSpace: 0)
+                Input(title: descTitle.capitalized, field: $meal.desc, height: 60)
+                AddImage(title: imageTitle.capitalized, image: $meal.image)
+                Input(title: urlTitle.capitalized, field: $meal.url, height: 60)
+                Input(title: notesTitle.capitalized, field: $meal.notes, height: 180)
+                Spacer()
+                
+            }
         }
+        .alert(isPresented: $confirmDelete, content: {
+            self.delete()
+        })
+        .alert(isPresented: $saveError, content: {
+            Alert(title: Text("Error!"),
+                  message: Text(meal.saveMessage))
+        })
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
     }
-}
-
-struct Input : View {
     
-    var title: String?
-    @Binding var field: String
-    var height: CGFloat = 40
-    var onChange: ((String)->())?
-    
-    var body: some View {
-
-        VStack {
-            Spacer().frame(height: 32)
-                
-            if let title = title {
-                HStack {
-                    Spacer().frame(width: 16)
-                    Text(title).font(.headline)
-                    Spacer()
-                }
-            }
-
-            HStack {
-                Spacer().frame(width: 32)
-                TextEditor(text: $field)
-                    .lineLimit(1)
-                    .padding(.all, 1)
-                    .background(Color(.lightGray))
-                Spacer().frame(width: 16)
-            }
-            .frame(height: self.height)
-        }
+    private func delete() -> Alert {
+        return Alert(title: Text("Warning!"),
+              message: Text("Are you sure you want to delete this \(mealName)?"),
+              primaryButton:
+                .destructive(Text("Delete")) {
+                    self.meal.remove()
+                    self.presentationMode.wrappedValue.dismiss()
+                },
+              secondaryButton:
+                .cancel())
     }
 }
 

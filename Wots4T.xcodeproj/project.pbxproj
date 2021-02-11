@@ -13,6 +13,9 @@
 		B212868325B1B29800557221 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B212868225B1B29800557221 /* Preview Assets.xcassets */; };
 		B212868525B1B29800557221 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212868425B1B29800557221 /* Persistence.swift */; };
 		B212868825B1B29800557221 /* Wots4T.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B212868625B1B29800557221 /* Wots4T.xcdatamodeld */; };
+		B233B3B125D453F4002EFB3A /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3B025D453F4002EFB3A /* Input.swift */; };
+		B233B3B425D45425002EFB3A /* Add Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3B325D45425002EFB3A /* Add Image.swift */; };
+		B233B3BF25D5292B002EFB3A /* Image Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3BE25D5292B002EFB3A /* Image Capture.swift */; };
 		B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B225CAC3C300EA1948 /* Day Number.swift */; };
 		B256F1B725CC3E1D00EA1948 /* Link Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */; };
 		B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BB25CC710700EA1948 /* Meal Summary View.swift */; };
@@ -42,6 +45,9 @@
 		B212868425B1B29800557221 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		B212868725B1B29800557221 /* Wots4T.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Wots4T.xcdatamodel; sourceTree = "<group>"; };
 		B212868925B1B29800557221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B233B3B025D453F4002EFB3A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
+		B233B3B325D45425002EFB3A /* Add Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Add Image.swift"; sourceTree = "<group>"; };
+		B233B3BE25D5292B002EFB3A /* Image Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image Capture.swift"; sourceTree = "<group>"; };
 		B256F1B225CAC3C300EA1948 /* Day Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day Number.swift"; sourceTree = "<group>"; };
 		B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Link Presentation.swift"; sourceTree = "<group>"; };
 		B256F1BB25CC710700EA1948 /* Meal Summary View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Summary View.swift"; sourceTree = "<group>"; };
@@ -115,6 +121,9 @@
 			isa = PBXGroup;
 			children = (
 				B256F1C125CD4C4400EA1948 /* Banner.swift */,
+				B233B3B025D453F4002EFB3A /* Input.swift */,
+				B233B3B325D45425002EFB3A /* Add Image.swift */,
+				B233B3BE25D5292B002EFB3A /* Image Capture.swift */,
 			);
 			name = "Reuseable UI Components";
 			sourceTree = "<group>";
@@ -255,16 +264,19 @@
 				B212868525B1B29800557221 /* Persistence.swift in Sources */,
 				B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */,
 				B26BA09525C861FC00C26B69 /* Date Extensions.swift in Sources */,
+				B233B3B125D453F4002EFB3A /* Input.swift in Sources */,
 				B26BA08925C82E9A00C26B69 /* String Extensions.swift in Sources */,
 				B26BA09825C96E3E00C26B69 /* Allocation View Model.swift in Sources */,
 				B256F1C925CDA42000EA1948 /* Meal Edit View.swift in Sources */,
 				B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */,
+				B233B3B425D45425002EFB3A /* Add Image.swift in Sources */,
 				B256F1C225CD4C4400EA1948 /* Banner.swift in Sources */,
 				B2844F7725B5F6370010A04C /* Meal View Model.swift in Sources */,
 				B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */,
 				B212867E25B1B29700557221 /* Meal List View.swift in Sources */,
 				B26BA08D25C82F2400C26B69 /* Other Extensions.swift in Sources */,
 				B26BA08125C827E500C26B69 /* Allocation Managed Object.swift in Sources */,
+				B233B3BF25D5292B002EFB3A /* Image Capture.swift in Sources */,
 				B2844FA825B99F300010A04C /* Core Data.swift in Sources */,
 				B212867C25B1B29700557221 /* Wots4TApp.swift in Sources */,
 				B2844FA025B6DFAB0010A04C /* Meal Ingredient Managed Object.swift in Sources */,

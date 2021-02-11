@@ -8,15 +8,21 @@
 import SwiftUI
 
 public struct MealSummaryView: View {
-    @State var image: UIImage?
-
-    var meal: MealViewModel
+    
+    @State var urlImage: UIImage?
+    @ObservedObject var meal: MealViewModel
     var imageWidth: CGFloat?
 
     public var body: some View {
         HStack(alignment: .top) {
             Spacer().frame(width: 48)
-            if let image = self.image {
+            if let imageData = $meal.image.wrappedValue, let image = UIImage(data: imageData) {
+                VStack {
+                    Spacer()
+                    Image(uiImage: image).resizable().aspectRatio(contentMode: .fit)
+                }.frame(maxWidth: self.imageWidth ?? 80)
+                Spacer()
+            } else if let image = self.urlImage {
                 VStack {
                     Spacer()
                     Image(uiImage: image).resizable()
@@ -48,16 +54,16 @@ public struct MealSummaryView: View {
                 Spacer()
             }
         }.onAppear {
-            if let url = meal.url {
+            if meal.url != "" {
                 if let image = meal.urlImageCache {
                     // Used cached image
-                    self.image = UIImage(data: image)
+                    self.urlImage = UIImage(data: image)
                 } else {
                     // No cached image - derive from URL
-                    LinkPresentation.getImage(url: URL(string: url)!) { (result) in
+                    LinkPresentation.getImage(url: URL(string: meal.url)!) { (result) in
                         switch result {
                         case .success(let image):
-                            self.image = image
+                            self.urlImage = image
                             meal.saveimageCache(image: image)
                         default:
                             break

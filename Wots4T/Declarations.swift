@@ -7,12 +7,6 @@
 
 import Foundation
 
-public enum EditMode: Int {
-    case none = 0
-    case create = 1
-    case amend = 2
-}
-
 // Localisable names
 
 public let appName = "Wots4T"
@@ -33,9 +27,9 @@ public let dinnerName = "dinner"
 public let calendarName = "calendar"
 public let dateFormat = "EEEE d MMMM"
 
-public let nameTitle = "Name"
-public let descTitle = "Description"
-public let urlTitle = "Web Page Link"
-public let imageTitle = "Image"
-public let notesTitle = "Notes"
-public let otherImagesTitle = "Other Images"
+public let nameTitle = "name"
+public let descTitle = "description"
+public let urlTitle = "web page Link"
+public let imageTitle = "image"
+public let notesTitle = "notes"
+public let otherImagesTitle = "other images"

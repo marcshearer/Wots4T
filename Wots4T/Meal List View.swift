@@ -13,17 +13,25 @@ struct MealListView: View {
     @State var linkToAdd = false
     @State var linkToEdit = false
     @State var linkToEditMeal: MealViewModel?
+    @State var editMode: EditMode = .transient
 
     @State var title: String
     var allocateDayNumber: DayNumber?
     var allocateSlot: Int?
     
-    
+    @ObservedObject var data = DataModel.shared
+
     var body: some View {
         VStack {
             Banner(title: $title,
-                   menuImage: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
-                   menuAction: { self.linkToAdd = true })
+                   optionMode: (allocateDayNumber == nil ? .buttons : .none),
+                   options: [
+                        BannerOption(
+                            image: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
+                            action: {
+                                    self.linkToAdd = true
+                                    self.linkToEdit = true
+                                })])
             LazyVStack {
                 ForEach(DataModel.shared.meals) { meal in
                     MealSummaryView(meal: meal, imageWidth: 100)
@@ -38,8 +46,7 @@ struct MealListView: View {
                             }
                         }
                 }
-                .onDelete(perform: deleteItems)
-            }
+            }.environment(\.editMode, $editMode)
             Spacer()
         }
         .navigationBarBackButtonHidden(true)
@@ -51,14 +58,6 @@ struct MealListView: View {
     private func allocate(meal: MealViewModel) {
         let allocation = AllocationViewModel(dayNumber: self.allocateDayNumber!, slot: self.allocateSlot!, meal: meal)
         allocation.insert()
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for offset in offsets {
-                DataModel.shared.meals[offset].remove()
-            }
-        }
     }
 }
 
