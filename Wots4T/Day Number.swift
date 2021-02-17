@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class DayNumber: CustomStringConvertible, Equatable, Hashable {
-    
+public class DayNumber: CustomStringConvertible, Equatable, Comparable, Hashable {
+ 
     static let today = DayNumber(from: Date())
     static let dayNumber1Jan1970: Int = 2440587
     static let secondsPerDay: Int = 24*60*60
@@ -39,8 +39,16 @@ public class DayNumber: CustomStringConvertible, Equatable, Hashable {
         return DayNumber(from: lhs.value - rhs)
     }
     
+    public static func - (lhs: DayNumber, rhs: DayNumber) -> Int {
+        return lhs.value - rhs.value
+    }
+    
     public static func == (lhs: DayNumber, rhs: DayNumber) -> Bool {
         return lhs.value == rhs.value
+    }
+    
+    public static func < (lhs: DayNumber, rhs: DayNumber) -> Bool {
+        return lhs.value < rhs.value
     }
     
     public func hash(into hasher: inout Hasher) {

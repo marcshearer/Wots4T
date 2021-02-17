@@ -39,7 +39,7 @@ struct Banner: View {
         VStack {
             Spacer()
             HStack {
-                Spacer().frame(width: 16)
+                Spacer().frame(width: 8)
                 if back {
                     backButton
                 }
@@ -94,6 +94,7 @@ struct Banner_Menu : View {
                     }
                     if option.text != nil {
                         Text(option.text!)
+                            .minimumScaleFactor(0.5)
                     }
                 }.menuStyle(DefaultMenuStyle())
             }
@@ -123,7 +124,7 @@ struct Banner_Buttons : View {
                     if option.text != nil {
                         Text(option.text ?? "")
                     }
-                }.menuStyle(DefaultMenuStyle())
+                }
             }
         }
         Spacer().frame(width: 16)

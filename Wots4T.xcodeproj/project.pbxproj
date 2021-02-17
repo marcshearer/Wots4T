@@ -13,9 +13,13 @@
 		B212868325B1B29800557221 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B212868225B1B29800557221 /* Preview Assets.xcassets */; };
 		B212868525B1B29800557221 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212868425B1B29800557221 /* Persistence.swift */; };
 		B212868825B1B29800557221 /* Wots4T.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B212868625B1B29800557221 /* Wots4T.xcdatamodeld */; };
+		B216445E25D6A84A00F19F4A /* Category View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216445D25D6A84A00F19F4A /* Category View Model.swift */; };
+		B216446125D6A86400F19F4A /* Category Value View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216446025D6A86400F19F4A /* Category Value View Model.swift */; };
 		B233B3B125D453F4002EFB3A /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3B025D453F4002EFB3A /* Input.swift */; };
 		B233B3B425D45425002EFB3A /* Add Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3B325D45425002EFB3A /* Add Image.swift */; };
 		B233B3BF25D5292B002EFB3A /* Image Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3BE25D5292B002EFB3A /* Image Capture.swift */; };
+		B233B3CB25D6A21D002EFB3A /* Category Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */; };
+		B233B3CF25D6A22C002EFB3A /* Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */; };
 		B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B225CAC3C300EA1948 /* Day Number.swift */; };
 		B256F1B725CC3E1D00EA1948 /* Link Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */; };
 		B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BB25CC710700EA1948 /* Meal Summary View.swift */; };
@@ -29,11 +33,19 @@
 		B26BA09025C8554B00C26B69 /* Calendar View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08F25C8554B00C26B69 /* Calendar View.swift */; };
 		B26BA09525C861FC00C26B69 /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA09425C861FC00C26B69 /* Date Extensions.swift */; };
 		B26BA09825C96E3E00C26B69 /* Allocation View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */; };
+		B26F5F4725D92198002B48EE /* Category Value Edit View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F4625D92198002B48EE /* Category Value Edit View.swift */; };
+		B26F5F4B25D921D9002B48EE /* Category Edit View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F4A25D921D9002B48EE /* Category Edit View.swift */; };
+		B26F5F4F25D927A2002B48EE /* Picker Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F4E25D927A2002B48EE /* Picker Input.swift */; };
+		B26F5F5225D95197002B48EE /* Category Value List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F5125D95197002B48EE /* Category Value List View.swift */; };
+		B26F5F5725D95649002B48EE /* Input Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F5625D95649002B48EE /* Input Title.swift */; };
+		B26F5F6025DAC03D002B48EE /* Preview Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F5F25DAC03D002B48EE /* Preview Data.swift */; };
+		B26F5F6325DAC2CA002B48EE /* Meal Display View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F6225DAC2CA002B48EE /* Meal Display View.swift */; };
 		B2844F7725B5F6370010A04C /* Meal View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F7625B5F6370010A04C /* Meal View Model.swift */; };
 		B2844F9625B5FF010010A04C /* Meal Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9425B5FF010010A04C /* Meal Managed Object.swift */; };
-		B2844FA025B6DFAB0010A04C /* Meal Ingredient Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Ingredient Managed Object.swift */; };
+		B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */; };
 		B2844FA825B99F300010A04C /* Core Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FA725B99F300010A04C /* Core Data.swift */; };
 		B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* DataModel.swift */; };
+		B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FABBFD25D6EC760008859E /* Category List View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,9 +57,13 @@
 		B212868425B1B29800557221 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		B212868725B1B29800557221 /* Wots4T.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Wots4T.xcdatamodel; sourceTree = "<group>"; };
 		B212868925B1B29800557221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B216445D25D6A84A00F19F4A /* Category View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category View Model.swift"; sourceTree = "<group>"; };
+		B216446025D6A86400F19F4A /* Category Value View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Value View Model.swift"; sourceTree = "<group>"; };
 		B233B3B025D453F4002EFB3A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		B233B3B325D45425002EFB3A /* Add Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Add Image.swift"; sourceTree = "<group>"; };
 		B233B3BE25D5292B002EFB3A /* Image Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image Capture.swift"; sourceTree = "<group>"; };
+		B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Managed Object.swift"; sourceTree = "<group>"; };
+		B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Value Managed Object.swift"; sourceTree = "<group>"; };
 		B256F1B225CAC3C300EA1948 /* Day Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day Number.swift"; sourceTree = "<group>"; };
 		B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Link Presentation.swift"; sourceTree = "<group>"; };
 		B256F1BB25CC710700EA1948 /* Meal Summary View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Summary View.swift"; sourceTree = "<group>"; };
@@ -61,11 +77,19 @@
 		B26BA08F25C8554B00C26B69 /* Calendar View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar View.swift"; sourceTree = "<group>"; };
 		B26BA09425C861FC00C26B69 /* Date Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date Extensions.swift"; sourceTree = "<group>"; };
 		B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Allocation View Model.swift"; sourceTree = "<group>"; };
+		B26F5F4625D92198002B48EE /* Category Value Edit View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Value Edit View.swift"; sourceTree = "<group>"; };
+		B26F5F4A25D921D9002B48EE /* Category Edit View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Edit View.swift"; sourceTree = "<group>"; };
+		B26F5F4E25D927A2002B48EE /* Picker Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Picker Input.swift"; sourceTree = "<group>"; };
+		B26F5F5125D95197002B48EE /* Category Value List View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Value List View.swift"; sourceTree = "<group>"; };
+		B26F5F5625D95649002B48EE /* Input Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Input Title.swift"; sourceTree = "<group>"; };
+		B26F5F5F25DAC03D002B48EE /* Preview Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preview Data.swift"; sourceTree = "<group>"; };
+		B26F5F6225DAC2CA002B48EE /* Meal Display View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Display View.swift"; sourceTree = "<group>"; };
 		B2844F7625B5F6370010A04C /* Meal View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal View Model.swift"; sourceTree = "<group>"; };
 		B2844F9425B5FF010010A04C /* Meal Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Managed Object.swift"; sourceTree = SOURCE_ROOT; };
-		B2844F9E25B6DFAB0010A04C /* Meal Ingredient Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Ingredient Managed Object.swift"; sourceTree = SOURCE_ROOT; };
+		B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Category Value Managed Object.swift"; sourceTree = SOURCE_ROOT; };
 		B2844FA725B99F300010A04C /* Core Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Data.swift"; sourceTree = "<group>"; };
 		B2844FAB25B9A0220010A04C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		B2FABBFD25D6EC760008859E /* Category List View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category List View.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +124,10 @@
 			children = (
 				B2844F6C25B5F3CB0010A04C /* Standard Components */,
 				B26BA08325C82A7F00C26B69 /* Shared */,
+				B233B3C925D6A1FC002EFB3A /* Categories */,
+				B26F5F4525D92170002B48EE /* Category Values */,
 				B26BA07E25C8142700C26B69 /* Allocations */,
-				B2844F7525B5F6090010A04C /* Meals & Meal Ingredients */,
+				B2844F7525B5F6090010A04C /* Meals & Meal Category Values */,
 				B256F1C525CD4C7800EA1948 /* Reuseable UI Components */,
 				B2844FAA25B99F360010A04C /* Libraries */,
 				B212868125B1B29800557221 /* Preview Content */,
@@ -117,11 +143,24 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		B233B3C925D6A1FC002EFB3A /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */,
+				B216445D25D6A84A00F19F4A /* Category View Model.swift */,
+				B2FABBFD25D6EC760008859E /* Category List View.swift */,
+				B26F5F4A25D921D9002B48EE /* Category Edit View.swift */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		B256F1C525CD4C7800EA1948 /* Reuseable UI Components */ = {
 			isa = PBXGroup;
 			children = (
 				B256F1C125CD4C4400EA1948 /* Banner.swift */,
+				B26F5F5625D95649002B48EE /* Input Title.swift */,
 				B233B3B025D453F4002EFB3A /* Input.swift */,
+				B26F5F4E25D927A2002B48EE /* Picker Input.swift */,
 				B233B3B325D45425002EFB3A /* Add Image.swift */,
 				B233B3BE25D5292B002EFB3A /* Image Capture.swift */,
 			);
@@ -146,6 +185,17 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
+		B26F5F4525D92170002B48EE /* Category Values */ = {
+			isa = PBXGroup;
+			children = (
+				B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */,
+				B216446025D6A86400F19F4A /* Category Value View Model.swift */,
+				B26F5F5125D95197002B48EE /* Category Value List View.swift */,
+				B26F5F4625D92198002B48EE /* Category Value Edit View.swift */,
+			);
+			name = "Category Values";
+			sourceTree = "<group>";
+		};
 		B2844F6C25B5F3CB0010A04C /* Standard Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,21 +205,23 @@
 				B212867F25B1B29800557221 /* Assets.xcassets */,
 				B212868925B1B29800557221 /* Info.plist */,
 				B2844FAB25B9A0220010A04C /* DataModel.swift */,
+				B26F5F5F25DAC03D002B48EE /* Preview Data.swift */,
 			);
 			name = "Standard Components";
 			sourceTree = "<group>";
 		};
-		B2844F7525B5F6090010A04C /* Meals & Meal Ingredients */ = {
+		B2844F7525B5F6090010A04C /* Meals & Meal Category Values */ = {
 			isa = PBXGroup;
 			children = (
-				B2844F9E25B6DFAB0010A04C /* Meal Ingredient Managed Object.swift */,
 				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
+				B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */,
 				B2844F7625B5F6370010A04C /* Meal View Model.swift */,
 				B212867D25B1B29700557221 /* Meal List View.swift */,
 				B256F1BB25CC710700EA1948 /* Meal Summary View.swift */,
 				B256F1C825CDA42000EA1948 /* Meal Edit View.swift */,
+				B26F5F6225DAC2CA002B48EE /* Meal Display View.swift */,
 			);
-			name = "Meals & Meal Ingredients";
+			name = "Meals & Meal Category Values";
 			sourceTree = "<group>";
 		};
 		B2844FAA25B99F360010A04C /* Libraries */ = {
@@ -258,28 +310,40 @@
 				B256F1BF25CD451600EA1948 /* Utility.swift in Sources */,
 				B256F1B725CC3E1D00EA1948 /* Link Presentation.swift in Sources */,
 				B2844F9625B5FF010010A04C /* Meal Managed Object.swift in Sources */,
+				B26F5F5225D95197002B48EE /* Category Value List View.swift in Sources */,
 				B212868825B1B29800557221 /* Wots4T.xcdatamodeld in Sources */,
+				B26F5F6325DAC2CA002B48EE /* Meal Display View.swift in Sources */,
 				B26BA09025C8554B00C26B69 /* Calendar View.swift in Sources */,
 				B26BA08525C82AAE00C26B69 /* Declarations.swift in Sources */,
 				B212868525B1B29800557221 /* Persistence.swift in Sources */,
 				B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */,
+				B26F5F6025DAC03D002B48EE /* Preview Data.swift in Sources */,
+				B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */,
 				B26BA09525C861FC00C26B69 /* Date Extensions.swift in Sources */,
+				B26F5F4F25D927A2002B48EE /* Picker Input.swift in Sources */,
 				B233B3B125D453F4002EFB3A /* Input.swift in Sources */,
+				B216445E25D6A84A00F19F4A /* Category View Model.swift in Sources */,
 				B26BA08925C82E9A00C26B69 /* String Extensions.swift in Sources */,
+				B216446125D6A86400F19F4A /* Category Value View Model.swift in Sources */,
 				B26BA09825C96E3E00C26B69 /* Allocation View Model.swift in Sources */,
 				B256F1C925CDA42000EA1948 /* Meal Edit View.swift in Sources */,
 				B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */,
 				B233B3B425D45425002EFB3A /* Add Image.swift in Sources */,
+				B26F5F4B25D921D9002B48EE /* Category Edit View.swift in Sources */,
+				B26F5F4725D92198002B48EE /* Category Value Edit View.swift in Sources */,
 				B256F1C225CD4C4400EA1948 /* Banner.swift in Sources */,
 				B2844F7725B5F6370010A04C /* Meal View Model.swift in Sources */,
 				B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */,
 				B212867E25B1B29700557221 /* Meal List View.swift in Sources */,
 				B26BA08D25C82F2400C26B69 /* Other Extensions.swift in Sources */,
+				B233B3CF25D6A22C002EFB3A /* Category Value Managed Object.swift in Sources */,
 				B26BA08125C827E500C26B69 /* Allocation Managed Object.swift in Sources */,
+				B26F5F5725D95649002B48EE /* Input Title.swift in Sources */,
 				B233B3BF25D5292B002EFB3A /* Image Capture.swift in Sources */,
 				B2844FA825B99F300010A04C /* Core Data.swift in Sources */,
 				B212867C25B1B29700557221 /* Wots4TApp.swift in Sources */,
-				B2844FA025B6DFAB0010A04C /* Meal Ingredient Managed Object.swift in Sources */,
+				B233B3CB25D6A21D002EFB3A /* Category Managed Object.swift in Sources */,
+				B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

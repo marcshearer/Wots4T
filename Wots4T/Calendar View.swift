@@ -13,7 +13,8 @@ import LinkPresentation
 struct CalendarView: View {
     @State var startAt: Int? = -1
     @State var linkEditMeals = false
-    @State var linkEditIngredients = false
+    @State var linkEditCategories = false
+    @State var linkDisplayMeal: MealViewModel?
     @State var title = appName
     
     @ObservedObject var data = DataModel.shared
@@ -25,8 +26,8 @@ struct CalendarView: View {
                 
                 Banner(title: $title, back: false,
                        optionMode: .menu,
-                       options: [BannerOption(text: editMealsName,  action: { self.linkEditMeals = true }),
-                                 BannerOption(text: editIngredientsName, action: { self.linkEditIngredients = true })])
+                       options: [BannerOption(text: "Setup \(editMealsName)",  action: { self.linkEditMeals = true }),
+                                 BannerOption(text: "Setup \(editCategoriesName)", action: { self.linkEditCategories = true })])
 
                 Spacer().frame(height: 10)
                 ScrollView {
@@ -48,7 +49,7 @@ struct CalendarView: View {
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
                 NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
-                NavigationLink(destination: IngredientListView(title: editIngredientsName), isActive: $linkSetupIngredients) { EmptyView() }
+                NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
             }
             .onAppear {
                 Utility.mainThread {
@@ -69,25 +70,40 @@ fileprivate struct CalendarView_Entry: View {
     @ObservedObject var data = DataModel.shared
 
     var body: some View {
-        NavigationLink(destination: MealListView(title: chooseName, allocateDayNumber: today + offset, allocateSlot: 0)) {
-            let allocation = data.allocations.first(where: {$0.dayNumber == today + offset && $0.slot == 0})
-            if allocation != nil || offset >= 0 {
-                VStack {
-                    Divider().padding(.leading, 24).padding(.trailing, 12)
-                    Spacer().frame(height: 8)
-                    CalendarView_AllocationTitle(dayNumber: today + offset, highlight: offset == 0, delete: allocation != nil)
-                    if let allocation = allocation {
-                        MealSummaryView(meal: allocation.meal)
-                    } else {
-                        CalendarView_AllocationPlaceholder()
-                    }
-                    Spacer()
-                    
-                }
-                .frame(height: 110)
+        if let meal = data.allocations[today + offset]?[0]?.meal {
+            NavigationLink(destination: MealDisplayView(meal: meal)) {
+                CalendarView_EntryContent(today: today, offset: offset)
+            }
+        } else {
+            NavigationLink(destination: MealListView(title: chooseName, allocateDayNumber: today + offset, allocateSlot: 0)) {
+                CalendarView_EntryContent(today: today, offset: offset)
             }
         }
+    }
+}
 
+fileprivate struct CalendarView_EntryContent: View {
+    var today: DayNumber
+    var offset: Int
+    @ObservedObject var data = DataModel.shared
+    
+    var body: some View {
+        let allocation = data.allocations[today + offset]?[0] // Assume slot is zero for now
+        if allocation != nil || offset >= 0 {
+            VStack {
+                Divider().padding(.leading, 24).padding(.trailing, 12)
+                Spacer().frame(height: 8)
+                CalendarView_AllocationTitle(dayNumber: today + offset, highlight: offset == 0, delete: allocation != nil)
+                if let allocation = allocation {
+                    MealSummaryView(meal: allocation.meal)
+                } else {
+                    CalendarView_AllocationPlaceholder()
+                }
+                Spacer()
+                
+            }
+            .frame(height: 110)
+        }
     }
 }
 
@@ -115,9 +131,8 @@ fileprivate struct CalendarView_AllocationTitle: View {
     }
     
     private func removeAllocation(dayNumber: DayNumber, slot: Int) {
-        
-        if let allocation = data.allocations.first(where: {$0.dayNumber == dayNumber && $0.slot == slot}) {
-            allocation.remove()
+        if let allocation = data.allocations[dayNumber]?[slot] {
+            data.remove(allocation: allocation)
         }
     }
     

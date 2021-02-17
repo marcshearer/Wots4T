@@ -21,11 +21,11 @@ public class MealViewModel : ObservableObject, Identifiable {
     @Published public var image: Data?
     @Published public var urlImageCache: Data?
     @Published public var lastDate: Date?
-    @Published public var ingredients: Set<UUID>!
+    @Published public var categoryValues: [UUID : CategoryValueViewModel] = [:]
     
     // Linked managed objects - should only be referenced in this and the Data classes
     internal var mealMO: MealMO?
-    internal var mealIngredientMO: Set<MealIngredientMO> = []
+    internal var mealCategoryValueMO: [UUID : MealCategoryValueMO] = [:]
     
     // Other properties
     @Published private(set) var saveMessage: String = ""
@@ -47,17 +47,23 @@ public class MealViewModel : ObservableObject, Identifiable {
            self.lastDate != self.mealMO?.lastDate {
             result = true
         } else {
-            let ingredients = Set(self.mealIngredientMO.map({$0.ingredientId}))
-            if self.ingredients != ingredients {
+            let categoryMOValues = self.mealCategoryValueMO.mapValues({$0.valueId})
+            let categoryModelValues = self.categoryValues.mapValues({$0.valueId})
+            if categoryMOValues != categoryModelValues {
                 result = true
             }
         }
         return result
     }
     
-    public init(mealMO: MealMO? = nil, ingredientMO: Set<MealIngredientMO> = []) {
+    public init() {
+        self.mealId = UUID()
+        self.setupMappings()
+    }
+    
+    public init(mealMO: MealMO? = nil, mealCategoryValueMO: [UUID : MealCategoryValueMO] = [:]) {
         self.mealMO = mealMO
-        self.mealIngredientMO = ingredientMO
+        self.mealCategoryValueMO = mealCategoryValueMO
         self.revert()
         self.setupMappings()
     }
@@ -69,13 +75,14 @@ public class MealViewModel : ObservableObject, Identifiable {
         self.url = url
         self.notes = notes
         self.image = image
+        self.setupMappings()
     }
     
     private func setupMappings() {
         $name
             .receive(on: RunLoop.main)
             .map { (name) in
-                return (name == "" ? "\(mealName.capitalized) \(nameTitle) must not be left blank. Either enter a valid \(mealName) \(nameTitle) or delete this \(mealName)." : "")
+                return (name == "" ? "\(mealName.capitalized) \(mealNameTitle) must not be left blank. Either enter a valid \(mealName) \(mealNameTitle) or delete this \(mealName)." : "")
             }
         .assign(to: \.saveMessage, on: self)
         .store(in: &cancellableSet)
@@ -90,17 +97,19 @@ public class MealViewModel : ObservableObject, Identifiable {
     }
     
     private func revert() {
-        self.mealId = mealMO?.mealId ?? UUID()
-        self.name = self.mealMO?.name ?? ""
-        self.desc = self.mealMO?.desc ?? ""
-        self.url = self.mealMO?.url ?? ""
-        self.notes = self.mealMO?.notes ?? ""
-        self.image = self.mealMO?.image
-        self.urlImageCache = self.mealMO?.urlImageCache
-        self.lastDate = self.mealMO?.lastDate
-        self.ingredients = []
-        for ingredient in self.mealIngredientMO {
-            self.ingredients.insert(ingredient.ingredientId)
+        self.mealId = self.mealMO?.mealId ?? UUID()
+        if let mealMO = self.mealMO {
+            self.name = mealMO.name
+            self.desc = mealMO.desc
+            self.url = mealMO.url
+            self.notes = mealMO.notes
+            self.image = mealMO.image
+            self.urlImageCache = mealMO.urlImageCache
+            self.lastDate = mealMO.lastDate
+            self.categoryValues = [:]
+        }
+        for (categoryId, mealCategoryValueMO) in self.mealCategoryValueMO {
+            self.categoryValues[categoryId] = DataModel.shared.categoryValues[mealCategoryValueMO.categoryId]?[mealCategoryValueMO.valueId]
         }
     }
     

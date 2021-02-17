@@ -52,10 +52,10 @@ public class AllocationViewModel : ObservableObject, Identifiable {
     }
     
     private func revert() {
-        self.dayNumber = self.allocationMO?.dayNumber
-        self.slot = self.allocationMO?.slot
-        if let meal = DataModel.shared.meals.first(where: {$0.mealId == self.allocationMO?.mealId}) {
-            self.meal = meal
+        if let allocationMO = self.allocationMO {
+            self.dayNumber = allocationMO.dayNumber
+            self.slot = allocationMO.slot
+            self.meal = DataModel.shared.meals[allocationMO.mealId]
         }
     }
     

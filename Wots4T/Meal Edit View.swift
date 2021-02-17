@@ -11,6 +11,7 @@ struct MealEditView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     @ObservedObject var meal: MealViewModel
+    
     @State var confirmDelete = false
     @State var saveError = false
     @State var title: String
@@ -22,8 +23,8 @@ struct MealEditView: View {
                         if meal.mealMO == nil && meal.name == "" {
                             return true
                         } else {
-                            if meal.canSave { self.meal.save() }
-                            saveError = !meal.canSave
+                            if self.meal.canSave { self.meal.save() }
+                            saveError = !self.meal.canSave
                             return !saveError
                         }
                    },
@@ -43,12 +44,13 @@ struct MealEditView: View {
                         self.delete()
                     })
 
-            ScrollView {
-                Input(title: nameTitle.capitalized, field: $meal.name, topSpace: 0)
-                Input(title: descTitle.capitalized, field: $meal.desc, height: 60)
-                AddImage(title: imageTitle.capitalized, image: $meal.image)
-                Input(title: urlTitle.capitalized, field: $meal.url, height: 60)
-                Input(title: notesTitle.capitalized, field: $meal.notes, height: 180)
+            ScrollView(showsIndicators: false) {
+                Input(title: mealNameTitle.capitalized, field: $meal.name, topSpace: 0)
+                Input(title: mealDescTitle.capitalized, field: $meal.desc, height: 60)
+                MealEditView_Categories(meal: meal)
+                AddImage(title: mealImageTitle.capitalized, image: $meal.image)
+                Input(title: mealUrlTitle.capitalized, field: $meal.url, height: 60)
+                Input(title: mealNotesTitle.capitalized, field: $meal.notes, height: 120)
                 Spacer()
             }
             .alert(isPresented: $saveError, content: {
@@ -75,10 +77,50 @@ struct MealEditView: View {
     }
 }
 
+struct MealEditView_Categories : View {
+    
+    @ObservedObject var meal: MealViewModel
+
+    var width: CGFloat = 105
+    var height: CGFloat = 32
+
+    var body: some View {
+        InputTitle(title: "Categories")
+        ScrollView(.horizontal, showsIndicators: false) {
+            let categories = DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+            HStack {
+                Spacer().frame(width: 32)
+                ForEach(categories) { category in
+                    let value = meal.categoryValues[category.categoryId]
+                    let title = value?.name ?? category.name!.uppercased()
+                    let values = self.getCategoryValues(categoryId: category.categoryId)
+                    let names = values.map{$0.name} + ["Not specified"]
+                    
+                    Menu(title) {
+                        ForEach(0..<(names.count)) { (index) in
+                            Button(names[index]) {
+                                meal.categoryValues[category.categoryId] = (index == names.count - 1 ? nil : values[index])
+                            }
+                        }
+                    }.foregroundColor(value == nil ? Color(UIColor.darkGray) : .white)
+                    .font(value == nil ? .caption : .callout)
+                    .frame(width: width, height: height)
+                    .background(value == nil ? Color(UIColor.lightGray) : Color.gray)
+                    .cornerRadius(height/2)
+                }
+            }
+        }
+    }
+    
+    func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {
+        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {$0.frequency > $1.frequency})
+    }
+}
+
 struct MealEditView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MealEditView(meal: MealViewModel(name: "Macaroni Cheese", desc: "James Martin's ultimate macaroni cheese", url: "https://www.bbc.co.uk/food/recipes/james_martins_ultimate_60657", notes: ""), title: "Edit Meal")
+            MealEditView(meal: MealViewModel(name: "Macaroni Cheese", desc: "James Martin's ultimate macaroni cheese", url: "https://www.bbc.co.uk/food/recipes/james_martins_ultimate_60657", notes: ""), title: "Meal")
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
             DataModel.shared.load()

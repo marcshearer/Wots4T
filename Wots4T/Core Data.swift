@@ -30,8 +30,7 @@ class CoreData {
         return CoreData.fetch(from: entityName, filter: filterArray, limit:limit, sort: sort)
     }
     
-    class func fetch<MO: NSManagedObject>(from entityName: String, filter: NSPredicate! = nil, filter2: NSPredicate! = nil, limit: Int = 0,
-                                          sort: (key: String, direction: SortDirection)...) -> [MO] {
+    class func fetch<MO: NSManagedObject>(from entityName: String, filter: NSPredicate! = nil, filter2: NSPredicate! = nil, limit: Int = 0, sort: (key: String, direction: SortDirection)...) -> [MO] {
         return CoreData.fetch(from: entityName, filter: filter, filter2: filter2, limit:limit, sort: sort)
     }
     

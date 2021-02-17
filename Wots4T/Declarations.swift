@@ -11,13 +11,19 @@ import Foundation
 
 public let appName = "Wots4T"
 public let chooseName = "Choose a Meal"
-public let editMealsName = "Edit Meals"
-public let editIngredientsName = "Setup Ingredients"
+public let editMealsName = "Meals"
+public let editCategoriesName = "Categories"
+public let editCategoryValuesName = "Values"
+
+public let categoryName = "category"
+public let categoryNamePlural = "categories"
+public let categoryValueName = "category value"
+public let categoryValueNamePlural = "category values"
 
 public let mealName = "meal"
 public let mealNamePlural = "meals"
-public let ingredientName = "ingredient"
-public let ingredientNamePlural = "ingredients"
+public let mealCategoryValueName = "meal category"
+public let mealCategoryValueNamePlural = "meal categories"
 
 public let allocationName = "meal choice"
 
@@ -28,9 +34,16 @@ public let dinnerName = "dinner"
 public let calendarName = "calendar"
 public let dateFormat = "EEEE d MMMM"
 
-public let nameTitle = "name"
-public let descTitle = "description"
-public let urlTitle = "web page Link"
-public let imageTitle = "image"
-public let notesTitle = "notes"
-public let otherImagesTitle = "other images"
+public let mealNameTitle = "name"
+public let mealDescTitle = "description"
+public let mealUrlTitle = "web page Link"
+public let mealImageTitle = "image"
+public let mealNotesTitle = "notes"
+public let mealOtherImagesTitle = "other images"
+
+public let categoryNameTitle = "name"
+public let categoryImportanceTitle = "importance"
+public let categoryValuesTitle = "possible values"
+
+public let categoryValueNameTitle = "name"
+public let categoryValueFrequencyTitle = "frequency"

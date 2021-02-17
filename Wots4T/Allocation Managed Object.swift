@@ -18,26 +18,18 @@ public class AllocationMO: NSManagedObject {
     
     convenience init(context: NSManagedObjectContext, dayNumber: DayNumber, slot: Int, mealId: UUID) {
         self.init(context: context)
-        self.dayNumber64 = Int64(dayNumber.value)
+        self.dayNumber = dayNumber
         self.slot16 = Int16(slot)
         self.mealId = mealId
     }
     
     public var slot: Int {
-        get {
-            Int(self.slot16)
-        }
-        set {
-            self.slot16 = Int16(newValue)
-        }
+        get { Int(self.slot16) }
+        set { self.slot16 = Int16(newValue) }
     }
     
     public var dayNumber: DayNumber {
-        get {
-            DayNumber(from: Int(self.dayNumber64))
-        }
-        set {
-            self.dayNumber64 = Int64(newValue.value)
-        }
+        get { DayNumber(from: Int(self.dayNumber64)) }
+        set { self.dayNumber64 = Int64(newValue.value) }
     }
 }

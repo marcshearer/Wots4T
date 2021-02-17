@@ -15,23 +15,8 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        let spagbogUUID = UUID()
-        let lasagneUUID = UUID()
-        let vegCurryUUID = UUID()
-        let chickenStirFryUUID = UUID()
-        let today = DayNumber.today
+        DataModel.setupPreviewData(context: viewContext)
         
-        let meals: [MealMO] = [
-            MealMO(context: viewContext, mealId: spagbogUUID, name: "Spaghetti Bolognaise", desc: "Spaghetti with a beef mince sauce", url: "https://www.bbc.co.uk/food/recipes/spaghettibolognese_67868"),
-            MealMO(context: viewContext, mealId: lasagneUUID, name: "Lasagne", desc: "Layers of pasta and mince with cheese", url: "https://www.bbc.co.uk/food/recipes/express_lasagne_51375"),
-            MealMO(context: viewContext, mealId: vegCurryUUID, name: "Vegetable Curry", desc: "Mixed vegetables in a spicy sauce", url: "https://www.bbc.co.uk/food/recipes/mushroom_chickpea_and_71193"),
-            MealMO(context: viewContext, mealId: chickenStirFryUUID, name: "Chicken Stir Fry", desc: "Chicken with stir fried vegetables", url: "https://www.bbc.co.uk/food/recipes/vegetablechickenstir_76805")
-        ]
-
-        let allocations: [AllocationMO] = [
-            AllocationMO(context: viewContext, dayNumber: DayNumber.today - 1, slot: 0, mealId: chickenStirFryUUID),
-            AllocationMO(context: viewContext, dayNumber: DayNumber.today + 1, slot: 0, mealId: vegCurryUUID)
-        ]
         do {
             try viewContext.save()
         } catch {
@@ -69,31 +54,15 @@ struct PersistenceController {
         })
         
         if !inMemory {
-            
-            /*
             let viewContext = container.viewContext
-             
-            let spagbogUUID = UUID()
-            let lasagneUUID = UUID()
-            let vegCurryUUID = UUID()
-            let chickenStirFryUUID = UUID()
-            let today = DayNumber(from: Date())
+            // DataModel.setupPreviewData(context: viewContext)
             
-            let _ = [
-             MealMO(context: viewContext, mealId: spagbogUUID, name: "Spaghetti Bolognaise", desc: "Spaghetti with a beef mince sauce", url: "https://www.bbc.co.uk/food/recipes/spaghettibolognese_67868"),
-             MealMO(context: viewContext, mealId: lasagneUUID, name: "Lasagne", desc: "Layers of pasta and mince with cheese", url: "https://www.bbc.co.uk/food/recipes/express_lasagne_51375"),
-             MealMO(context: viewContext, mealId: vegCurryUUID, name: "Vegetable Curry", desc: "Mixed vegetables in a spicy sauce", url: "https://www.bbc.co.uk/food/recipes/mushroom_chickpea_and_71193"),
-             MealMO(context: viewContext, mealId: chickenStirFryUUID, name: "Chicken Stir Fry", desc: "Chicken with stir fried vegetables", url: "https://www.bbc.co.uk/food/recipes/vegetablechickenstir_76805")
-            ]
-            let _ = [
-                AllocationMO(context: viewContext, dayNumber: today, slot: 0, mealId: chickenStirFryUUID),
-                AllocationMO(context: viewContext, dayNumber: today + 2, slot: 0, mealId: vegCurryUUID)
-            ]
             do {
                 try viewContext.save()
             } catch {
+                fatalError()
             }
-            */
+            
         }
     }
 }

@@ -10,16 +10,15 @@ import SwiftUI
 struct MealListView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @State var linkToAdd = false
-    @State var linkToEdit = false
-    @State var linkToEditMeal: MealViewModel?
-    @State var linkToEditTitle: String?
-
     @State var title: String
     var allocateDayNumber: DayNumber?
     var allocateSlot: Int?
     
     @ObservedObject var data = DataModel.shared
+
+    @State var linkToEdit = false
+    @State var linkToEditMeal: MealViewModel?
+    @State var linkToEditTitle: String?
 
     var body: some View {
         VStack {
@@ -29,21 +28,20 @@ struct MealListView: View {
                         BannerOption(
                             image: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
                             action: {
-                                self.linkToAdd = true
                                 self.linkToEdit = true
                                 self.linkToEditTitle = "New \(mealName.capitalized)"
                                 self.linkToEditMeal = nil
                             })])
             LazyVStack {
-                ForEach(DataModel.shared.meals) { meal in
+                let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber)
+                ForEach(meals) { meal in
                     MealSummaryView(meal: meal, imageWidth: 100)
                         .frame(height: 80)
                         .onTapGesture {
                             if allocateDayNumber == nil {
-                                self.linkToAdd = false
-                                self.linkToEditTitle = "Edit \(mealName.capitalized)"
-                                self.linkToEditMeal = meal
                                 self.linkToEdit = true
+                                self.linkToEditTitle = mealName.capitalized
+                                self.linkToEditMeal = meal
                             } else {
                                 self.allocate(meal: meal)
                                 self.presentationMode.wrappedValue.dismiss()
@@ -65,7 +63,7 @@ struct MealListView: View {
     }
 }
 
-struct MenuListView_Previews: PreviewProvider {
+struct MealListView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {

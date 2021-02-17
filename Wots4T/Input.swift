@@ -18,16 +18,7 @@ struct Input : View {
     var body: some View {
 
         VStack {
-            Spacer().frame(height: topSpace)
-                
-            if let title = title {
-                HStack {
-                    Spacer().frame(width: 16)
-                    Text(title).font(.headline)
-                    Spacer()
-                }
-            }
-
+            InputTitle(title: title, topSpace: topSpace)
             HStack {
                 Spacer().frame(width: 32)
                 TextEditor(text: $field)

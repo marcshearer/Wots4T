@@ -17,17 +17,8 @@ struct AddImage : View {
     var body: some View {
 
         VStack {
-            Spacer().frame(height: 24)
-                
-            if let title = title {
-                HStack {
-                    Spacer().frame(width: 16)
-                    Text(title).font(.headline)
-                    Spacer()
-                }
-                Spacer().frame(height: 4)
-            }
-
+            InputTitle(title: title, topSpace: 24)
+            Spacer().frame(height: 8)
             HStack {
                 Spacer().frame(width: 32)
                 if image == nil {
@@ -69,7 +60,7 @@ struct AddImage_Button : View {
     var text: String
     var systemImage: String?
     var capture = true
-    var width: CGFloat = 102
+    var width: CGFloat = 105
     var height: CGFloat = 32
     var action: (UIImagePickerController.SourceType?)->()
     
@@ -124,12 +115,13 @@ struct AddImage_Button_Content : View {
                 Spacer().frame(width: 8)
                 Image(systemName: systemImage)
                     .foregroundColor(.white)
-                    .font(.caption)
+                    .font(.callout)
             }
             Spacer()
             Text(text)
                 .foregroundColor(.white)
                 .font(.callout)
+                .minimumScaleFactor(0.5)
             Spacer()
         }
     }
@@ -141,7 +133,7 @@ struct AddImage_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            AddImage(title: imageTitle.capitalized, image: $image)
+            AddImage(title: mealImageTitle.capitalized, image: $image)
         }
     }
 }
