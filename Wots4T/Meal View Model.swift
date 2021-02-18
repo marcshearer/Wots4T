@@ -21,6 +21,7 @@ public class MealViewModel : ObservableObject, Identifiable {
     @Published public var image: Data?
     @Published public var urlImageCache: Data?
     @Published public var lastDate: Date?
+    @Published public var debugInfo: String = ""
     @Published public var categoryValues: [UUID : CategoryValueViewModel] = [:]
     
     // Linked managed objects - should only be referenced in this and the Data classes

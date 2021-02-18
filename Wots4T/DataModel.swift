@@ -86,7 +86,7 @@ class DataModel: ObservableObject {
                                 if mealValue.valueId == value.valueId {
                                     let distance = abs(allocation.dayNumber - dayNumber)
                                     let weighting = distance * value.frequency.rawValue
-                                    if weighting < (weightings[category.categoryId]![value.valueId] ?? 10000) {
+                                    if weighting < (weightings[category.categoryId]![value.valueId] ?? maxRetention + 1) {
                                         weightings[category.categoryId]![value.valueId] = weighting
                                         foundBefore = allocation.dayNumber < dayNumber
                                     }
@@ -95,6 +95,11 @@ class DataModel: ObservableObject {
                         }
                         index += 1
                     }
+                    if weightings[category.categoryId]![value.valueId] == nil {
+                        // Not previously allocated - default to max retention * factor
+                        weightings[category.categoryId]![value.valueId] = value.frequency.rawValue * (maxRetention + 1)
+                    }
+                    
                 } else {
                     // Simply base sort on the frequencies
                     weightings[category.categoryId]![value.valueId] = value.frequency.rawValue
@@ -108,19 +113,24 @@ class DataModel: ObservableObject {
             var mealWeightings: [Int] = []
             for category in categories {
                 if let mealValueId = meal.categoryValues[category.categoryId]?.valueId {
-                    mealWeightings.append(weightings[category.categoryId]?[mealValueId] ?? 10000)
+                    mealWeightings.append(weightings[category.categoryId]?[mealValueId] ?? maxRetention + 1)
                 } else {
-                    mealWeightings.append(10000)
+                    mealWeightings.append(maxRetention + 1)
                 }
             }
             if dayNumber != nil {
                 if let mostRecent = allocations.first(where: {$0.meal.mealId == meal.mealId}) {
                     mealWeightings.append(abs(mostRecent.dayNumber - dayNumber))
                 } else {
-                    mealWeightings.append(10000)
+                    mealWeightings.append(maxRetention + 1)
                 }
             }
             sort.append((weightings: mealWeightings, meal: meal))
+            meal.debugInfo = ""
+            for (index, category) in categories.enumerated() {
+                meal.debugInfo = meal.debugInfo + " \(meal.categoryValues[category.categoryId]?.frequency.rawValue ?? 0)->\(mealWeightings[index])"
+            }
+            meal.debugInfo += " \(mealWeightings.last!)"
         }
                 
         let sorted = sort.sorted(by: { lessThan($1.weightings, $0.weightings) })

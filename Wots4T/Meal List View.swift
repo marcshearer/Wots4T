@@ -25,36 +25,38 @@ struct MealListView: View {
             Banner(title: $title,
                    optionMode: (allocateDayNumber == nil ? .buttons : .none),
                    options: [
-                        BannerOption(
-                            image: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
-                            action: {
-                                self.linkToEdit = true
-                                self.linkToEditTitle = "New \(mealName.capitalized)"
-                                self.linkToEditMeal = nil
-                            })])
-            LazyVStack {
-                let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber)
-                ForEach(meals) { meal in
-                    MealSummaryView(meal: meal, imageWidth: 100)
-                        .frame(height: 80)
-                        .onTapGesture {
-                            if allocateDayNumber == nil {
-                                self.linkToEdit = true
-                                self.linkToEditTitle = mealName.capitalized
-                                self.linkToEditMeal = meal
-                            } else {
-                                self.allocate(meal: meal)
-                                self.presentationMode.wrappedValue.dismiss()
+                    BannerOption(
+                        image: AnyView(Image(systemName: "plus.circle.fill").font(.largeTitle).foregroundColor(.blue)),
+                        action: {
+                            self.linkToEdit = true
+                            self.linkToEditTitle = "New \(mealName.capitalized)"
+                            self.linkToEditMeal = nil
+                        })])
+            ScrollView {
+                LazyVStack {
+                    let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber)
+                    ForEach(meals) { meal in
+                        MealSummaryView(meal: meal, imageWidth: 100)
+                            .frame(height: 80)
+                            .onTapGesture {
+                                if allocateDayNumber == nil {
+                                    self.linkToEdit = true
+                                    self.linkToEditTitle = mealName.capitalized
+                                    self.linkToEditMeal = meal
+                                } else {
+                                    self.allocate(meal: meal)
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
                             }
-                        }
+                    }
                 }
+                Spacer()
             }
-            Spacer()
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+            NavigationLink(destination: MealEditView(meal: self.linkToEditMeal ?? MealViewModel(), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
-        NavigationLink(destination: MealEditView(meal: self.linkToEditMeal ?? MealViewModel(), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
     }
     
     private func allocate(meal: MealViewModel) {

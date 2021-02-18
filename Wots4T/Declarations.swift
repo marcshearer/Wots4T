@@ -7,6 +7,10 @@
 
 import Foundation
 
+// Parameters
+
+public let maxRetention = 366
+
 // Localisable names
 
 public let appName = "Wots4T"

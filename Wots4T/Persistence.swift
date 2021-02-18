@@ -55,7 +55,13 @@ struct PersistenceController {
         
         if !inMemory {
             let viewContext = container.viewContext
-            // DataModel.setupPreviewData(context: viewContext)
+            
+            let request = NSFetchRequest<CategoryMO>(entityName: CategoryMO.tableName)
+            let read = try? viewContext.fetch(request)
+            
+            if read == nil || read!.isEmpty {
+                DataModel.setupPreviewData(context: viewContext)
+            }
             
             do {
                 try viewContext.save()

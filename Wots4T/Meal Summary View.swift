@@ -47,7 +47,7 @@ public struct MealSummaryView: View {
                 HStack {
                     Spacer()
                         .frame(width: 8)
-                    Text(meal.desc)
+                    Text(meal.desc) // + "\n\(meal.debugInfo)")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
