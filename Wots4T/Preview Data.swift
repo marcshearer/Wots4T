@@ -80,6 +80,6 @@ extension DataModel {
         meal(name: "Crispy Duck", desc: "bread duck oriental", carbs: bread, protein: duck, cuisine: oriental)
         meal(name: "Mango Chicken Wraps", desc: "bread chicken oriental", carbs: bread, protein: chicken, cuisine: oriental, notes: "Source: Home Fresh")
         meal(name: "Pork and Ramen", desc: "pasta pork oriental", carbs: pasta, protein: pork, cuisine: oriental)
-        meal(name: "", desc: "rice fish oriental", carbs: rice, protein: fish, cuisine: oriental)
+        meal(name: "Teryaki Salmon", desc: "rice fish oriental", carbs: rice, protein: fish, cuisine: oriental)
     }
 }

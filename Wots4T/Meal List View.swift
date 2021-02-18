@@ -36,7 +36,7 @@ struct MealListView: View {
                 LazyVStack {
                     let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber)
                     ForEach(meals) { meal in
-                        MealSummaryView(meal: meal, imageWidth: 100)
+                        MealSummaryView(meal: meal, imageWidth: 100, showInfo: allocateDayNumber != nil)
                             .frame(height: 80)
                             .onTapGesture {
                                 if allocateDayNumber == nil {

@@ -130,8 +130,8 @@ public class MealViewModel : ObservableObject, Identifiable {
         DataModel.shared.remove(meal: self)
     }
     
-    public func saveimageCache(image: UIImage) {
-        if let imageData = image.pngData() {
+    public func saveimageCache(image: UIImage?) {
+        if let image = image, let imageData = image.pngData() {
             self.urlImageCache = imageData
         } else {
             self.urlImageCache = nil

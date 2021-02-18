@@ -42,7 +42,7 @@ struct MealDisplayView_Banner: View {
     var body: some View {
         let options: [BannerOption] = (meal.url == "" ? [] : [
                 BannerOption(
-                    image: AnyView(Image(systemName: "eye").font(.largeTitle).foregroundColor(.blue)),
+                    image: AnyView(Image("online").resizable().frame(width: 30, height: 30).font(.largeTitle).foregroundColor(.blue)),
                     action: {
                         MealDisplayView.browseUrl(url: meal.url)
                     })])

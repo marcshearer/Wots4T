@@ -11,26 +11,40 @@ import SwiftUI
 
 class LinkPresentation {
     
-    static func getImage(url: URL, completion: @escaping (Result<UIImage, Error>)->()) {
+    static func getDetail(url: URL, getImage: Bool = false, completion: @escaping (Result<(image: UIImage?, title: String?), Error>)->()) {
         
         let provider = LPMetadataProvider()
         provider.startFetchingMetadata(for: url) { (metadata, error) in
             if let error = error {
                 completion(.failure(error))
             } else {
-                if let metadata = metadata, let imageProvider = metadata.imageProvider {
-                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                        if let error = error {
-                            completion(.failure(error))
+                if let metadata = metadata {
+                    if getImage {
+                        if let imageProvider = metadata.imageProvider {
+                            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                                if let error = error {
+                                    completion(.failure(error))
+                                } else {
+                                    completion(.success((image: image as? UIImage ?? UIImage(), title: metadata.title)))
+                                }
+                            }
                         } else {
-                            let uiImage = image as? UIImage ?? UIImage()
-                            completion(.success(uiImage))
+                            completion(.failure(LinkPresentationError.noImageProvider))
                         }
+                    } else {
+                        completion(.success((image: nil, title: metadata.title)))
                     }
+                } else {
+                    completion(.failure(LinkPresentationError.noMetadata))
                 }
             }
         }
     }
+}
+
+enum LinkPresentationError: Error {
+    case noMetadata
+    case noImageProvider
 }
 
 struct LinkView: UIViewRepresentable {

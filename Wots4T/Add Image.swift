@@ -5,6 +5,23 @@
 //  Created by Marc Shearer on 10/02/2021.
 //
 
+enum ImageSource {
+    case camera
+    case photoLibrary
+    case pasteboard
+    
+    var pickerType: UIImagePickerController.SourceType? {
+        switch self {
+        case .camera:
+            return .camera
+        case .photoLibrary:
+            return .photoLibrary
+        default:
+            return nil
+        }
+    }
+}
+
 import SwiftUI
 
 struct AddImage : View {
@@ -12,7 +29,7 @@ struct AddImage : View {
     var title: String?
     @Binding var image: Data?
     @State var captureImage = false
-    @State var source: UIImagePickerController.SourceType!
+    @State var source: ImageSource?
     
     var body: some View {
 
@@ -23,8 +40,7 @@ struct AddImage : View {
                 Spacer().frame(width: 32)
                 if image == nil {
                     AddImage_Button(text: "Add", systemImage: "camera", width: 90, action: { (source) in
-                        self.source = source
-                        captureImage = (source != nil)
+                        self.getImage(source: source)
                     })
                 } else {
                     if let uiImage = UIImage(data: image!) {
@@ -37,8 +53,7 @@ struct AddImage : View {
                         Spacer().frame(width: 8)
                     }
                     AddImage_Button(text: "Replace", systemImage: "arrow.triangle.2.circlepath.camera", action: { (source) in
-                        self.source = source
-                        captureImage = (source != nil)
+                        self.getImage(source: source)
                     })
                     Spacer().frame(width: 8)
                     AddImage_Button(text: "Remove", systemImage: "trash", capture: false, action: { (source) in
@@ -49,7 +64,22 @@ struct AddImage : View {
                 Spacer()
             }
             .sheet(isPresented: $captureImage) {
-                ImageCapture(image: $image, source: self.source)
+                ImageCapture(image: $image, source: self.source!.pickerType!)
+            }
+        }
+    }
+    
+    func getImage(source: ImageSource?) {
+        if source != nil {
+            self.source = source
+            if source == .pasteboard {
+                let pasteboard = UIPasteboard.general
+                if pasteboard.hasImages {
+                    self.image = pasteboard.image?.pngData() ?? nil
+                }
+                self.captureImage = false
+            } else {
+                self.captureImage = true
             }
         }
     }
@@ -62,28 +92,42 @@ struct AddImage_Button : View {
     var capture = true
     var width: CGFloat = 105
     var height: CGFloat = 32
-    var action: (UIImagePickerController.SourceType?)->()
+    var action: (ImageSource)->()
     
     var body: some View {
         
         let camera = ImageCapture.isCameraAvailable && capture
         let photoLibrary =  ImageCapture.isPhotoLibraryAvailable && capture
+        let pasteboard = UIPasteboard.general
+        let paste = pasteboard.hasImages && capture
         
-        if camera && photoLibrary {
+        if (camera ? 1 : 0) + (photoLibrary ? 1 : 0) + (paste ? 1 : 0) > 1 {
             Menu {
-                Button(action: {
-                    action(.camera)
-                }) {
-                    HStack {
-                        Image(systemName: "camera")
-                        Text("Take Photo")
+                if camera {
+                    Button(action: {
+                        action(.camera)
+                    }) {
+                        HStack {
+                            Image(systemName: "camera")
+                            Text("Take Photo")
+                        }
                     }
                 }
-                Button(action: {
-                    action(.photoLibrary)
-                }) {
-                    Image(systemName: "photo")
-                    Text("Find in Photos")
+                if photoLibrary {
+                    Button(action: {
+                        action(.photoLibrary)
+                    }) {
+                        Image(systemName: "photo")
+                        Text("Find in Photos")
+                    }
+                }
+                if paste {
+                    Button(action: {
+                        action(.pasteboard)
+                    }) {
+                        Image(systemName: "doc.on.clipboard")
+                        Text("Paste Image")
+                    }
                 }
             } label: {
                 AddImage_Button_Content(text: text, systemImage: systemImage)
@@ -93,7 +137,7 @@ struct AddImage_Button : View {
                 .cornerRadius(height/2)
         } else {
             Button(action: {
-                action(camera ? .camera : (photoLibrary ? .photoLibrary : .none))
+                action(camera ? .camera : (photoLibrary ? .photoLibrary : .pasteboard))
             }) {
                 AddImage_Button_Content(text: text, systemImage: systemImage)
             }

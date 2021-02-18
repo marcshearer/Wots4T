@@ -14,17 +14,26 @@ struct Input : View {
     var topSpace: CGFloat = 24
     var height: CGFloat = 40
     var onChange: ((String)->())?
+    var keyboardType: UIKeyboardType = .default
+    var autoCapitalize: UITextAutocapitalizationType = .sentences
+    var autoCorrect: Bool = true
     
     var body: some View {
 
-        VStack {
-            InputTitle(title: title, topSpace: topSpace)
+        VStack(spacing: 0) {
+            if title != nil {
+                InputTitle(title: title, topSpace: topSpace)
+                Spacer().frame(height: 8)
+            }
             HStack {
                 Spacer().frame(width: 32)
                 TextEditor(text: $field)
                     .lineLimit(1)
                     .padding(.all, 1)
                     .background(Color(.lightGray))
+                    .keyboardType(keyboardType)
+                    .autocapitalization(autoCapitalize)
+                    .disableAutocorrection(!autoCorrect)
                 Spacer().frame(width: 16)
             }
             .frame(height: self.height)

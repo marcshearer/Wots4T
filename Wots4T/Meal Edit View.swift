@@ -46,10 +46,11 @@ struct MealEditView: View {
 
             ScrollView(showsIndicators: false) {
                 Input(title: mealNameTitle.capitalized, field: $meal.name, topSpace: 0)
-                Input(title: mealDescTitle.capitalized, field: $meal.desc, height: 60)
+                InputTitle(title: mealDescTitle.capitalized, buttonImage: AnyView(Image(systemName: "icloud.and.arrow.down").foregroundColor(.blue).font(.callout)), buttonAction: ($meal.url.wrappedValue == "" ? nil : { getDetail() }))
+                Input(field: $meal.desc, height: 60)
                 MealEditView_Categories(meal: meal)
                 AddImage(title: mealImageTitle.capitalized, image: $meal.image)
-                Input(title: mealUrlTitle.capitalized, field: $meal.url, height: 60)
+                Input(title: mealUrlTitle.capitalized, field: $meal.url, height: 60, keyboardType: .URL, autoCapitalize: .none, autoCorrect: false)
                 Input(title: mealNotesTitle.capitalized, field: $meal.notes, height: 120)
                 Spacer()
             }
@@ -59,9 +60,28 @@ struct MealEditView: View {
             })
 
         }
+        .onChange(of: meal.url, perform: { value in
+            // Invalidate image cache if URL changes
+            meal.urlImageCache = nil
+        })
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
+    }
+    
+    private func getDetail() {
+        LinkPresentation.getDetail(url: URL(string: meal.url)!) { (result) in
+            switch result {
+            case .success(let (_,title)):
+                Utility.mainThread {
+                    if let title = title {
+                        meal.desc = title
+                    }
+                }
+            default:
+                break
+            }
+        }
     }
     
     private func delete() -> Alert {
