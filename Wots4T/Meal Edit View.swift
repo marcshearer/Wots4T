@@ -13,6 +13,7 @@ struct MealEditView: View {
     @ObservedObject var meal: MealViewModel
     
     @State var confirmDelete = false
+    @State var linkToAttachments = false
     @State var saveError = false
     @State var title: String
      
@@ -38,6 +39,11 @@ struct MealEditView: View {
                                 } else {
                                     confirmDelete = true
                                 }
+                            }),
+                        BannerOption(
+                            image: AnyView(Image(systemName: "paperclip.circle.fill").font(.largeTitle).foregroundColor(.blue)),
+                            action: {
+                                self.linkToAttachments = true
                             })
                    ])
                     .alert(isPresented: $confirmDelete, content: {
@@ -49,7 +55,7 @@ struct MealEditView: View {
                 InputTitle(title: mealDescTitle.capitalized, buttonImage: AnyView(Image(systemName: "icloud.and.arrow.down").foregroundColor(.blue).font(.callout)), buttonAction: ($meal.url.wrappedValue == "" ? nil : { getDetail() }))
                 Input(field: $meal.desc, height: 60)
                 MealEditView_Categories(meal: meal)
-                AddImage(title: mealImageTitle.capitalized, image: $meal.image)
+                ImageCaptureGroup(title: mealImageTitle.capitalized, image: $meal.image)
                 Input(title: mealUrlTitle.capitalized, field: $meal.url, height: 60, keyboardType: .URL, autoCapitalize: .none, autoCorrect: false)
                 Input(title: mealNotesTitle.capitalized, field: $meal.notes, height: 120)
                 Spacer()
@@ -58,7 +64,7 @@ struct MealEditView: View {
                 Alert(title: Text("Error!"),
                       message: Text(meal.saveMessage))
             })
-
+            NavigationLink(destination: AttachmentView(meal: meal, title: editAttachmentsName), isActive: $linkToAttachments) { EmptyView() }
         }
         .onChange(of: meal.url, perform: { value in
             // Invalidate image cache if URL changes

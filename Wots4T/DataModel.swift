@@ -38,15 +38,18 @@ class DataModel: ObservableObject {
         
         let mealMOList = CoreData.fetch(from: MealMO.tableName, sort: (key: #keyPath(MealMO.lastDate), direction: .ascending)) as! [MealMO]
         let mealCategoryValueMOList = CoreData.fetch(from: MealCategoryValueMO.tableName) as! [MealCategoryValueMO]
+        let mealAttachmentList = CoreData.fetch(from: MealAttachmentMO.tableName) as! [MealAttachmentMO]
 
         self.meals = [:]
         for mealMO in mealMOList {
-            let mealCategoryValueMO = mealCategoryValueMOList.filter( { $0.mealId == mealMO.mealId } )
-            let mealCategoryValues = Dictionary(uniqueKeysWithValues: mealCategoryValueMO.map{($0.categoryId, $0)})
-            self.meals[mealMO.mealId] = MealViewModel(mealMO: mealMO, mealCategoryValueMO: mealCategoryValues)
+            let mealCategoryValueArray = mealCategoryValueMOList.filter( { $0.mealId == mealMO.mealId } )
+            let mealCategoryValueMO = Dictionary(uniqueKeysWithValues: mealCategoryValueArray.map{($0.categoryId, $0)})
+            let mealAttachmentMO = Set(mealAttachmentList.filter( {$0.mealId == mealMO.mealId }))
+            self.meals[mealMO.mealId] = MealViewModel(mealMO: mealMO, mealCategoryValueMO: mealCategoryValueMO, mealAttachmentMO: mealAttachmentMO)
         }
         
-        let allocationMOList = CoreData.fetch(from: AllocationMO.entity().name!, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending)) as! [AllocationMO]
+        let dateFilter = NSPredicate(format: "dayNumber64 >= %d", DayNumber.today.value - maxRetention)
+        let allocationMOList = CoreData.fetch(from: AllocationMO.entity().name!, filter: dateFilter, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending)) as! [AllocationMO]
 
         self.allocations = [:]
         for allocationMO in allocationMOList {
@@ -170,8 +173,12 @@ class DataModel: ObservableObject {
         assert(self.meals[meal.mealId] != nil, "\(mealName) does not exist and cannot be deleted")
         CoreData.update(updateLogic: {
             if !meal.mealCategoryValueMO.isEmpty {
-                // Delete Categorys
+                // Delete categorys
                 self.updateMealCategoryValuesMO(meal: meal, categoryValues: [:])
+            }
+            if !meal.mealAttachmentMO.isEmpty {
+                // Delete attachments
+                self.updateMealAttachmentsMO(meal: meal, attachments: [])
             }
             CoreData.context.delete(meal.mealMO!)
             self.meals[meal.mealId] = nil
@@ -184,6 +191,7 @@ class DataModel: ObservableObject {
         CoreData.update(updateLogic: {
             self.updateMO(meal: meal)
             self.updateMealCategoryValuesMO(meal: meal)
+            self.updateMealAttachmentsMO(meal: meal)
         })
     }
     
@@ -215,6 +223,28 @@ class DataModel: ObservableObject {
                     let mealCategoryValueMO = MealCategoryValueMO(context: CoreData.context, mealId: meal.mealId, categoryId: categoryValue.categoryId, valueId: categoryValue.valueId)
                     meal.mealCategoryValueMO[categoryId] = mealCategoryValueMO
                 }
+            }
+        }
+    }
+    
+    private func updateMealAttachmentsMO(meal: MealViewModel, attachments: Set<AttachmentViewModel>? = nil) {
+        let attachments = attachments ?? meal.attachments
+        
+        // First remove any MOs in MO but not in category values
+        for mealAttachmentMO in meal.mealAttachmentMO {
+            if attachments.first(where: {$0.attachmentId == mealAttachmentMO.attachmentId}) == nil {
+                meal.mealAttachmentMO.remove(mealAttachmentMO)
+                CoreData.delete(record: mealAttachmentMO)
+            }
+        }
+        
+        // Now update (or add) MOs from attachments
+        for attachment in attachments {
+            if let mealAttachmentMO = meal.mealAttachmentMO.first(where: {$0.attachmentId == attachment.attachmentId}) {
+                mealAttachmentMO.sequence = attachment.sequence
+                mealAttachmentMO.attachment = attachment.attachment
+            } else {
+                meal.mealAttachmentMO.insert(MealAttachmentMO(context: CoreData.context, mealId: meal.mealId, attachmentId: attachment.attachmentId, sequence: attachment.sequence, attachment: attachment.attachment))
             }
         }
     }

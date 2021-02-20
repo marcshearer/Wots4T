@@ -23,10 +23,12 @@ public class MealViewModel : ObservableObject, Identifiable {
     @Published public var lastDate: Date?
     @Published public var debugInfo: String = ""
     @Published public var categoryValues: [UUID : CategoryValueViewModel] = [:]
+    @Published public var attachments: Set<AttachmentViewModel> = []
     
     // Linked managed objects - should only be referenced in this and the Data classes
     internal var mealMO: MealMO?
-    internal var mealCategoryValueMO: [UUID : MealCategoryValueMO] = [:]
+    internal var mealCategoryValueMO: [UUID : MealCategoryValueMO] = [:]            // categoryId
+    internal var mealAttachmentMO: Set<MealAttachmentMO> = []
     
     // Other properties
     @Published private(set) var saveMessage: String = ""
@@ -48,10 +50,17 @@ public class MealViewModel : ObservableObject, Identifiable {
            self.lastDate != self.mealMO?.lastDate {
             result = true
         } else {
+            // Basic data OK - check category values
             let categoryMOValues = self.mealCategoryValueMO.mapValues({$0.valueId})
             let categoryModelValues = self.categoryValues.mapValues({$0.valueId})
             if categoryMOValues != categoryModelValues {
                 result = true
+            } else {
+                // Category values OK - check attachments
+                let attachmentMOValues = Set(self.mealAttachmentMO.map({ AttachmentViewModel(attachmentId: $0.attachmentId, sequence: $0.sequence, attachment: $0.attachment) }))
+                if attachmentMOValues != self.attachments {
+                    result = true
+                }
             }
         }
         return result
@@ -62,9 +71,10 @@ public class MealViewModel : ObservableObject, Identifiable {
         self.setupMappings()
     }
     
-    public init(mealMO: MealMO? = nil, mealCategoryValueMO: [UUID : MealCategoryValueMO] = [:]) {
+    public init(mealMO: MealMO? = nil, mealCategoryValueMO: [UUID : MealCategoryValueMO] = [:], mealAttachmentMO: Set<MealAttachmentMO> = []) {
         self.mealMO = mealMO
         self.mealCategoryValueMO = mealCategoryValueMO
+        self.mealAttachmentMO = mealAttachmentMO
         self.revert()
         self.setupMappings()
     }
@@ -109,9 +119,12 @@ public class MealViewModel : ObservableObject, Identifiable {
             self.lastDate = mealMO.lastDate
             self.categoryValues = [:]
         }
+        // Set up dictionary of category values
         for (categoryId, mealCategoryValueMO) in self.mealCategoryValueMO {
             self.categoryValues[categoryId] = DataModel.shared.categoryValues[mealCategoryValueMO.categoryId]?[mealCategoryValueMO.valueId]
         }
+        // Set up array of attachments
+        self.attachments = Set(self.mealAttachmentMO.map({ AttachmentViewModel(attachmentId: $0.attachmentId, sequence: $0.sequence, attachment: $0.attachment) }))
     }
     
     public func save() {

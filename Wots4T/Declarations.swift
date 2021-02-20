@@ -16,6 +16,7 @@ public let maxRetention = 366
 public let appName = "Wots4T"
 public let chooseName = "Choose a Meal"
 public let editMealsName = "Meals"
+public let editAttachmentsName = "Attachments"
 public let editCategoriesName = "Categories"
 public let editCategoryValuesName = "Values"
 

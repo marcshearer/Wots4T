@@ -68,7 +68,7 @@ extension DataModel {
         meal(name: "Chicken Korma", desc: "rice chicken indian", carbs: rice, protein: chicken, cuisine: indian, notes: "Source: Jamie Oliver")
         meal(name: "Beef Rogan Josh", desc: "rice beef indian", carbs: rice, protein: beef, cuisine: indian)
         meal(name: "Hoisin Chicken", desc: "rice chicken oriental", carbs: rice, protein: chicken, cuisine: oriental, notes: "Source: Home Fresh")
-        meal(name: "Lamb Tagine", desc: "pasta lamb med", carbs: pasta, protein: lamb, cuisine: med)
+        meal(name: "Lamb Tagine", desc: "pasta lamb med", carbs: couscous, protein: lamb, cuisine: med)
         meal(name: "Sweet Potato Curry", desc: "rice veggie indian", carbs: rice, protein: veggie, cuisine: indian)
         meal(name: "Sweet and Sour Pork", desc: "rice pork oriental", carbs: rice, protein: pork, cuisine: oriental)
         meal(name: "Vegetable Curry", desc: "rice veggie indian", carbs: rice, protein: veggie, cuisine: indian)

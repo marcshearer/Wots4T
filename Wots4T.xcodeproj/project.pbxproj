@@ -45,6 +45,9 @@
 		B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */; };
 		B2844FA825B99F300010A04C /* Core Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FA725B99F300010A04C /* Core Data.swift */; };
 		B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* DataModel.swift */; };
+		B2DC95A525E019D500FDE49D /* Meal Attachment Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */; };
+		B2DC95A925E01CA600FDE49D /* Attachment View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */; };
+		B2DC95AE25E02AC900FDE49D /* Attachment View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95AD25E02AC900FDE49D /* Attachment View.swift */; };
 		B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FABBFD25D6EC760008859E /* Category List View.swift */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +92,9 @@
 		B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Category Value Managed Object.swift"; sourceTree = SOURCE_ROOT; };
 		B2844FA725B99F300010A04C /* Core Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Data.swift"; sourceTree = "<group>"; };
 		B2844FAB25B9A0220010A04C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Attachment Managed Object.swift"; sourceTree = "<group>"; };
+		B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View Model.swift"; sourceTree = "<group>"; };
+		B2DC95AD25E02AC900FDE49D /* Attachment View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View.swift"; sourceTree = "<group>"; };
 		B2FABBFD25D6EC760008859E /* Category List View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category List View.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +133,7 @@
 				B233B3C925D6A1FC002EFB3A /* Categories */,
 				B26F5F4525D92170002B48EE /* Category Values */,
 				B26BA07E25C8142700C26B69 /* Allocations */,
+				B2DC95AB25E01D5D00FDE49D /* Attachments */,
 				B2844F7525B5F6090010A04C /* Meals & Meal Category Values */,
 				B256F1C525CD4C7800EA1948 /* Reuseable UI Components */,
 				B2844FAA25B99F360010A04C /* Libraries */,
@@ -213,8 +220,7 @@
 		B2844F7525B5F6090010A04C /* Meals & Meal Category Values */ = {
 			isa = PBXGroup;
 			children = (
-				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
-				B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */,
+				B2DC95A325E019B000FDE49D /* Meal Managed Objects */,
 				B2844F7625B5F6370010A04C /* Meal View Model.swift */,
 				B212867D25B1B29700557221 /* Meal List View.swift */,
 				B256F1BB25CC710700EA1948 /* Meal Summary View.swift */,
@@ -236,6 +242,25 @@
 				B256F1BE25CD451600EA1948 /* Utility.swift */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		B2DC95A325E019B000FDE49D /* Meal Managed Objects */ = {
+			isa = PBXGroup;
+			children = (
+				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
+				B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */,
+				B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */,
+			);
+			name = "Meal Managed Objects";
+			sourceTree = "<group>";
+		};
+		B2DC95AB25E01D5D00FDE49D /* Attachments */ = {
+			isa = PBXGroup;
+			children = (
+				B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */,
+				B2DC95AD25E02AC900FDE49D /* Attachment View.swift */,
+			);
+			name = Attachments;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,6 +345,7 @@
 				B26F5F6025DAC03D002B48EE /* Preview Data.swift in Sources */,
 				B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */,
 				B26BA09525C861FC00C26B69 /* Date Extensions.swift in Sources */,
+				B2DC95A925E01CA600FDE49D /* Attachment View Model.swift in Sources */,
 				B26F5F4F25D927A2002B48EE /* Picker Input.swift in Sources */,
 				B233B3B125D453F4002EFB3A /* Input.swift in Sources */,
 				B216445E25D6A84A00F19F4A /* Category View Model.swift in Sources */,
@@ -328,11 +354,13 @@
 				B26BA09825C96E3E00C26B69 /* Allocation View Model.swift in Sources */,
 				B256F1C925CDA42000EA1948 /* Meal Edit View.swift in Sources */,
 				B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */,
+				B2DC95A525E019D500FDE49D /* Meal Attachment Managed Object.swift in Sources */,
 				B233B3B425D45425002EFB3A /* Add Image.swift in Sources */,
 				B26F5F4B25D921D9002B48EE /* Category Edit View.swift in Sources */,
 				B26F5F4725D92198002B48EE /* Category Value Edit View.swift in Sources */,
 				B256F1C225CD4C4400EA1948 /* Banner.swift in Sources */,
 				B2844F7725B5F6370010A04C /* Meal View Model.swift in Sources */,
+				B2DC95AE25E02AC900FDE49D /* Attachment View.swift in Sources */,
 				B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */,
 				B212867E25B1B29700557221 /* Meal List View.swift in Sources */,
 				B26BA08D25C82F2400C26B69 /* Other Extensions.swift in Sources */,
