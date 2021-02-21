@@ -23,7 +23,7 @@ public class MealViewModel : ObservableObject, Identifiable {
     @Published public var lastDate: Date?
     @Published public var debugInfo: String = ""
     @Published public var categoryValues: [UUID : CategoryValueViewModel] = [:]
-    @Published public var attachments: Set<AttachmentViewModel> = []
+    @Published public var attachments: [AttachmentViewModel] = []
     
     // Linked managed objects - should only be referenced in this and the Data classes
     internal var mealMO: MealMO?
@@ -58,7 +58,7 @@ public class MealViewModel : ObservableObject, Identifiable {
             } else {
                 // Category values OK - check attachments
                 let attachmentMOValues = Set(self.mealAttachmentMO.map({ AttachmentViewModel(attachmentId: $0.attachmentId, sequence: $0.sequence, attachment: $0.attachment) }))
-                if attachmentMOValues != self.attachments {
+                if attachmentMOValues != Set(self.attachments) {
                     result = true
                 }
             }
@@ -124,7 +124,7 @@ public class MealViewModel : ObservableObject, Identifiable {
             self.categoryValues[categoryId] = DataModel.shared.categoryValues[mealCategoryValueMO.categoryId]?[mealCategoryValueMO.valueId]
         }
         // Set up array of attachments
-        self.attachments = Set(self.mealAttachmentMO.map({ AttachmentViewModel(attachmentId: $0.attachmentId, sequence: $0.sequence, attachment: $0.attachment) }))
+        self.attachments = self.mealAttachmentMO.map({ AttachmentViewModel(attachmentId: $0.attachmentId, sequence: $0.sequence, attachment: $0.attachment) }).sorted(by: { $0.sequence < $1.sequence })
     }
     
     public func save() {

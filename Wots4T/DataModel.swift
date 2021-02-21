@@ -227,7 +227,7 @@ class DataModel: ObservableObject {
         }
     }
     
-    private func updateMealAttachmentsMO(meal: MealViewModel, attachments: Set<AttachmentViewModel>? = nil) {
+    private func updateMealAttachmentsMO(meal: MealViewModel, attachments: [AttachmentViewModel]? = nil) {
         let attachments = attachments ?? meal.attachments
         
         // First remove any MOs in MO but not in category values

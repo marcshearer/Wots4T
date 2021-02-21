@@ -50,8 +50,24 @@ class ImageCaptureCoordinator: NSObject, UINavigationControllerDelegate, UIImage
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            self.source.image = image.pngData()
+            let rotatedImage = self.rotateImage(image: image)
+            self.source.image = rotatedImage.pngData()
             self.source.dismiss()
         }
+    }
+
+    func rotateImage(image: UIImage) -> UIImage {
+        if (image.imageOrientation == UIImage.Orientation.up ) {
+            return image
+        }
+        
+        UIGraphicsBeginImageContext(image.size)
+        
+        image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
+        let copy = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return copy!
     }
 }

@@ -13,18 +13,21 @@ struct MealDisplayView: View {
     @ObservedObject var meal: MealViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
-            MealDisplayView_Banner(meal: meal)
-            MealDisplayView_Image(meal: meal)
-            MealDisplayView_Description(meal: meal)
-            MealDisplayView_Notes(meal: meal)
-            Spacer()
-        }.edgesIgnoringSafeArea(.bottom)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
-        .onTapGesture {
-            MealDisplayView.browseUrl(url: meal.url)
+        ScrollView {
+            VStack(spacing: 0) {
+                MealDisplayView_Banner(meal: meal)
+                MealDisplayView_Image(meal: meal)
+                MealDisplayView_Description(meal: meal)
+                MealDisplayView_Notes(meal: meal)
+                MealDisplayView_Attachments(meal: meal)
+                Spacer()
+            }.edgesIgnoringSafeArea(.bottom)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+            .onTapGesture {
+                MealDisplayView.browseUrl(url: meal.url)
+            }
         }
     }
     
@@ -104,7 +107,7 @@ struct MealDisplayView_Notes: View {
     
     var body: some View {
         
-        if true || meal.notes != "" {
+        if meal.notes != "" {
             ZStack {
                 VStack {
                     Text(meal.notes)
@@ -114,6 +117,22 @@ struct MealDisplayView_Notes: View {
                 }
                 Rectangle()
                     .foregroundColor(Color(.black).opacity(0.03))
+            }
+        }
+    }
+}
+
+struct MealDisplayView_Attachments: View {
+
+    @ObservedObject var meal: MealViewModel
+    
+    var body: some View {
+        
+        VStack {
+            ForEach(meal.attachments) { (attachment) in
+                Image(uiImage: UIImage(data: attachment.attachment!)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
             }
         }
     }

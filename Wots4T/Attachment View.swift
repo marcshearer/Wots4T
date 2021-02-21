@@ -14,26 +14,63 @@ struct AttachmentView: View {
     
     @State var title: String
     @State private var image: Data?
+    @State private var editMode = EditMode.active
      
     var body: some View {
+            
         VStack {
-            Spacer()
             HStack {
                 Banner(title: $title)
                 Spacer()
                 VStack {
                     Spacer()
-                    ImageCaptureButton(image: $image, buttonImage: AnyView(Image(systemName: "plus.circle.fill").foregroundColor(.blue).font(.caption)))
+                    ImageCaptureButton(image: $image, buttonContent: AnyView(Image(systemName: "plus.circle.fill")
+                                                                                .foregroundColor(.blue)
+                                                                                .font(.largeTitle)))
+                        .onChange(of: image, perform: { image in
+                            if let image = image {
+                                let sequence = meal.attachments.last?.sequence ?? 0
+                                meal.attachments.append(AttachmentViewModel(sequence: sequence, attachment: image))
+                                meal.save()
+                            }
+                        })
                     Spacer().frame(height: 4)
                 }
                 .frame(height: 70)
                 Spacer()
                     .frame(width: 16)
             }
+            List {
+                ForEach(meal.attachments) { (attachment) in
+                    Image(uiImage: UIImage(data: attachment.attachment!)!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 80)
+                }
+                .onDelete(perform: onDelete)
+                .onMove(perform: onMove)
+            }
+            .environment(\.editMode, $editMode)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
             Spacer()
+            
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+    }
+    
+    func onDelete(offsets: IndexSet) {
+        for index in offsets.reversed() {
+            meal.attachments.remove(at: index)
+        }
+        meal.save()
+    }
+    
+    private func onMove(source: IndexSet, destination: Int) {
+        meal.attachments.move(fromOffsets: source, toOffset: destination)
+        for (index, attachment) in meal.attachments.enumerated() {
+            attachment.sequence = index
+        }
+        meal.save()
     }
 }

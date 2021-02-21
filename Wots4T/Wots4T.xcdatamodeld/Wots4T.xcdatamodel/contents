@@ -52,7 +52,7 @@
         <attribute name="attachment" optional="YES" attributeType="Binary"/>
         <attribute name="attachmentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="mealId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="sequence" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sequence16" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="MealCategoryValue" representedClassName="MealCategoryValueMO" syncable="YES">
         <attribute name="categoryId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -71,7 +71,7 @@
         <element name="Category" positionX="45" positionY="162" width="128" height="74"/>
         <element name="CategoryValue" positionX="54" positionY="171" width="128" height="89"/>
         <element name="Meal" positionX="160" positionY="192" width="128" height="149"/>
-        <element name="MealCategoryValue" positionX="99" positionY="225" width="128" height="74"/>
         <element name="MealAttachment" positionX="99" positionY="225" width="128" height="89"/>
+        <element name="MealCategoryValue" positionX="99" positionY="225" width="128" height="74"/>
     </elements>
 </model>

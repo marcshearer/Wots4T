@@ -58,8 +58,8 @@ enum ImageButtonType {
         }
     }
     
-    func image(_ image: AnyView?) -> AnyView {
-        return image ?? AnyView(Image(systemName: self.imageName).foregroundColor(.white).font(.callout))
+    var image: AnyView {
+        return AnyView(Image(systemName: self.imageName).foregroundColor(.white).font(.callout))
     }
 
 }
@@ -102,7 +102,7 @@ struct ImageCaptureGroup : View {
 
 struct ImageCaptureButton : View {
     @Binding var image: Data?
-    @State var buttonImage: AnyView?
+    @State var buttonContent: AnyView?
     @State var text: String?
     @State var type: ImageButtonType = .add
     @State var width: CGFloat?
@@ -113,37 +113,38 @@ struct ImageCaptureButton : View {
     var body: some View {
         
         HStack(spacing: 0) {
-            let buttonImage = type.image(self.buttonImage)
-            
+            let buttonContent = self.buttonContent ?? AnyView(ImageCaptureButton_GetSource_Content(type: type))
             switch type {
             case .add:
-            ImageCaptureButton_GetSource(text: text, buttonImage: buttonImage, width: width, action: { (source) in
+            ImageCaptureButton_GetSource(text: text, buttonContent: buttonContent, action: { (source) in
                     self.getImage(source: source)
                 })
             case .replace:
-                ImageCaptureButton_GetSource(text: text, buttonImage: buttonImage, width: width, action: { (source) in
+                ImageCaptureButton_GetSource(text: text, buttonContent: buttonContent, action: { (source) in
                     self.getImage(source: source)
                 })
             case .remove:
-                ImageCaptureButton_GetSource(text: text, buttonImage: buttonImage, capture: false, width: width, action: { (source) in
+                ImageCaptureButton_GetSource(text: text, buttonContent: buttonContent, capture: false, action: { (source) in
                     self.image = nil
                 })
             }
         }
         .sheet(isPresented: $captureImage) {
-            ImageCapture(image: $image, source: self.source!.pickerType!)
+            if let source = source {
+                ImageCapture(image: $image, source: source.pickerType!)
+            }
         }
     }
     
     func getImage(source: ImageSource?) {
         if source != nil {
+            self.captureImage = false
             self.source = source
             if source == .pasteboard {
                 let pasteboard = UIPasteboard.general
                 if pasteboard.hasImages {
                     self.image = pasteboard.image?.pngData() ?? nil
                 }
-                self.captureImage = false
             } else {
                 self.captureImage = true
             }
@@ -154,16 +155,12 @@ struct ImageCaptureButton : View {
 fileprivate struct ImageCaptureButton_GetSource : View {
  
     var text: String?
-    var buttonImage: AnyView?
+    var buttonContent: AnyView?
     var capture = true
-    var width: CGFloat?
-    var height: CGFloat?
     var action: (ImageSource)->()
     
     var body: some View {
         
-        let width = self.width ?? 32
-        let height = self.height ?? 32
         let camera = ImageCapture.isCameraAvailable && capture
         let photoLibrary =  ImageCapture.isPhotoLibraryAvailable && capture
         let pasteboard = UIPasteboard.general
@@ -176,7 +173,7 @@ fileprivate struct ImageCaptureButton_GetSource : View {
                         action(.camera)
                     }) {
                         HStack {
-                            buttonImage
+                            Image(systemName: "camera")
                             Text("Take Photo")
                         }
                     }
@@ -198,19 +195,13 @@ fileprivate struct ImageCaptureButton_GetSource : View {
                     }
                 }
             } label: {
-                ImageCaptureButton_GetSource_Content(text: text, buttonImage: buttonImage)
-                    .frame(width: width, height: height)
-                        .background(Color.gray)
-                        .cornerRadius(height/2)
+                buttonContent
             }
         } else {
             Button(action: {
                 action(camera ? .camera : (photoLibrary ? .photoLibrary : .pasteboard))
             }) {
-                ImageCaptureButton_GetSource_Content(text: text, buttonImage: buttonImage)
-                    .frame(width: width, height: height)
-                        .background(Color.gray)
-                        .cornerRadius(height/2)
+                buttonContent
             }
         }
     }
@@ -218,28 +209,23 @@ fileprivate struct ImageCaptureButton_GetSource : View {
 
 fileprivate struct ImageCaptureButton_GetSource_Content : View {
     
-    var text: String?
-    var buttonImage: AnyView?
+    var type: ImageButtonType
+    private let height: CGFloat = 32
     
     var body: some View {
         HStack {
-            if let buttonImage = buttonImage {
-                if text != nil {
-                    Spacer().frame(width: 8)
-                }
-                buttonImage
-                if text != nil {
-                    Spacer()
-                }
-            }
-            if let text = text {
-                Text(text)
-                    .foregroundColor(.white)
-                    .font(.callout)
-                    .minimumScaleFactor(0.5)
-                Spacer()
-            }
+            Spacer().frame(width: 8)
+            type.image
+            Spacer()
+            Text(type.text)
+                .foregroundColor(.white)
+                .font(.callout)
+                .minimumScaleFactor(0.5)
+            Spacer()
         }
+        .frame(width: type.width, height: height)
+            .background(Color.gray)
+            .cornerRadius(height/2)
     }
 }
 

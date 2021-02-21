@@ -7,7 +7,8 @@
 
 import Foundation
 
-public class AttachmentViewModel : Equatable, Hashable {
+public class AttachmentViewModel : Equatable, Hashable, Identifiable {
+    public var id: UUID { attachmentId }
     public var attachmentId: UUID
     public var sequence: Int
     public var attachment: Data?
