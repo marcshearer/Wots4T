@@ -23,6 +23,7 @@ class Palette {
     @BackgroundColor(.imagePlaceholder) static var imagePlaceholder
     @BackgroundColor(.disabledButton) static var disabledButton
     @BackgroundColor(.enabledButton) static var enabledButton
+    @BackgroundColor(.highlightButton) static var highlightButton
     @BackgroundColor(.input) static var input
     @BackgroundColor(.filter) static var filter
     

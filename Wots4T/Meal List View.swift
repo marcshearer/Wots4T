@@ -16,14 +16,17 @@ struct MealListView: View {
     
     @ObservedObject var data = DataModel.shared
 
-    @State private var startAt: Int? = -1
+    @State private var startAt: UUID?
     @State var linkToEdit = false
     @State var linkToEditMeal: MealViewModel?
     @State var linkToEditTitle: String?
+    @State var meals: [MealViewModel] = []
 
-    @State var categoryValues: [UUID: CategoryValueViewModel] = [:]
+    let categories = DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+    @State private var categoryValues: [UUID: CategoryValueViewModel] = [:]
 
     var body: some View {
+        let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber).filter({self.filter($0)})
         ZStack {
             Palette.background.background
                 .ignoresSafeArea()
@@ -31,14 +34,12 @@ struct MealListView: View {
                 MealListView_Banner(title: title, editMode: allocateDayNumber == nil)
                 ScrollView(showsIndicators: false) {
                     Spacer().frame(height: 8)
-                    MealListView_FilterInput(categoryValues: categoryValues)
+                    MealListView_FilterInput(categoryValues: $categoryValues)
                     ScrollViewReader { scrollViewProxy in
                         LazyVStack {
-                            let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber)
-                            ForEach(0..<meals.count) { index in
-                                let meal = meals[index]
+                            ForEach(meals) { meal in
                                 MealSummaryView(meal: meal, imageWidth: 100, showInfo: allocateDayNumber != nil)
-                                    .id(index)
+                                    .id(meal.mealId)
                                     .frame(height: 80)
                                     .onTapGesture {
                                         if allocateDayNumber == nil {
@@ -63,7 +64,7 @@ struct MealListView: View {
             }
             .onAppear {
                 Utility.mainThread {
-                    self.startAt = 0
+                    self.startAt = meals.first!.mealId
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -73,9 +74,26 @@ struct MealListView: View {
         }
     }
     
+    private func index(of meal: MealViewModel, in meals: [MealViewModel]) -> Int {
+        return meals.firstIndex(where: {$0.mealId == meal.mealId}) ?? -1
+    }
+    
     private func allocate(meal: MealViewModel) {
         let allocation = AllocationViewModel(dayNumber: self.allocateDayNumber!, slot: self.allocateSlot!, meal: meal)
         allocation.insert()
+    }
+    
+    private func filter(_ meal: MealViewModel) -> Bool {
+        var include = true
+        for category in categories {
+            if let filterValue = categoryValues[category.categoryId]?.valueId {
+                if filterValue != meal.categoryValues[category.categoryId]?.valueId {
+                    include = false
+                    break
+                }
+            }
+        }
+        return include
     }
 }
 
@@ -101,7 +119,7 @@ struct MealListView_Banner: View {
 
 struct MealListView_FilterInput: View {
 
-    @State var categoryValues: [UUID: CategoryValueViewModel]
+    @Binding var categoryValues: [UUID: CategoryValueViewModel]
     
     private let height: CGFloat = 32
     
@@ -132,19 +150,21 @@ struct MealListView_FilterInput: View {
                                         let value = categoryValues[categoryId]
                                         let title = value?.name ?? category.name!.uppercased()
                                         let values = self.getCategoryValues(categoryId: categoryId)
-                                        let names = values.map{$0.name} + ["Not specified"]
+                                        let names = ["No \(category.name!.lowercased()) filter"] + values.map{$0.name}
                                         
                                         Menu(title) {
                                             ForEach(0..<(names.count)) { (index) in
-                                                Button(names[index]) {
-                                                    categoryValues[categoryId] = (index == names.count - 1 ? nil : values[index])
+                                                Button(action: {
+                                                    categoryValues[categoryId] = (index == 0 ? nil : values[index - 1])
+                                                }) {
+                                                    Text(names[index]).foregroundColor(index == 0 ? Palette.menuEntry.text : Palette.menuEntry.strongText)
                                                 }
                                             }
                                         }
                                         .foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
                                         .font(value == nil ? .caption : .callout)
                                         .frame(width: width, height: height)
-                                        .background(value == nil ? Palette.disabledButton.background : Palette.enabledButton.background)
+                                        .background(value == nil ? Palette.disabledButton.background : .blue)
                                         .cornerRadius(height/2)
                                     }
                                 }
