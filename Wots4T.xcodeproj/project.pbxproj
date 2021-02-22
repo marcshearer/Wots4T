@@ -47,6 +47,7 @@
 		B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* DataModel.swift */; };
 		B2C678EA25E26AA6003E5DE8 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678E925E26AA6003E5DE8 /* Palette.swift */; };
 		B2C678ED25E26AD8003E5DE8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EC25E26AD8003E5DE8 /* Themes.swift */; };
+		B2C678F025E3AFC6003E5DE8 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EF25E3AFC6003E5DE8 /* Separator.swift */; };
 		B2DC95A525E019D500FDE49D /* Meal Attachment Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */; };
 		B2DC95A925E01CA600FDE49D /* Attachment View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */; };
 		B2DC95AE25E02AC900FDE49D /* Attachment View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95AD25E02AC900FDE49D /* Attachment View.swift */; };
@@ -96,6 +97,7 @@
 		B2844FAB25B9A0220010A04C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		B2C678E925E26AA6003E5DE8 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		B2C678EC25E26AD8003E5DE8 /* Themes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		B2C678EF25E3AFC6003E5DE8 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Attachment Managed Object.swift"; sourceTree = "<group>"; };
 		B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View Model.swift"; sourceTree = "<group>"; };
 		B2DC95AD25E02AC900FDE49D /* Attachment View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View.swift"; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				B26F5F4E25D927A2002B48EE /* Picker Input.swift */,
 				B233B3B325D45425002EFB3A /* Add Image.swift */,
 				B233B3BE25D5292B002EFB3A /* Image Capture.swift */,
+				B2C678EF25E3AFC6003E5DE8 /* Separator.swift */,
 			);
 			name = "Reuseable UI Components";
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				B216445E25D6A84A00F19F4A /* Category View Model.swift in Sources */,
 				B26BA08925C82E9A00C26B69 /* String Extensions.swift in Sources */,
 				B216446125D6A86400F19F4A /* Category Value View Model.swift in Sources */,
+				B2C678F025E3AFC6003E5DE8 /* Separator.swift in Sources */,
 				B26BA09825C96E3E00C26B69 /* Allocation View Model.swift in Sources */,
 				B256F1C925CDA42000EA1948 /* Meal Edit View.swift in Sources */,
 				B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */,

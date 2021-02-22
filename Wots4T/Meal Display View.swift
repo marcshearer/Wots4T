@@ -19,13 +19,16 @@ struct MealDisplayView: View {
             VStack(spacing: 0) {
                 MealDisplayView_Banner(meal: meal)
                 ScrollView {
-                    MealDisplayView_Image(meal: meal)
-                    MealDisplayView_Description(meal: meal)
-                    MealDisplayView_Notes(meal: meal)
-                    MealDisplayView_Attachments(meal: meal)
-                    Spacer()
+                    VStack(spacing: 0) {
+                        MealDisplayView_Image(meal: meal)
+                        MealDisplayView_Description(meal: meal)
+                        MealDisplayView_Notes(meal: meal)
+                        MealDisplayView_Attachments(meal: meal)
+                    }
                 }
-            }.edgesIgnoringSafeArea(.bottom)
+                Spacer()
+            }
+            .edgesIgnoringSafeArea(.bottom)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
             .navigationBarHidden(true)

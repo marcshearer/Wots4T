@@ -117,7 +117,7 @@ struct MealEditView_Categories : View {
     var body: some View {
         InputTitle(title: "Categories")
         ScrollView(.horizontal, showsIndicators: false) {
-            let categories = DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+            let categories = self.getCategories()
             HStack {
                 Spacer().frame(width: 32)
                 ForEach(categories) { category in
@@ -140,6 +140,10 @@ struct MealEditView_Categories : View {
                 }
             }
         }
+    }
+    
+    func getCategories() -> [CategoryViewModel] {
+        return DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
     }
     
     func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {

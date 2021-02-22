@@ -24,6 +24,7 @@ class Palette {
     @BackgroundColor(.disabledButton) static var disabledButton
     @BackgroundColor(.enabledButton) static var enabledButton
     @BackgroundColor(.input) static var input
+    @BackgroundColor(.filter) static var filter
     
     // Specific colors
     @SpecificColor(.bannerBackButton) static var bannerBackButton

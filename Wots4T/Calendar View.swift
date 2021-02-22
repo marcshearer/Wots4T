@@ -11,10 +11,10 @@ import SwiftUI
 import LinkPresentation
 
 struct CalendarView: View {
-    @State var startAt: Int? = -1
-    @State var linkEditMeals = false
-    @State var linkEditCategories = false
-    @State var linkDisplayMeal: MealViewModel?
+    @State private var startAt: Int? = -1
+    @State private var linkEditMeals = false
+    @State private var linkEditCategories = false
+    @State private var linkDisplayMeal: MealViewModel?
     @State var title = appName
     
     @ObservedObject var data = DataModel.shared
@@ -95,7 +95,7 @@ fileprivate struct CalendarView_EntryContent: View {
         let allocation = data.allocations[today + offset]?[0] // Assume slot is zero for now
         if allocation != nil || offset >= 0 {
             VStack {
-                Divider().padding(.leading, 24).padding(.trailing, 12)
+                Separator()
                 Spacer().frame(height: 8)
                 CalendarView_AllocationTitle(dayNumber: today + offset, highlight: offset == 0, delete: allocation != nil)
                 if let allocation = allocation {
