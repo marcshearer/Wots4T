@@ -61,6 +61,7 @@ struct CalendarView: View {
                 }
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     func date(offset: Int) -> String {
