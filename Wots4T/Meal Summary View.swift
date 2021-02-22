@@ -30,7 +30,7 @@ public struct MealSummaryView: View {
                         .resizable()
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                 } else {
-                    Rectangle().foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                    Rectangle().foregroundColor(Palette.imagePlaceholder.background)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                 }
                 Spacer()
@@ -43,7 +43,7 @@ public struct MealSummaryView: View {
                         .frame(width: 8)
                     Text(meal.name)
                         .font(.title2)
-                        .foregroundColor(.black)
+                        .foregroundColor(Palette.background.text)
                         .lineLimit(1)
                     Spacer()
                 }
@@ -52,7 +52,7 @@ public struct MealSummaryView: View {
                         .frame(width: 8)
                     Text(meal.desc) // + "\n\(meal.debugInfo)")
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(Palette.background.contrastText)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
                         .frame(height: 50, alignment: .top)
@@ -64,7 +64,7 @@ public struct MealSummaryView: View {
                 VStack {
                     Spacer()
                     Button(action: { linkToDisplay = true }) {
-                        Image(systemName: "info.circle").font(.title2).foregroundColor(.blue)
+                        Image(systemName: "info.circle").font(.title2).foregroundColor(Palette.background.themeText)
                     }
                     Spacer()
                 }

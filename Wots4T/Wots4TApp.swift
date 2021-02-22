@@ -14,6 +14,9 @@ struct Wots4TApp: App {
     init() {
         CoreData.context = context
         DataModel.shared.load()
+        Themes.selectTheme(.standard)
+    
+        UITextView.appearance().backgroundColor = .clear
     }
     
     var body: some Scene {

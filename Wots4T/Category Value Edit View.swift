@@ -22,9 +22,12 @@ struct CategoryValueEditView: View {
     @State private var frequencyIndex: Int = 0
         
     var body: some View {
-        VStack {
-            Banner(title: $title,
-                   backCheck: {
+        ZStack {
+            Palette.background.background
+                .ignoresSafeArea()
+            VStack {
+                Banner(title: $title,
+                       backCheck: {
                         if categoryValue.categoryValueMO == nil && categoryValue.name == "" {
                             return true
                         } else {
@@ -34,11 +37,11 @@ struct CategoryValueEditView: View {
                             saveError = !self.categoryValue.canSave
                             return !saveError
                         }
-                   },
-                   optionMode: .buttons,
-                   options: [
+                       },
+                       optionMode: .buttons,
+                       options: [
                         BannerOption(
-                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(.red)),
+                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(Palette.destructiveButton.background)),
                             action: {
                                 if self.categoryValue.categoryValueMO == nil {
                                     self.presentationMode.wrappedValue.dismiss()
@@ -46,25 +49,28 @@ struct CategoryValueEditView: View {
                                     confirmDelete = true
                                 }
                             })
-                   ])
+                       ])
                     .alert(isPresented: $confirmDelete, content: {
                         self.delete()
                     })
-
-                Input(title: categoryValueNameTitle.capitalized, field: $categoryValue.name, topSpace: 0)
                 
-                PickerInput(title: categoryValueFrequencyTitle.capitalized, field: $frequencyIndex, values: frequencies.map{$0.string.capitalized})
-                    .onChange(of: frequencyIndex, perform: { index in
-                        categoryValue.frequency = frequencies[index]
-                    })
-                Spacer()
-                    .alert(isPresented: $saveError, content: {
-                        Alert(title: Text("Error!"),
-                              message: Text(categoryValue.saveMessage))
-                    })
-        }
-        .onAppear {
-            self.frequencyIndex = frequencies.firstIndex(where: {$0 == categoryValue.frequency}) ?? 0
+                ScrollView {
+                    Input(title: categoryValueNameTitle.capitalized, field: $categoryValue.name, topSpace: 0)
+                    
+                    PickerInput(title: categoryValueFrequencyTitle.capitalized, field: $frequencyIndex, values: frequencies.map{$0.string.capitalized})
+                        .onChange(of: frequencyIndex, perform: { index in
+                            categoryValue.frequency = frequencies[index]
+                        })
+                    Spacer()
+                        .alert(isPresented: $saveError, content: {
+                            Alert(title: Text("Error!"),
+                                  message: Text(categoryValue.saveMessage))
+                        })
+                }
+            }
+            .onAppear {
+                self.frequencyIndex = frequencies.firstIndex(where: {$0 == categoryValue.frequency}) ?? 0
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")

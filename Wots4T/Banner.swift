@@ -36,21 +36,26 @@ struct Banner: View {
     var options: [BannerOption]? = nil
        
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer().frame(width: 8)
-                if back {
-                    backButton
-                }
-                Text(title).font(.largeTitle).bold()
+        ZStack {
+            Palette.banner.background
+                .ignoresSafeArea()
+            VStack {
                 Spacer()
-                switch optionMode {
-                case .menu:                    Banner_Menu(image: menuImage, options: options!)
-                case .buttons:
-                    Banner_Buttons(options: options!)
-                default:
-                    EmptyView()
+                HStack {
+                    Spacer().frame(width: 8)
+                    if back {
+                        backButton
+                    }
+                    Text(title).font(.largeTitle).bold().foregroundColor(Palette.banner.text)
+                    Spacer()
+                    switch optionMode {
+                    case .menu:
+                        Banner_Menu(image: menuImage, options: options!)
+                    case .buttons:
+                        Banner_Buttons(options: options!)
+                    default:
+                        EmptyView()
+                    }
                 }
             }
         }
@@ -79,7 +84,7 @@ struct Banner_Menu : View {
     var options: [BannerOption]
 
     var body: some View {
-        let menuLabel = image ?? AnyView(Image(systemName: "line.horizontal.3").foregroundColor(.black).font(.largeTitle))
+        let menuLabel = image ?? AnyView(Image(systemName: "line.horizontal.3").foregroundColor(Palette.bannerMenuButton).font(.largeTitle))
         Menu {
             ForEach(0..<(options.count)) { (index) in
                 let option = options[index]

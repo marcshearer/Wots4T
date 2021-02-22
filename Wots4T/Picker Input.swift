@@ -33,7 +33,7 @@ struct PickerInput : View {
                         Text(values[index])
                     }
                 }
-                .foregroundColor(.black)
+                .foregroundColor(Palette.background.text)
                 .pickerStyle(MenuPickerStyle())
                 .lineLimit(1)
                 .padding(.all, 1)

@@ -18,9 +18,12 @@ struct MealEditView: View {
     @State var title: String
      
     var body: some View {
-        VStack {
-            Banner(title: $title,
-                   backCheck: {
+        ZStack {
+            Palette.background.background
+                .ignoresSafeArea()
+            VStack {
+                Banner(title: $title,
+                       backCheck: {
                         if meal.mealMO == nil && meal.name == "" {
                             return true
                         } else {
@@ -28,11 +31,11 @@ struct MealEditView: View {
                             saveError = !self.meal.canSave
                             return !saveError
                         }
-                   },
-                   optionMode: .buttons,
-                   options: [
+                       },
+                       optionMode: .buttons,
+                       options: [
                         BannerOption(
-                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(.red)),
+                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(Palette.destructiveButton.background)),
                             action: {
                                 if self.meal.mealMO == nil {
                                     self.presentationMode.wrappedValue.dismiss()
@@ -41,38 +44,39 @@ struct MealEditView: View {
                                 }
                             }),
                         BannerOption(
-                            image: AnyView(Image(systemName: "paperclip.circle.fill").font(.largeTitle).foregroundColor(.blue)),
+                            image: AnyView(Image(systemName: "paperclip.circle.fill").font(.largeTitle).foregroundColor(Palette.bannerButton.background)),
                             action: {
                                 self.linkToAttachments = true
                             })
-                   ])
+                       ])
                     .alert(isPresented: $confirmDelete, content: {
                         self.delete()
                     })
-
-            ScrollView(showsIndicators: false) {
-                Input(title: mealNameTitle.capitalized, field: $meal.name, topSpace: 0)
-                InputTitle(title: mealDescTitle.capitalized, buttonImage: AnyView(Image(systemName: "icloud.and.arrow.down").foregroundColor(.blue).font(.callout)), buttonAction: ($meal.url.wrappedValue == "" ? nil : { getDetail() }))
-                Input(field: $meal.desc, height: 60)
-                MealEditView_Categories(meal: meal)
-                ImageCaptureGroup(title: mealImageTitle.capitalized, image: $meal.image)
-                Input(title: mealUrlTitle.capitalized, field: $meal.url, height: 60, keyboardType: .URL, autoCapitalize: .none, autoCorrect: false)
-                Input(title: mealNotesTitle.capitalized, field: $meal.notes, height: 120)
-                Spacer()
+                
+                ScrollView(showsIndicators: false) {
+                    Input(title: mealNameTitle.capitalized, field: $meal.name, topSpace: 0)
+                    InputTitle(title: mealDescTitle.capitalized, buttonImage: AnyView(Image(systemName: "icloud.and.arrow.down").foregroundColor(Palette.background.themeText).font(.callout)), buttonAction: ($meal.url.wrappedValue == "" ? nil : { getDetail() }))
+                    Input(field: $meal.desc, height: 60)
+                    MealEditView_Categories(meal: meal)
+                    ImageCaptureGroup(title: mealImageTitle.capitalized, image: $meal.image)
+                    Input(title: mealUrlTitle.capitalized, field: $meal.url, height: 60, keyboardType: .URL, autoCapitalize: .none, autoCorrect: false)
+                    Input(title: mealNotesTitle.capitalized, field: $meal.notes, height: 120)
+                    Spacer()
+                }
+                .alert(isPresented: $saveError, content: {
+                    Alert(title: Text("Error!"),
+                          message: Text(meal.saveMessage))
+                })
+                NavigationLink(destination: AttachmentView(meal: meal, title: editAttachmentsName), isActive: $linkToAttachments) { EmptyView() }
             }
-            .alert(isPresented: $saveError, content: {
-                Alert(title: Text("Error!"),
-                      message: Text(meal.saveMessage))
+            .onChange(of: meal.url, perform: { value in
+                // Invalidate image cache if URL changes
+                meal.urlImageCache = nil
             })
-            NavigationLink(destination: AttachmentView(meal: meal, title: editAttachmentsName), isActive: $linkToAttachments) { EmptyView() }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
-        .onChange(of: meal.url, perform: { value in
-            // Invalidate image cache if URL changes
-            meal.urlImageCache = nil
-        })
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
     }
     
     private func getDetail() {
@@ -128,10 +132,10 @@ struct MealEditView_Categories : View {
                                 meal.categoryValues[category.categoryId] = (index == names.count - 1 ? nil : values[index])
                             }
                         }
-                    }.foregroundColor(value == nil ? Color(UIColor.darkGray) : .white)
+                    }.foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
                     .font(value == nil ? .caption : .callout)
                     .frame(width: width, height: height)
-                    .background(value == nil ? Color(UIColor.lightGray) : Color.gray)
+                    .background(value == nil ? Palette.disabledButton.background : Palette.enabledButton.background)
                     .cornerRadius(height/2)
                 }
             }

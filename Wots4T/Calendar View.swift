@@ -21,39 +21,43 @@ struct CalendarView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                let today = DayNumber.today
-                
-                Banner(title: $title, back: false,
-                       optionMode: .menu,
-                       options: [BannerOption(text: "Setup \(editMealsName)",  action: { self.linkEditMeals = true }),
-                                 BannerOption(text: "Setup \(editCategoriesName)", action: { self.linkEditCategories = true })])
-
-                Spacer().frame(height: 10)
-                ScrollView {
-                    ScrollViewReader { scrollViewProxy in
-                        VStack {
-                            ForEach(-14...28, id: \.self) { offset in
-                                CalendarView_Entry(today: today, offset: offset)
-                                    .id(offset)
+            ZStack {
+                Palette.background.background
+                    .ignoresSafeArea()
+                VStack(spacing: 0) {
+                    let today = DayNumber.today
+                    
+                    Banner(title: $title, back: false,
+                           optionMode: .menu,
+                           options: [BannerOption(text: "Setup \(editMealsName)",  action: { self.linkEditMeals = true }),
+                                     BannerOption(text: "Setup \(editCategoriesName)", action: { self.linkEditCategories = true })])
+                    
+                    Spacer().frame(height: 10)
+                    ScrollView {
+                        ScrollViewReader { scrollViewProxy in
+                            VStack {
+                                ForEach(-14...28, id: \.self) { offset in
+                                    CalendarView_Entry(today: today, offset: offset)
+                                        .id(offset)
+                                }
+                                Spacer()
                             }
-                            Spacer()
-                        }
-                        .onChange(of: self.startAt) { (startAt) in
-                            if let startAt = startAt {
-                                scrollViewProxy.scrollTo(startAt, anchor: .top)
+                            .onChange(of: self.startAt) { (startAt) in
+                                if let startAt = startAt {
+                                    scrollViewProxy.scrollTo(startAt, anchor: .top)
+                                }
                             }
                         }
                     }
+                    .navigationBarTitle("")
+                    .navigationBarHidden(true)
+                    NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
+                    NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
                 }
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
-                NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
-                NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
-            }
-            .onAppear {
-                Utility.mainThread {
-                    self.startAt = 0
+                .onAppear {
+                    Utility.mainThread {
+                        self.startAt = 0
+                    }
                 }
             }
         }
@@ -119,11 +123,11 @@ fileprivate struct CalendarView_AllocationTitle: View {
             Spacer().frame(width: 32)
             Text(dayNumber.date.toString(format: dateFormat))
                 .font(.headline)
-                .foregroundColor(self.highlight ? .red : .blue)
+                .foregroundColor(self.highlight ? Palette.background.strongText : Palette.background.themeText)
             Spacer()
             if delete {
                 Button(action: { self.removeAllocation(dayNumber: dayNumber, slot: 0) }) {
-                    Image(systemName: "multiply.circle.fill").font(.headline).foregroundColor(.gray)
+                    Image(systemName: "multiply.circle.fill").font(.headline).foregroundColor(Palette.listButton.background)
                 }
                 Spacer().frame(width: 16)
             }
@@ -146,7 +150,7 @@ fileprivate struct CalendarView_AllocationPlaceholder: View {
         HStack {
             Spacer().frame(width: 64)
             Text(chooseName + "...")
-                .foregroundColor(.gray)
+                .foregroundColor(Palette.background.faintText)
                 .font(.headline)
             Spacer()
         }

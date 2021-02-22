@@ -23,7 +23,7 @@ struct InputTitle : View {
             if let title = title {
                 HStack(alignment: .center, spacing: nil) {
                     Spacer().frame(width: 16)
-                    Text(title).font(.headline)
+                    Text(title).font(.headline).foregroundColor(Palette.background.text)
                     
                     if let action = buttonAction {
                         Spacer().frame(width: 16)
@@ -38,8 +38,10 @@ struct InputTitle : View {
                                     Spacer().frame(width: 8)
                                 }
                                 Text(text)
+                                    .foregroundColor(Palette.background.themeText)
                             }
-                        }.menuStyle(DefaultMenuStyle())
+                        }
+                        .menuStyle(DefaultMenuStyle())
                     }
                     Spacer()
                 }

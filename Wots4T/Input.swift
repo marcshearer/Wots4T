@@ -30,10 +30,11 @@ struct Input : View {
                 TextEditor(text: $field)
                     .lineLimit(1)
                     .padding(.all, 1)
-                    .background(Color(.lightGray))
+                    .background(Palette.input.background)
                     .keyboardType(keyboardType)
                     .autocapitalization(autoCapitalize)
                     .disableAutocorrection(!autoCorrect)
+                    .cornerRadius(8)
                 Spacer().frame(width: 16)
             }
             .frame(height: self.height)

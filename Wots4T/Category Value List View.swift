@@ -22,44 +22,48 @@ struct CategoryValueListView: View {
     @State var linkToEditTitle: String?
 
     var body: some View {
-        VStack {
-            if let title = title {
-                InputTitle(title: title,
-                           buttonImage: AnyView(Image(systemName: "plus.circle.fill").font(.title).foregroundColor(.gray)),
-                           buttonAction: !addOption ? nil : {
+        ZStack {
+            Palette.background.background
+                .ignoresSafeArea()
+            VStack {
+                if let title = title {
+                    InputTitle(title: title,
+                               buttonImage: AnyView(Image(systemName: "plus.circle.fill").font(.title).foregroundColor(Palette.listButton.background)),
+                               buttonAction: !addOption ? nil : {
                                 self.linkToEdit = true
                                 self.linkToEditTitle = "New \(categoryValueName.capitalized)"
                                 self.linkToEditCategoryValue = nil
-                           })
-                Spacer().frame(height: 8)
-            }
-            LazyVStack {
-                let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {$0.frequency > $1.frequency})
-                ForEach(categoryValues) { categoryValue in
-                    VStack {
-                        HStack(alignment: .top) {
-                            Spacer().frame(width: 38)
-                            Text(categoryValue.name)
-                                .font(.body)
-                                .foregroundColor(.black)
-                                .lineLimit(1)
-                            Spacer()
+                               })
+                    Spacer().frame(height: 8)
+                }
+                LazyVStack {
+                    let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {$0.frequency > $1.frequency})
+                    ForEach(categoryValues) { categoryValue in
+                        VStack {
+                            HStack(alignment: .top) {
+                                Spacer().frame(width: 38)
+                                Text(categoryValue.name)
+                                    .font(.body)
+                                    .foregroundColor(Palette.background.text)
+                                    .lineLimit(1)
+                                Spacer()
+                            }
+                            Spacer().frame(height: 16)
                         }
-                        Spacer().frame(height: 16)
-                    }
-                    .onTapGesture {
-                        self.linkToEditTitle = categoryValueName.capitalized
-                        self.linkToEditCategoryValue = categoryValue
-                        self.linkToEdit = true
+                        .onTapGesture {
+                            self.linkToEditTitle = categoryValueName.capitalized
+                            self.linkToEditCategoryValue = categoryValue
+                            self.linkToEdit = true
+                        }
                     }
                 }
+                Spacer()
             }
-            Spacer()
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+            NavigationLink(destination: CategoryValueEditView(categoryValue: self.linkToEditCategoryValue ?? CategoryValueViewModel(categoryId: category.categoryId), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
-        NavigationLink(destination: CategoryValueEditView(categoryValue: self.linkToEditCategoryValue ?? CategoryValueViewModel(categoryId: category.categoryId), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
     }
 }
 

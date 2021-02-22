@@ -23,9 +23,12 @@ struct CategoryEditView: View {
     let importances = Importance.allCases
 
     var body: some View {
-        VStack {
-            Banner(title: $title,
-                   backCheck: {
+        ZStack {
+            Palette.background.background
+                .ignoresSafeArea()
+            VStack {
+                Banner(title: $title,
+                       backCheck: {
                         if category.categoryMO == nil && category.name == "" {
                             return true
                         } else {
@@ -33,11 +36,11 @@ struct CategoryEditView: View {
                             saveError = !self.category.canSave
                             return !saveError
                         }
-                   },
-                   optionMode: .buttons,
-                   options: [
+                       },
+                       optionMode: .buttons,
+                       options: [
                         BannerOption(
-                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(.red)),
+                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(Palette.destructiveButton.background)),
                             action: {
                                 if self.category.categoryMO == nil {
                                     self.presentationMode.wrappedValue.dismiss()
@@ -45,29 +48,32 @@ struct CategoryEditView: View {
                                     confirmDelete = true
                                 }
                             })
-                   ])
+                       ])
                     .alert(isPresented: $confirmDelete, content: {
                         self.delete()
                     })
-            VStack {
-                Spacer().frame(height: 16)
-                Input(title: categoryNameTitle.capitalized, field: $category.name, topSpace: 0)
-                PickerInput(title: categoryImportanceTitle.capitalized, field: $importanceIndex, values: importances.map{$0.string.capitalized})
-                    .onChange(of: importanceIndex, perform: { index in
-                        category.importance = importances[index]
-                    })
-                
-                CategoryValueListView(title: categoryValuesTitle.capitalized , addOption: true, category: category)
-                Spacer()
-                    .alert(isPresented: $saveError, content: {
-                        Alert(title: Text("Error!"),
-                              message: Text(category.saveMessage))
-                    })
+                ScrollView {
+                    VStack {
+                        Spacer().frame(height: 16)
+                        Input(title: categoryNameTitle.capitalized, field: $category.name, topSpace: 0)
+                        PickerInput(title: categoryImportanceTitle.capitalized, field: $importanceIndex, values: importances.map{$0.string.capitalized})
+                            .onChange(of: importanceIndex, perform: { index in
+                                category.importance = importances[index]
+                            })
+                        
+                        CategoryValueListView(title: categoryValuesTitle.capitalized , addOption: true, category: category)
+                        Spacer()
+                            .alert(isPresented: $saveError, content: {
+                                Alert(title: Text("Error!"),
+                                      message: Text(category.saveMessage))
+                            })
+                    }
+                }
             }
-        }
-
-        .onAppear {
-            self.importanceIndex = importances.firstIndex(where: {$0 == category.importance}) ?? 0
+            
+            .onAppear {
+                self.importanceIndex = importances.firstIndex(where: {$0 == category.importance}) ?? 0
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")

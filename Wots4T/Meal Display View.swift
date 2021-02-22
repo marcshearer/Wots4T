@@ -13,14 +13,18 @@ struct MealDisplayView: View {
     @ObservedObject var meal: MealViewModel
     
     var body: some View {
-        ScrollView {
+        ZStack {
+            Palette.background.background
+                .ignoresSafeArea()
             VStack(spacing: 0) {
                 MealDisplayView_Banner(meal: meal)
-                MealDisplayView_Image(meal: meal)
-                MealDisplayView_Description(meal: meal)
-                MealDisplayView_Notes(meal: meal)
-                MealDisplayView_Attachments(meal: meal)
-                Spacer()
+                ScrollView {
+                    MealDisplayView_Image(meal: meal)
+                    MealDisplayView_Description(meal: meal)
+                    MealDisplayView_Notes(meal: meal)
+                    MealDisplayView_Attachments(meal: meal)
+                    Spacer()
+                }
             }.edgesIgnoringSafeArea(.bottom)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
@@ -45,7 +49,7 @@ struct MealDisplayView_Banner: View {
     var body: some View {
         let options: [BannerOption] = (meal.url == "" ? [] : [
                 BannerOption(
-                    image: AnyView(Image("online").resizable().frame(width: 30, height: 30).font(.largeTitle).foregroundColor(.blue)),
+                    image: AnyView(Image("online").resizable().frame(width: 30, height: 30).font(.largeTitle).foregroundColor(Palette.banner.themeText)),
                     action: {
                         MealDisplayView.browseUrl(url: meal.url)
                     })])
@@ -68,13 +72,13 @@ struct MealDisplayView_Image: View {
             VStack {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .aspectRatio(contentMode: .fill)
             }
         } else if let imageData = meal.urlImageCache, let image = UIImage(data: imageData) {
             VStack {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .aspectRatio(contentMode: .fill)
             }
         }
     }
@@ -94,9 +98,9 @@ struct MealDisplayView_Description: View {
                     .bold()
                     .padding(.all, 16)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
+                    .foregroundColor(Palette.divider.text)
                 Spacer()
-            }.background(Color(.black))
+            }.background(Palette.divider.background)
         }
     }
 }
@@ -109,14 +113,15 @@ struct MealDisplayView_Notes: View {
         
         if meal.notes != "" {
             ZStack {
+                Rectangle()
+                    .foregroundColor(Palette.alternate.background)
                 VStack {
                     Text(meal.notes)
                         .font(.body)
                         .padding(.all, 16)
+                        .foregroundColor(Palette.alternate.text)
                     Spacer()
                 }
-                Rectangle()
-                    .foregroundColor(Color(.black).opacity(0.03))
             }
         }
     }

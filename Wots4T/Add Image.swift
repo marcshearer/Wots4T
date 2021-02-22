@@ -218,14 +218,14 @@ fileprivate struct ImageCaptureButton_GetSource_Content : View {
             type.image
             Spacer()
             Text(type.text)
-                .foregroundColor(.white)
+                .foregroundColor(Palette.enabledButton.text)
                 .font(.callout)
                 .minimumScaleFactor(0.5)
             Spacer()
         }
         .frame(width: type.width, height: height)
-            .background(Color.gray)
-            .cornerRadius(height/2)
+        .background(Palette.enabledButton.background)
+        .cornerRadius(height/2)
     }
 }
 
