@@ -69,6 +69,9 @@ struct MealListView: View {
                     self.displayedRemoteChanges = DataModel.shared.load()
                 }
             })
+            .onSwipe(.right) {
+                presentationMode.wrappedValue.dismiss()
+            }
             .onAppear {
                 Utility.mainThread {
                     if let meal = meals.first {

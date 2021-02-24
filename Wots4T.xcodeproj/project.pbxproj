@@ -52,6 +52,7 @@
 		B2DC95A525E019D500FDE49D /* Meal Attachment Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */; };
 		B2DC95A925E01CA600FDE49D /* Attachment View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */; };
 		B2DC95AE25E02AC900FDE49D /* Attachment View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95AD25E02AC900FDE49D /* Attachment View.swift */; };
+		B2F0AEC225E6463E0021FBDB /* Swipe Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */; };
 		B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FABBFD25D6EC760008859E /* Category List View.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,7 @@
 		B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Attachment Managed Object.swift"; sourceTree = "<group>"; };
 		B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View Model.swift"; sourceTree = "<group>"; };
 		B2DC95AD25E02AC900FDE49D /* Attachment View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View.swift"; sourceTree = "<group>"; };
+		B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swipe Gestures.swift"; sourceTree = "<group>"; };
 		B2FABBFD25D6EC760008859E /* Category List View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category List View.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +185,7 @@
 				B233B3B325D45425002EFB3A /* Add Image.swift */,
 				B233B3BE25D5292B002EFB3A /* Image Capture.swift */,
 				B2C678EF25E3AFC6003E5DE8 /* Separator.swift */,
+				B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */,
 			);
 			name = "Reuseable UI Components";
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				B2844FA825B99F300010A04C /* Core Data.swift in Sources */,
 				B212867C25B1B29700557221 /* Wots4TApp.swift in Sources */,
 				B233B3CB25D6A21D002EFB3A /* Category Managed Object.swift in Sources */,
+				B2F0AEC225E6463E0021FBDB /* Swipe Gestures.swift in Sources */,
 				B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */,
 				B2C678EA25E26AA6003E5DE8 /* Palette.swift in Sources */,
 			);

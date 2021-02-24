@@ -32,6 +32,9 @@ struct MealDisplayView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
             .navigationBarHidden(true)
+            .onSwipe(.right) {
+                presentationMode.wrappedValue.dismiss()
+            }
             .onTapGesture {
                 MealDisplayView.browseUrl(url: meal.url)
             }

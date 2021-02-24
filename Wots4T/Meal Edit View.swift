@@ -23,15 +23,7 @@ struct MealEditView: View {
                 .ignoresSafeArea()
             VStack {
                 Banner(title: $title,
-                       backCheck: {
-                        if meal.mealMO == nil && meal.name == "" {
-                            return true
-                        } else {
-                            if self.meal.canSave { self.meal.save() }
-                            saveError = !self.meal.canSave
-                            return !saveError
-                        }
-                       },
+                       backCheck: self.save,
                        optionMode: .buttons,
                        options: [
                         BannerOption(
@@ -73,9 +65,24 @@ struct MealEditView: View {
                 // Invalidate image cache if URL changes
                 meal.urlImageCache = nil
             })
+            .onSwipe(.right) {
+                if self.save() {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
             .navigationBarHidden(true)
+        }
+    }
+    
+    private func save() -> Bool {
+        if meal.mealMO == nil && meal.name == "" {
+            return true
+        } else {
+            if self.meal.canSave { self.meal.save() }
+            saveError = !self.meal.canSave
+            return !saveError
         }
     }
     

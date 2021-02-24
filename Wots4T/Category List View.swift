@@ -79,6 +79,9 @@ struct CategoryListView: View {
                 }
             }
         }
+        .onSwipe(.right) {
+            presentationMode.wrappedValue.dismiss()
+        }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)

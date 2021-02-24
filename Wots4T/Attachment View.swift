@@ -60,6 +60,9 @@ struct AttachmentView: View {
                 Spacer()
             }
         }
+        .onSwipe(.right) {
+            presentationMode.wrappedValue.dismiss()
+        }
     }
     
     func onDelete(offsets: IndexSet) {

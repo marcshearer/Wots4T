@@ -28,15 +28,7 @@ struct CategoryEditView: View {
                 .ignoresSafeArea()
             VStack {
                 Banner(title: $title,
-                       backCheck: {
-                        if category.categoryMO == nil && category.name == "" {
-                            return true
-                        } else {
-                            if self.category.canSave { self.category.save() }
-                            saveError = !self.category.canSave
-                            return !saveError
-                        }
-                       },
+                       backCheck: self.save,
                        optionMode: .buttons,
                        options: [
                         BannerOption(
@@ -70,7 +62,11 @@ struct CategoryEditView: View {
                     }
                 }
             }
-            
+            .onSwipe(.right) {
+                if self.save() {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
             .onAppear {
                 self.importanceIndex = importances.firstIndex(where: {$0 == category.importance}) ?? 0
             }
@@ -78,6 +74,16 @@ struct CategoryEditView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
+    }
+    
+    private func save() -> Bool {
+        if category.categoryMO == nil && category.name == "" {
+            return true
+        } else {
+            if self.category.canSave { self.category.save() }
+            saveError = !self.category.canSave
+            return !saveError
+        }
     }
     
     private func delete() -> Alert {
