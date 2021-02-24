@@ -10,7 +10,8 @@ import SwiftUI
 
 struct PersistenceController {
     static let shared = PersistenceController()
-
+    private(set) var remoteChange = false
+    
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
@@ -35,6 +36,12 @@ struct PersistenceController {
         container = NSPersistentCloudKitContainer(name: "Wots4T")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        } else {
+            container.viewContext.automaticallyMergesChangesFromParent = true
+            let description = container.persistentStoreDescriptions.first
+            description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            let remoteChangeKey = "NSPersistentStoreRemoteChangeNotificationOptionKey"
+            description?.setOption(true as NSNumber, forKey: remoteChangeKey)
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -60,7 +67,7 @@ struct PersistenceController {
             let read = try? viewContext.fetch(request)
             
             if read == nil || read!.isEmpty {
-                DataModel.setupPreviewData(context: viewContext)
+                // DataModel.setupPreviewData(context: viewContext)
             }
             
             do {
@@ -68,8 +75,6 @@ struct PersistenceController {
             } catch {
                 fatalError()
             }
-            
         }
     }
 }
-

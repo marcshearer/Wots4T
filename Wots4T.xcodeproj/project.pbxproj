@@ -48,6 +48,7 @@
 		B2C678EA25E26AA6003E5DE8 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678E925E26AA6003E5DE8 /* Palette.swift */; };
 		B2C678ED25E26AD8003E5DE8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EC25E26AD8003E5DE8 /* Themes.swift */; };
 		B2C678F025E3AFC6003E5DE8 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EF25E3AFC6003E5DE8 /* Separator.swift */; };
+		B2C678FC25E4E7B2003E5DE8 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */; };
 		B2DC95A525E019D500FDE49D /* Meal Attachment Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */; };
 		B2DC95A925E01CA600FDE49D /* Attachment View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */; };
 		B2DC95AE25E02AC900FDE49D /* Attachment View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95AD25E02AC900FDE49D /* Attachment View.swift */; };
@@ -98,6 +99,8 @@
 		B2C678E925E26AA6003E5DE8 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		B2C678EC25E26AD8003E5DE8 /* Themes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		B2C678EF25E3AFC6003E5DE8 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		B2C678F825E4E7AA003E5DE8 /* Wots4T.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wots4T.entitlements; sourceTree = "<group>"; };
+		B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Attachment Managed Object.swift"; sourceTree = "<group>"; };
 		B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View Model.swift"; sourceTree = "<group>"; };
 		B2DC95AD25E02AC900FDE49D /* Attachment View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View.swift"; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2C678FC25E4E7B2003E5DE8 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +124,7 @@
 			children = (
 				B212867A25B1B29700557221 /* Wots4T */,
 				B212867925B1B29700557221 /* Products */,
+				B2C678FA25E4E7B2003E5DE8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,6 +139,7 @@
 		B212867A25B1B29700557221 /* Wots4T */ = {
 			isa = PBXGroup;
 			children = (
+				B2C678F825E4E7AA003E5DE8 /* Wots4T.entitlements */,
 				B2844F6C25B5F3CB0010A04C /* Standard Components */,
 				B26BA08325C82A7F00C26B69 /* Shared */,
 				B233B3C925D6A1FC002EFB3A /* Categories */,
@@ -251,6 +257,14 @@
 				B2C678EC25E26AD8003E5DE8 /* Themes.swift */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		B2C678FA25E4E7B2003E5DE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B2DC95A325E019B000FDE49D /* Meal Managed Objects */ = {
@@ -511,6 +525,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Wots4T/Wots4T.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Wots4T/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T7CT2S464;
@@ -533,6 +548,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Wots4T/Wots4T.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Wots4T/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T7CT2S464;

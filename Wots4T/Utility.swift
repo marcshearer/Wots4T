@@ -69,7 +69,7 @@ class Utility {
     public static var isDevelopment: Bool {
         get {
             if _isDevelopment == nil {
-                _isDevelopment = (UserDefaults.standard.string(forKey: "database") == "development")
+                _isDevelopment = true // TODO (UserDefaults.standard.string(forKey: "database") == "development")
             }
             return _isDevelopment
         }

@@ -16,6 +16,7 @@ struct CalendarView: View {
     @State private var linkEditCategories = false
     @State private var linkDisplayMeal: MealViewModel?
     @State var title = appName
+    @State private var displayedRemoteChanges: Int = 0
     
     @ObservedObject var data = DataModel.shared
     
@@ -54,6 +55,12 @@ struct CalendarView: View {
                     NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
                     NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
                 }
+                .onChange(of: DataModel.shared.publishedRemoteChanges, perform: { value in
+                    // Remote data model has changed - refresh it
+                    if value > self.displayedRemoteChanges {
+                        self.displayedRemoteChanges = DataModel.shared.load()
+                    }
+                })
                 .onAppear {
                     Utility.mainThread {
                         self.startAt = 0

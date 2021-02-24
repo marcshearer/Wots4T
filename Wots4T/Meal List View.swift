@@ -21,7 +21,8 @@ struct MealListView: View {
     @State var linkToEditMeal: MealViewModel?
     @State var linkToEditTitle: String?
     @State var meals: [MealViewModel] = []
-
+    @State private var displayedRemoteChanges: Int = 0
+    
     let categories = DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
     @State private var categoryValues: [UUID: CategoryValueViewModel] = [:]
 
@@ -62,9 +63,17 @@ struct MealListView: View {
                     Spacer()
                 }
             }
+            .onChange(of: DataModel.shared.publishedRemoteChanges, perform: { value in
+                // Remote data model has changed - refresh it
+                if value > self.displayedRemoteChanges {
+                    self.displayedRemoteChanges = DataModel.shared.load()
+                }
+            })
             .onAppear {
                 Utility.mainThread {
-                    self.startAt = meals.first!.mealId
+                    if let meal = meals.first {
+                        self.startAt = meal.mealId
+                    }
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -79,7 +88,7 @@ struct MealListView: View {
     }
     
     private func allocate(meal: MealViewModel) {
-        let allocation = AllocationViewModel(dayNumber: self.allocateDayNumber!, slot: self.allocateSlot!, meal: meal)
+        let allocation = AllocationViewModel(dayNumber: self.allocateDayNumber!, slot: self.allocateSlot!, meal: meal, allocated: Date())
         allocation.insert()
     }
     

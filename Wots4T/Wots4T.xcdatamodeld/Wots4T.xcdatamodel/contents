@@ -1,37 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Allocation" representedClassName="AllocationMO" syncable="YES">
+        <attribute name="allocated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dayNumber64" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="mealId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="slot16" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="dayNumber64"/>
-                <constraint value="slot16"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="Category" representedClassName="CategoryMO" syncable="YES">
         <attribute name="categoryId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="importance16" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="categoryId"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="CategoryValue" representedClassName="CategoryValueMO" syncable="YES">
         <attribute name="categoryId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="frequency16" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="valueId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="categoryId"/>
-                <constraint value="valueId"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="Meal" representedClassName="MealMO" syncable="YES">
         <attribute name="desc" optional="YES" attributeType="String"/>
@@ -42,11 +26,6 @@
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
         <attribute name="urlImageCache" optional="YES" attributeType="Binary"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="mealId"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="MealAttachment" representedClassName="MealAttachmentMO" syncable="YES">
         <attribute name="attachment" optional="YES" attributeType="Binary"/>
@@ -58,16 +37,9 @@
         <attribute name="categoryId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="mealId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="valueId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="mealId"/>
-                <constraint value="categoryId"/>
-                <constraint value="valueId"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Allocation" positionX="45" positionY="135" width="128" height="74"/>
+        <element name="Allocation" positionX="45" positionY="135" width="128" height="89"/>
         <element name="Category" positionX="45" positionY="162" width="128" height="74"/>
         <element name="CategoryValue" positionX="54" positionY="171" width="128" height="89"/>
         <element name="Meal" positionX="160" positionY="192" width="128" height="149"/>

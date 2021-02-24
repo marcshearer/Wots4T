@@ -7,10 +7,16 @@
 
 import Foundation
 import CoreData
+import Combine
 
 class DataModel: ObservableObject {
     
     public static let shared = DataModel()
+    
+    @Published private(set) var receivedRemoteChanges = 0
+    @Published private(set) var publishedRemoteChanges = 0 // Updated every 10 seconds
+    @Published private(set) var loadedRemoteChanges = 0
+    private var observer: NSObjectProtocol?
     
     @Published private(set) var categories: [UUID:CategoryViewModel] = [:]                  // Category ID
     @Published private(set) var categoryValues: [UUID:[UUID:CategoryValueViewModel]] = [:]  // Category ID / Value ID
@@ -19,14 +25,68 @@ class DataModel: ObservableObject {
     
     @Published private(set) var allocations: [DayNumber:[Int:AllocationViewModel]] = [:]    // Day number / Slot
     
-    public func load() {
+    // Auto-cleanup
+    private var cancellableSet: Set<AnyCancellable> = []
+
+    init() {
+        self.observer = NotificationCenter.default.addObserver(forName: Notification.Name.persistentStoreRemoteChangeNotification, object: nil, queue: nil, using: { (notification) in
+            Utility.mainThread {
+                self.receivedRemoteChanges += 1
+            }
+        })
+        
+        self.setupMappings()
+    }
+    
+    private func setupMappings() {
+        $receivedRemoteChanges
+            .receive(on: RunLoop.main)
+            .debounce(for: .seconds(1), scheduler: RunLoop.main)
+            .map { (receivedRemoteChanges) in
+                return receivedRemoteChanges
+            }
+        .assign(to: \.publishedRemoteChanges, on: self)
+        .store(in: &cancellableSet)
+    }
+    
+    @discardableResult public func load() -> Int {
+        
+        let startLoadReceivedRemoteChanges = self.receivedRemoteChanges
+        
+        Utility.debugMessage("DataModel", "Loading \(startLoadReceivedRemoteChanges)")
         
         /// **Builds in-memory mirror of categories, category value, meals and their category values with pointers to managed objects**
         /// Note that this infers that there will only ever be 1 instance of the app accessing the database
-        
+       
+        // Read current data
         let categoryList = CoreData.fetch(from: CategoryMO.tableName, sort: (key: #keyPath(CategoryMO.importance16), direction: .ascending)) as! [CategoryMO]
         let categoryValueList = CoreData.fetch(from: CategoryValueMO.tableName, sort: (key: #keyPath(CategoryValueMO.frequency16), direction: .ascending)) as! [CategoryValueMO]
         
+        let mealList = CoreData.fetch(from: MealMO.tableName, sort: (key: #keyPath(MealMO.lastDate), direction: .ascending)) as! [MealMO]
+        let mealCategoryValueList = CoreData.fetch(from: MealCategoryValueMO.tableName) as! [MealCategoryValueMO]
+        let mealAttachmentList = CoreData.fetch(from: MealAttachmentMO.tableName) as! [MealAttachmentMO]
+        
+        let dateFilter = NSPredicate(format: "dayNumber64 >= %d", DayNumber.today.value - maxRetention)
+        var allocationList = CoreData.fetch(from: AllocationMO.entity().name!, filter: dateFilter, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending), (key: #keyPath(AllocationMO.allocated), direction: .ascending)) as! [AllocationMO]
+        
+        // Check duplicates
+        self.checkDuplicates(categoryList, ["categoryId"], descKey: "name", recordName: CategoryMO.tableName)
+        self.checkDuplicates(categoryValueList, ["categoryId", "valueId"], recordName: CategoryValueMO.tableName)
+        self.checkDuplicates(mealList, ["mealId"], descKey: "name", recordName: MealMO.tableName)
+        self.checkDuplicates(mealCategoryValueList, ["mealId", "categoryId", "valueId"], recordName: MealCategoryValueMO.tableName)
+        self.checkDuplicates(mealAttachmentList, ["mealId", "attachmentId"], recordName: MealAttachmentMO.tableName)
+        self.checkDuplicates(allocationList, ["dayNumber64", "slot16"], recordName: AllocationMO.tableName) { (record) in
+            // Delete the earlier duplicate records in the list
+            let allocationMO = record as! AllocationMO
+            if let index = allocationList.firstIndex(where: {$0.objectID == allocationMO.objectID}) {
+                CoreData.update {
+                    allocationList.remove(at: index)
+                    CoreData.context.delete(allocationMO)
+                }
+            }
+        }
+        
+       // Setup categories
         self.categories = [:]
         self.categoryValues = [:]
         for category in categoryList {
@@ -36,24 +96,86 @@ class DataModel: ObservableObject {
             self.categories[category.categoryId] = CategoryViewModel(categoryMO: category)
         }
         
-        let mealMOList = CoreData.fetch(from: MealMO.tableName, sort: (key: #keyPath(MealMO.lastDate), direction: .ascending)) as! [MealMO]
-        let mealCategoryValueMOList = CoreData.fetch(from: MealCategoryValueMO.tableName) as! [MealCategoryValueMO]
-        let mealAttachmentList = CoreData.fetch(from: MealAttachmentMO.tableName) as! [MealAttachmentMO]
-
+        // Setup meals
         self.meals = [:]
-        for mealMO in mealMOList {
-            let mealCategoryValueArray = mealCategoryValueMOList.filter( { $0.mealId == mealMO.mealId } )
+        for mealMO in mealList {
+            let mealCategoryValueArray = mealCategoryValueList.filter( { $0.mealId == mealMO.mealId } )
             let mealCategoryValueMO = Dictionary(uniqueKeysWithValues: mealCategoryValueArray.map{($0.categoryId, $0)})
             let mealAttachmentMO = Set(mealAttachmentList.filter( {$0.mealId == mealMO.mealId }))
             self.meals[mealMO.mealId] = MealViewModel(mealMO: mealMO, mealCategoryValueMO: mealCategoryValueMO, mealAttachmentMO: mealAttachmentMO)
         }
-        
-        let dateFilter = NSPredicate(format: "dayNumber64 >= %d", DayNumber.today.value - maxRetention)
-        let allocationMOList = CoreData.fetch(from: AllocationMO.entity().name!, filter: dateFilter, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending)) as! [AllocationMO]
 
+        //Setup calendar
         self.allocations = [:]
-        for allocationMO in allocationMOList {
+        for allocationMO in allocationList {
             self.addAllocation(allocation: AllocationViewModel(allocationMO: allocationMO))
+        }
+        
+        if startLoadReceivedRemoteChanges == self.receivedRemoteChanges {
+            // No additional changes since start
+            self.loadedRemoteChanges = self.receivedRemoteChanges
+            return self.loadedRemoteChanges
+        } else {
+            // Things have moved since load started - reload
+            return self.load()
+        }
+    }
+    
+    /// Method to check for duplicates
+    
+    private func checkDuplicates(_ records: [NSManagedObject], _ indexKeys: [String], descKey: String? = nil, recordName: String, action: ((NSManagedObject)->())? = nil) {
+        // Note that if the delete flag is set then the earlier entry(ies) in the list will be deleted
+        // Therefore the list should be sorted so that the entries to be deleted appear earlier
+        // If the delete flag is not set and a duplicate is detected this will result in a fatal error
+        
+        if records.count > 1 {
+        
+            var lastKey: [String:Any?] = [:]
+            
+            let entity = records.first!.entity
+            let attributes = entity.attributesByName
+            
+            func checkKey(record: NSManagedObject, key: String) -> Bool {
+                var same = true
+                switch attributes[key]?.attributeType {
+                case .integer16AttributeType, .integer32AttributeType, .integer64AttributeType:
+                    let value = record.value(forKey: key) as? Int
+                    if value != (lastKey[key] as? Int) {
+                        same = false
+                    }
+                    lastKey[key] = value
+                case .UUIDAttributeType:
+                    let value = record.value(forKey: key) as? UUID
+                    if value != (lastKey[key] as? UUID) {
+                        same = false
+                    }
+                    lastKey[key] = value
+                default:
+                    fatalError("Core data type not handled")
+                }
+                return same
+            }
+            
+            for record in records.reversed() {
+                var duplicate = true
+                for indexKey in indexKeys {
+                    let keySame = checkKey(record: record, key: indexKey)
+                    duplicate = duplicate && keySame
+                }
+                if duplicate {
+                    var desc: String
+                    if let descKey = descKey {
+                        desc = record.value(forKey: descKey) as! String
+                    } else {
+                        desc = "Unknown"
+                    }
+                    if let action = action {
+                        action(record)
+                    } else {
+                        fatalError("Duplicate key for record \(desc)!) in table \(recordName)")
+                    }
+                }
+            }
         }
     }
     
@@ -255,7 +377,7 @@ class DataModel: ObservableObject {
         assert(allocation.allocationMO == nil, "Cannot insert a \(allocationName) which already has a managed object")
         assert(self.allocations[allocation.dayNumber]?[allocation.slot] == nil, "\(allocationName) already exists and cannot be created")
         CoreData.update(updateLogic: {
-            allocation.allocationMO = AllocationMO(context: CoreData.context, dayNumber: allocation.dayNumber, slot: allocation.slot, mealId: allocation.meal.mealId)
+            allocation.allocationMO = AllocationMO(context: CoreData.context, dayNumber: allocation.dayNumber, slot: allocation.slot, mealId: allocation.meal.mealId, allocated: allocation.allocated)
             self.updateMO(allocation: allocation)
             self.addAllocation(allocation: allocation)
         })
@@ -282,6 +404,7 @@ class DataModel: ObservableObject {
         allocation.allocationMO!.dayNumber = allocation.dayNumber
         allocation.allocationMO!.slot = allocation.slot
         allocation.allocationMO!.mealId = allocation.meal.mealId
+        allocation.allocationMO!.allocated = allocation.allocated
     }
     
     private func addAllocation(allocation: AllocationViewModel) {
@@ -369,3 +492,8 @@ class DataModel: ObservableObject {
         self.categoryValues[categoryValue.categoryId]![categoryValue.valueId] = categoryValue
     }
 }
+
+extension Notification.Name {
+    static let persistentStoreRemoteChangeNotification = Notification.Name(rawValue: "NSPersistentStoreRemoteChangeNotification")
+}
+

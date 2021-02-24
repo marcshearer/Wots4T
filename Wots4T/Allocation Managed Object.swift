@@ -15,12 +15,14 @@ public class AllocationMO: NSManagedObject {
     @NSManaged public var dayNumber64: Int64
     @NSManaged public var slot16: Int16
     @NSManaged public var mealId: UUID
+    @NSManaged public var allocated: Date
     
-    convenience init(context: NSManagedObjectContext, dayNumber: DayNumber, slot: Int, mealId: UUID) {
+    convenience init(context: NSManagedObjectContext, dayNumber: DayNumber, slot: Int, mealId: UUID, allocated: Date) {
         self.init(context: context)
         self.dayNumber = dayNumber
         self.slot16 = Int16(slot)
         self.mealId = mealId
+        self.allocated = allocated
     }
     
     public var slot: Int {

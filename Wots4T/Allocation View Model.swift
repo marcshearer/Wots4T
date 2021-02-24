@@ -15,6 +15,7 @@ public class AllocationViewModel : ObservableObject, Identifiable {
     @Published private(set) var dayNumber: DayNumber!
     @Published private(set) var slot: Int!
     @Published private(set) var meal: MealViewModel!
+    @Published private(set) var allocated: Date!
     
     // Linked managed objects - should only be referenced in this and the Data classes
     internal var allocationMO: AllocationMO?
@@ -40,10 +41,11 @@ public class AllocationViewModel : ObservableObject, Identifiable {
         self.setupMappings()
     }
     
-    public init(dayNumber: DayNumber, slot: Int = 0, meal: MealViewModel) {
+    public init(dayNumber: DayNumber, slot: Int = 0, meal: MealViewModel, allocated: Date) {
         self.dayNumber = dayNumber
         self.slot = slot
         self.meal = meal
+        self.allocated = allocated
         self.setupMappings()
     }
     
@@ -56,6 +58,7 @@ public class AllocationViewModel : ObservableObject, Identifiable {
             self.dayNumber = allocationMO.dayNumber
             self.slot = allocationMO.slot
             self.meal = DataModel.shared.meals[allocationMO.mealId]
+            self.allocated = allocationMO.allocated
         }
     }
     
