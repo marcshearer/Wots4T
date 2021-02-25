@@ -50,12 +50,8 @@ struct CalendarView: View {
                             }
                         }
                     }
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
-                    NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
-                    NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
                 }
-                .onChange(of: DataModel.shared.publishedRemoteChanges, perform: { value in
+                .onChange(of: DataModel.shared.publishedRemoteUpdates, perform: { value in
                     // Remote data model has changed - refresh it
                     if value > self.displayedRemoteChanges {
                         self.displayedRemoteChanges = DataModel.shared.load()
@@ -66,7 +62,11 @@ struct CalendarView: View {
                         self.startAt = 0
                     }
                 }
+                NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
+                NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
             }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

@@ -86,7 +86,7 @@ struct CategoryValueEditView: View {
     
     private func delete() -> Alert {
         return Alert(title: Text("Warning!"),
-              message: Text("Are you sure you want to delete this \(categoryValueName)?"),
+              message: Text("Are you sure you want to delete this \(categoryValueName)?\n\nThis \(categoryValueName) will be removed from any meals where it has been setup."),
               primaryButton:
                 .destructive(Text("Delete")) {
                     self.categoryValue.remove()

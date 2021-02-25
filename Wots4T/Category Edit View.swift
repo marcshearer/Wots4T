@@ -31,15 +31,15 @@ struct CategoryEditView: View {
                        backCheck: self.save,
                        optionMode: .buttons,
                        options: [
-                        BannerOption(
-                            image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(Palette.destructiveButton.background)),
-                            action: {
-                                if self.category.categoryMO == nil {
-                                    self.presentationMode.wrappedValue.dismiss()
-                                } else {
-                                    confirmDelete = true
-                                }
-                            })
+                            BannerOption(
+                                image: AnyView(Image(systemName: "trash.circle.fill").font(.largeTitle).foregroundColor(Palette.destructiveButton.background)),
+                                action: {
+                                    if self.category.categoryMO == nil {
+                                        self.presentationMode.wrappedValue.dismiss()
+                                    } else {
+                                        confirmDelete = true
+                                    }
+                                })
                        ])
                     .alert(isPresented: $confirmDelete, content: {
                         self.delete()
@@ -88,7 +88,7 @@ struct CategoryEditView: View {
     
     private func delete() -> Alert {
         return Alert(title: Text("Warning!"),
-              message: Text("Are you sure you want to delete this \(categoryName)?"),
+              message: Text("Are you sure you want to delete this \(categoryName)?\n\nAll values for this category will be deleted and any values for this category which you have setup on meals will be removed."),
               primaryButton:
                 .destructive(Text("Delete")) {
                     self.category.remove()

@@ -23,7 +23,7 @@ struct MealListView: View {
     @State var meals: [MealViewModel] = []
     @State private var displayedRemoteChanges: Int = 0
     
-    let categories = DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+    let categories = DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance, $0.name], [$1.importance, $1.name], [.int, .string])})
     @State private var categoryValues: [UUID: CategoryValueViewModel] = [:]
 
     var body: some View {
@@ -63,7 +63,7 @@ struct MealListView: View {
                     Spacer()
                 }
             }
-            .onChange(of: DataModel.shared.publishedRemoteChanges, perform: { value in
+            .onChange(of: DataModel.shared.publishedRemoteUpdates, perform: { value in
                 // Remote data model has changed - refresh it
                 if value > self.displayedRemoteChanges {
                     self.displayedRemoteChanges = DataModel.shared.load()
@@ -160,9 +160,9 @@ struct MealListView_FilterInput: View {
                                     ForEach(categories) { category in
                                         let categoryId = category.categoryId
                                         let value = categoryValues[categoryId]
-                                        let title = value?.name ?? category.name!.uppercased()
+                                        let title = value?.name ?? category.name.uppercased()
                                         let values = self.getCategoryValues(categoryId: categoryId)
-                                        let names = ["No \(category.name!.lowercased()) filter"] + values.map{$0.name}
+                                        let names = ["No \(category.name.lowercased()) filter"] + values.map{$0.name}
                                         
                                         Menu(title) {
                                             ForEach(0..<(names.count)) { (index) in
@@ -193,11 +193,11 @@ struct MealListView_FilterInput: View {
     }
     
     func getCategories() -> [CategoryViewModel] {
-        return DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+        return DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance, $0.name], [$1.importance, $1.name], [.int, .string])})
     }
     
     func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {
-        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {$0.frequency > $1.frequency})
+        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {!Utility.lessThan([$0.frequency, $0.name], [$1.frequency, $1.name], [.int, .string])})
     }
 }
 

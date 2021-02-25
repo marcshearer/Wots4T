@@ -12,10 +12,10 @@ struct CategoryListView: View {
     
     @State var linkToAdd = false
     @State var linkToEdit = false
-    @State var linkToEditCategory: CategoryViewModel?
+    @State var linkToEditCategory = CategoryViewModel()
     @State var linkToEditTitle: String?
 
-    @State var title: String
+    @State var title: String = ""
     
     @ObservedObject var data = DataModel.shared
 
@@ -26,6 +26,7 @@ struct CategoryListView: View {
                     .ignoresSafeArea()
                 VStack {
                     Banner(title: $title,
+                           backCheck: exit,
                            optionMode: .buttons,
                            options: [
                             BannerOption(
@@ -34,10 +35,10 @@ struct CategoryListView: View {
                                     self.linkToAdd = true
                                     self.linkToEdit = true
                                     self.linkToEditTitle = "New \(categoryName.capitalized)"
-                                    self.linkToEditCategory = nil
+                                    self.linkToEditCategory = CategoryViewModel()
                                 })])
                     LazyVStack {
-                        let categories = DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+                        let categories = DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance, $0.name], [$1.importance, $1.name], [.int, .string])})
                         ForEach(categories) { category in
                             VStack {
                                 HStack(alignment: .top) {
@@ -57,7 +58,7 @@ struct CategoryListView: View {
                                             .font(.caption)
                                             .foregroundColor(Palette.background.faintText)
                                     } else {
-                                        let valueString = Utility.toString( categoryValues.map{$1}.sorted(by: {$0.frequency > $1.frequency}).map{$0.name})
+                                        let valueString = Utility.toString( categoryValues.map{$1}.sorted(by: {!Utility.lessThan([$0.frequency, $0.name], [$1.frequency, $1.name], [.int, .string])}).map{$0.name})
                                         Text(valueString)
                                             .font(.caption)
                                             .foregroundColor(Palette.background.contrastText)
@@ -79,13 +80,21 @@ struct CategoryListView: View {
                 }
             }
         }
+        .onAppear() {
+            DataModel.shared.suspendRemoteUpdates(true)
+        }
         .onSwipe(.right) {
             presentationMode.wrappedValue.dismiss()
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("")
         .navigationBarHidden(true)
-        NavigationLink(destination: CategoryEditView(category: self.linkToEditCategory ?? CategoryViewModel(), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
+        NavigationLink(destination: CategoryEditView(category: self.linkToEditCategory, title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
+    }
+    
+    private func exit() -> Bool {
+        DataModel.shared.suspendRemoteUpdates(false)
+        return true
     }
 }
 

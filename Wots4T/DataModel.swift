@@ -13,9 +13,10 @@ class DataModel: ObservableObject {
     
     public static let shared = DataModel()
     
-    @Published private(set) var receivedRemoteChanges = 0
-    @Published private(set) var publishedRemoteChanges = 0 // Updated every 10 seconds
-    @Published private(set) var loadedRemoteChanges = 0
+    @Published private(set) var receivedRemoteUpdates = 0
+    @Published private(set) var publishedRemoteUpdates = 0 // Updated every 10 seconds (unless suspended)
+    @Published private(set) var loadedRemoteUpdates = 0
+    @Published private var remoteUpdatesSuspended = false
     private var observer: NSObjectProtocol?
     
     @Published private(set) var categories: [UUID:CategoryViewModel] = [:]                  // Category ID
@@ -31,29 +32,35 @@ class DataModel: ObservableObject {
     init() {
         self.observer = NotificationCenter.default.addObserver(forName: Notification.Name.persistentStoreRemoteChangeNotification, object: nil, queue: nil, using: { (notification) in
             Utility.mainThread {
-                self.receivedRemoteChanges += 1
+                self.receivedRemoteUpdates += 1
             }
         })
         
         self.setupMappings()
     }
     
+    public func suspendRemoteUpdates(_ suspend: Bool) {
+        if suspend != self.remoteUpdatesSuspended {
+            self.remoteUpdatesSuspended = suspend
+        }
+    }
+    
     private func setupMappings() {
-        $receivedRemoteChanges
+        Publishers.CombineLatest3($receivedRemoteUpdates, $publishedRemoteUpdates, $remoteUpdatesSuspended)
             .receive(on: RunLoop.main)
             .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .map { (receivedRemoteChanges) in
-                return receivedRemoteChanges
+            .map { (receivedRemoteUpdates, publishedRemoteUpdates, remoteUpdatesSuspended) in
+                return (remoteUpdatesSuspended ? publishedRemoteUpdates :receivedRemoteUpdates)
             }
-        .assign(to: \.publishedRemoteChanges, on: self)
+        .assign(to: \.publishedRemoteUpdates, on: self)
         .store(in: &cancellableSet)
     }
     
     @discardableResult public func load() -> Int {
         
-        let startLoadReceivedRemoteChanges = self.receivedRemoteChanges
+        let startLoadreceivedRemoteUpdates = self.receivedRemoteUpdates
         
-        Utility.debugMessage("DataModel", "Loading \(startLoadReceivedRemoteChanges)")
+        Utility.debugMessage("DataModel", "Loading \(startLoadreceivedRemoteUpdates)")
         
         /// **Builds in-memory mirror of categories, category value, meals and their category values with pointers to managed objects**
         /// Note that this infers that there will only ever be 1 instance of the app accessing the database
@@ -67,7 +74,7 @@ class DataModel: ObservableObject {
         let mealAttachmentList = CoreData.fetch(from: MealAttachmentMO.tableName) as! [MealAttachmentMO]
         
         let dateFilter = NSPredicate(format: "dayNumber64 >= %d", DayNumber.today.value - maxRetention)
-        var allocationList = CoreData.fetch(from: AllocationMO.entity().name!, filter: dateFilter, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending), (key: #keyPath(AllocationMO.allocated), direction: .ascending)) as! [AllocationMO]
+        var allocationList = CoreData.fetch(from: AllocationMO.tableName, filter: dateFilter, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending), (key: #keyPath(AllocationMO.allocated), direction: .ascending)) as! [AllocationMO]
         
         // Check duplicates
         self.checkDuplicates(categoryList, ["categoryId"], descKey: "name", recordName: CategoryMO.tableName)
@@ -111,10 +118,10 @@ class DataModel: ObservableObject {
             self.addAllocation(allocation: AllocationViewModel(allocationMO: allocationMO))
         }
         
-        if startLoadReceivedRemoteChanges == self.receivedRemoteChanges {
+        if startLoadreceivedRemoteUpdates == self.receivedRemoteUpdates {
             // No additional changes since start
-            self.loadedRemoteChanges = self.receivedRemoteChanges
-            return self.loadedRemoteChanges
+            self.loadedRemoteUpdates = self.receivedRemoteUpdates
+            return self.loadedRemoteUpdates
         } else {
             // Things have moved since load started - reload
             return self.load()
@@ -182,7 +189,7 @@ class DataModel: ObservableObject {
     /// Methods to sort the meals
     
     public func sortedMeals(dayNumber: DayNumber! = nil) -> [MealViewModel] {
-        let categories = self.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+        let categories = self.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance, $0.name], [$1.importance, $1.name], [.int, .string])})
         var weightings: [UUID:[UUID:Int]] = [:] // categoryId/valueId
         
         // Flatten out allocation dictionaries - note this should be possible with a couple of compactMaps
@@ -193,7 +200,7 @@ class DataModel: ObservableObject {
             }
         }
         // Now sort into reverse chronological order
-        let allocations = unsorted.sorted(by: {lessThan([$1.dayNumber.value, $1.slot], [$0.dayNumber.value, $0.slot])})
+        let allocations = unsorted.sorted(by: {Utility.lessThan([$1.dayNumber.value, $1.slot], [$0.dayNumber.value, $0.slot])})
         
         for category in categories {
             weightings[category.categoryId] = [:]
@@ -258,24 +265,8 @@ class DataModel: ObservableObject {
             meal.debugInfo += " \(mealWeightings.last!)"
         }
                 
-        let sorted = sort.sorted(by: { lessThan($1.weightings, $0.weightings) })
+        let sorted = sort.sorted(by: { Utility.lessThan($1.weightings, $0.weightings) })
         return sorted.map{$0.meal}
-    }
-    
-    private func lessThan (_ lhs: [Int], _ rhs: [Int], element: Int = 0) -> Bool {
-        if element >= rhs.count {
-            return false
-        } else if element >= lhs.count {
-            return true
-        } else {
-            if lhs[element] < rhs[element] {
-                return true
-            } else if lhs[element] > rhs[element] {
-                return false
-            } else {
-                return lessThan(lhs, rhs, element: element + 1)
-            }
-        }
     }
     
     /// Methods for meals and Categorys
@@ -294,14 +285,23 @@ class DataModel: ObservableObject {
         assert(meal.mealMO != nil, "Cannot remove a \(mealName) which doesn't already have managed objects")
         assert(self.meals[meal.mealId] != nil, "\(mealName) does not exist and cannot be deleted")
         CoreData.update(updateLogic: {
+            // Remove meal category values
             if !meal.mealCategoryValueMO.isEmpty {
-                // Delete categorys
                 self.updateMealCategoryValuesMO(meal: meal, categoryValues: [:])
             }
+            
+            // Remove attachments
             if !meal.mealAttachmentMO.isEmpty {
-                // Delete attachments
                 self.updateMealAttachmentsMO(meal: meal, attachments: [])
             }
+            
+            // Remove any allocations for this meal
+            let mealAllocations = (allocations.compactMap{$1.compactMap{$1}}).flatMap{$0}.filter{$0.meal.mealId == meal.mealId}
+            for allocation in mealAllocations {
+                self.remove(allocation: allocation)
+            }
+            
+            // Now remove the meal itself
             CoreData.context.delete(meal.mealMO!)
             self.meals[meal.mealId] = nil
         })
@@ -430,6 +430,22 @@ class DataModel: ObservableObject {
         assert(category.categoryMO != nil, "Cannot remove a \(categoryName) which doesn't already have a managed object")
         assert(self.categories[category.categoryId] != nil, "\(categoryName) does not exist and cannot be deleted")
         CoreData.update(updateLogic: {
+            
+            // Remove any values for this category
+            if let categoryValues = self.categoryValues[category.categoryId] {
+                for (_, categoryValue) in categoryValues {
+                    self.remove(categoryValue: categoryValue)
+                }
+            }
+            
+            // Now remove this category from any meals
+            let meals = self.meals.filter{$1.categoryValues[category.categoryId] != nil}
+            for (_, meal) in meals {
+                meal.categoryValues[category.categoryId] = nil
+                meal.save()
+            }
+            
+            // Noew remove the category itself
             CoreData.context.delete(category.categoryMO!)
             self.categories[category.categoryId] = nil
         })

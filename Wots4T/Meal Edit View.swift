@@ -103,7 +103,7 @@ struct MealEditView: View {
     
     private func delete() -> Alert {
         return Alert(title: Text("Warning!"),
-              message: Text("Are you sure you want to delete this \(mealName)?"),
+              message: Text("Are you sure you want to delete this \(mealName)?\n\nAny allocations of this meal in the calendar will be removed."),
               primaryButton:
                 .destructive(Text("Delete")) {
                     self.meal.remove()
@@ -129,7 +129,7 @@ struct MealEditView_Categories : View {
                 Spacer().frame(width: 32)
                 ForEach(categories) { category in
                     let value = meal.categoryValues[category.categoryId]
-                    let title = value?.name ?? category.name!.uppercased()
+                    let title = value?.name ?? category.name.uppercased()
                     let values = self.getCategoryValues(categoryId: category.categoryId)
                     let names = values.map{$0.name} + ["Not specified"]
                     
@@ -150,11 +150,11 @@ struct MealEditView_Categories : View {
     }
     
     func getCategories() -> [CategoryViewModel] {
-        return DataModel.shared.categories.map{$1}.sorted(by: {$0.importance < $1.importance})
+        return DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance, $0.name], [$1.importance, $1.name], [.int, .string])})
     }
     
     func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {
-        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {$0.frequency > $1.frequency})
+        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {!Utility.lessThan([$0.frequency, $0.name], [$1.frequency, $1.name], [.int, .string])})
     }
 }
 

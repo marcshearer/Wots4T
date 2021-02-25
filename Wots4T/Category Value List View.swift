@@ -18,7 +18,7 @@ struct CategoryValueListView: View {
     @ObservedObject var data = DataModel.shared
 
     @State var linkToEdit = false
-    @State var linkToEditCategoryValue: CategoryValueViewModel?
+    @State var linkToEditCategoryValue = CategoryValueViewModel()
     @State var linkToEditTitle: String?
 
     var body: some View {
@@ -30,14 +30,14 @@ struct CategoryValueListView: View {
                     InputTitle(title: title,
                                buttonImage: AnyView(Image(systemName: "plus.circle.fill").font(.title).foregroundColor(Palette.listButton.background)),
                                buttonAction: !addOption ? nil : {
-                                self.linkToEdit = true
+                                self.linkToEditCategoryValue = CategoryValueViewModel(categoryId: category.categoryId)
                                 self.linkToEditTitle = "New \(categoryValueName.capitalized)"
-                                self.linkToEditCategoryValue = nil
+                                self.linkToEdit = true
                                })
                     Spacer().frame(height: 8)
                 }
                 LazyVStack {
-                    let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {$0.frequency > $1.frequency})
+                    let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {!Utility.lessThan([$0.frequency, $0.name], [$1.frequency, $0.name], [.int, .string])})
                     ForEach(categoryValues) { categoryValue in
                         VStack {
                             HStack(alignment: .top) {
@@ -62,7 +62,7 @@ struct CategoryValueListView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
             .navigationBarHidden(true)
-            NavigationLink(destination: CategoryValueEditView(categoryValue: self.linkToEditCategoryValue ?? CategoryValueViewModel(categoryId: category.categoryId), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
+            NavigationLink(destination: CategoryValueEditView(categoryValue: self.linkToEditCategoryValue, title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
     }
 }

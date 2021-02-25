@@ -28,8 +28,8 @@ public class CategoryViewModel : ObservableObject, Identifiable {
 
     // Properties in core data model
     @Published private(set) var categoryId: UUID!
-    @Published public var name: String! = ""
-    @Published public var importance: Importance! = .other
+    @Published public var name: String = ""
+    @Published public var importance: Importance = .other
     
     // Linked managed objects - should only be referenced in this and the Data classes
     internal var categoryMO: CategoryMO?
