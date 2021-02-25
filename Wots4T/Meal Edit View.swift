@@ -46,7 +46,7 @@ struct MealEditView: View {
                     })
                 
                 ScrollView(showsIndicators: false) {
-                    Input(title: mealNameTitle.capitalized, field: $meal.name, topSpace: 0)
+                    Input(title: mealNameTitle.capitalized, field: $meal.name, message: $meal.nameMessage, topSpace: 0)
                     InputTitle(title: mealDescTitle.capitalized, buttonImage: AnyView(Image(systemName: "icloud.and.arrow.down").foregroundColor(Palette.background.themeText).font(.callout)), buttonAction: ($meal.url.wrappedValue == "" ? nil : { getDetail() }))
                     Input(field: $meal.desc, height: 60)
                     MealEditView_Categories(meal: meal)

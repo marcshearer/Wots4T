@@ -31,6 +31,7 @@ public class MealViewModel : ObservableObject, Identifiable {
     internal var mealAttachmentMO: Set<MealAttachmentMO> = []
     
     // Other properties
+    @Published public var nameMessage: String = ""
     @Published private(set) var saveMessage: String = ""
     @Published private(set) var canSave: Bool = false
     
@@ -94,15 +95,23 @@ public class MealViewModel : ObservableObject, Identifiable {
         $name
             .receive(on: RunLoop.main)
             .map { (name) in
-                return (name == "" ? "\(mealName.capitalized) \(mealNameTitle) must not be left blank. Either enter a valid \(mealName) \(mealNameTitle) or delete this \(mealName)." : "")
+                return (name == "" ? "\(mealName.capitalized) \(mealNameTitle) must not be left blank. Either enter a valid \(mealName) \(mealNameTitle) or delete this \(mealName)." : (self.nameExists(name) ? "This \(mealNameTitle) already exists on another \(mealName)" : ""))
             }
         .assign(to: \.saveMessage, on: self)
         .store(in: &cancellableSet)
         
+        $name
+            .receive(on: RunLoop.main)
+            .map { (name) in
+                return (self.nameExists(name) ? "Duplicate \(mealNameTitle)" : "")
+            }
+        .assign(to: \.nameMessage, on: self)
+        .store(in: &cancellableSet)
+        
         $saveMessage
             .receive(on: RunLoop.main)
-            .map { (nameError) in
-                return (nameError == "")
+            .map { (saveMessage) in
+                return (saveMessage == "")
             }
         .assign(to: \.canSave, on: self)
         .store(in: &cancellableSet)
@@ -153,5 +162,9 @@ public class MealViewModel : ObservableObject, Identifiable {
         CoreData.update() {
             self.mealMO?.urlImageCache = self.urlImageCache
         }
+    }
+    
+    private func nameExists(_ name: String) -> Bool {
+        return !DataModel.shared.meals.compactMap{$1}.filter({$0.name == name && $0.mealId != self.mealId}).isEmpty
     }
 }

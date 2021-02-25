@@ -47,7 +47,7 @@ struct CategoryEditView: View {
                 ScrollView {
                     VStack {
                         Spacer().frame(height: 16)
-                        Input(title: categoryNameTitle.capitalized, field: $category.name, topSpace: 0)
+                        Input(title: categoryNameTitle.capitalized, field: $category.name, message: $category.nameMessage, topSpace: 0)
                         PickerInput(title: categoryImportanceTitle.capitalized, field: $importanceIndex, values: importances.map{$0.string.capitalized})
                             .onChange(of: importanceIndex, perform: { index in
                                 category.importance = importances[index]

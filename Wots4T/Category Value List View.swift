@@ -31,7 +31,7 @@ struct CategoryValueListView: View {
                                buttonImage: AnyView(Image(systemName: "plus.circle.fill").font(.title).foregroundColor(Palette.listButton.background)),
                                buttonAction: !addOption ? nil : {
                                 self.linkToEditCategoryValue = CategoryValueViewModel(categoryId: category.categoryId)
-                                self.linkToEditTitle = "New \(categoryValueName.capitalized)"
+                                self.linkToEditTitle = newCategoryValuesName.capitalized
                                 self.linkToEdit = true
                                })
                     Spacer().frame(height: 8)
@@ -51,7 +51,7 @@ struct CategoryValueListView: View {
                             Spacer().frame(height: 16)
                         }
                         .onTapGesture {
-                            self.linkToEditTitle = categoryValueName.capitalized
+                            self.linkToEditTitle = editCategoryValueName.capitalized
                             self.linkToEditCategoryValue = categoryValue
                             self.linkToEdit = true
                         }

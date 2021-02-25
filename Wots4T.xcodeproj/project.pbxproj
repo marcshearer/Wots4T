@@ -146,11 +146,9 @@
 				B2C678F825E4E7AA003E5DE8 /* Wots4T.entitlements */,
 				B2844F6C25B5F3CB0010A04C /* Standard Components */,
 				B26BA08325C82A7F00C26B69 /* Shared */,
-				B233B3C925D6A1FC002EFB3A /* Categories */,
-				B26F5F4525D92170002B48EE /* Category Values */,
-				B26BA07E25C8142700C26B69 /* Allocations */,
-				B2DC95AB25E01D5D00FDE49D /* Attachments */,
-				B2844F7525B5F6090010A04C /* Meals & Meal Category Values */,
+				B26BA07E25C8142700C26B69 /* Managed Object Models */,
+				B2DC95AB25E01D5D00FDE49D /* View Models */,
+				B2844F7525B5F6090010A04C /* Views */,
 				B256F1C525CD4C7800EA1948 /* Reuseable UI Components */,
 				B2844FAA25B99F360010A04C /* Libraries */,
 				B212868125B1B29800557221 /* Preview Content */,
@@ -169,8 +167,6 @@
 		B233B3C925D6A1FC002EFB3A /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */,
-				B216445D25D6A84A00F19F4A /* Category View Model.swift */,
 				B2FABBFD25D6EC760008859E /* Category List View.swift */,
 				B26F5F4A25D921D9002B48EE /* Category Edit View.swift */,
 			);
@@ -192,14 +188,17 @@
 			name = "Reuseable UI Components";
 			sourceTree = "<group>";
 		};
-		B26BA07E25C8142700C26B69 /* Allocations */ = {
+		B26BA07E25C8142700C26B69 /* Managed Object Models */ = {
 			isa = PBXGroup;
 			children = (
+				B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */,
+				B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */,
+				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
+				B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */,
+				B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */,
 				B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */,
-				B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */,
-				B26BA08F25C8554B00C26B69 /* Calendar View.swift */,
 			);
-			name = Allocations;
+			name = "Managed Object Models";
 			sourceTree = "<group>";
 		};
 		B26BA08325C82A7F00C26B69 /* Shared */ = {
@@ -213,8 +212,6 @@
 		B26F5F4525D92170002B48EE /* Category Values */ = {
 			isa = PBXGroup;
 			children = (
-				B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */,
-				B216446025D6A86400F19F4A /* Category Value View Model.swift */,
 				B26F5F5125D95197002B48EE /* Category Value List View.swift */,
 				B26F5F4625D92198002B48EE /* Category Value Edit View.swift */,
 			);
@@ -235,17 +232,15 @@
 			name = "Standard Components";
 			sourceTree = "<group>";
 		};
-		B2844F7525B5F6090010A04C /* Meals & Meal Category Values */ = {
+		B2844F7525B5F6090010A04C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B2DC95A325E019B000FDE49D /* Meal Managed Objects */,
-				B2844F7625B5F6370010A04C /* Meal View Model.swift */,
-				B212867D25B1B29700557221 /* Meal List View.swift */,
-				B256F1BB25CC710700EA1948 /* Meal Summary View.swift */,
-				B256F1C825CDA42000EA1948 /* Meal Edit View.swift */,
-				B26F5F6225DAC2CA002B48EE /* Meal Display View.swift */,
+				B233B3C925D6A1FC002EFB3A /* Categories */,
+				B26F5F4525D92170002B48EE /* Category Values */,
+				B2F0AEC925E7B6040021FBDB /* Meals */,
+				B2F0AECA25E7B6210021FBDB /* Allocations */,
 			);
-			name = "Meals & Meal Category Values";
+			name = Views;
 			sourceTree = "<group>";
 		};
 		B2844FAA25B99F360010A04C /* Libraries */ = {
@@ -273,23 +268,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B2DC95A325E019B000FDE49D /* Meal Managed Objects */ = {
+		B2DC95AB25E01D5D00FDE49D /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
-				B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */,
-				B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */,
+				B216445D25D6A84A00F19F4A /* Category View Model.swift */,
+				B216446025D6A86400F19F4A /* Category Value View Model.swift */,
+				B2844F7625B5F6370010A04C /* Meal View Model.swift */,
+				B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */,
+				B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */,
 			);
-			name = "Meal Managed Objects";
+			name = "View Models";
 			sourceTree = "<group>";
 		};
-		B2DC95AB25E01D5D00FDE49D /* Attachments */ = {
+		B2F0AEC925E7B6040021FBDB /* Meals */ = {
 			isa = PBXGroup;
 			children = (
-				B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */,
+				B212867D25B1B29700557221 /* Meal List View.swift */,
+				B256F1BB25CC710700EA1948 /* Meal Summary View.swift */,
+				B26F5F6225DAC2CA002B48EE /* Meal Display View.swift */,
+				B256F1C825CDA42000EA1948 /* Meal Edit View.swift */,
 				B2DC95AD25E02AC900FDE49D /* Attachment View.swift */,
 			);
-			name = Attachments;
+			name = Meals;
+			sourceTree = "<group>";
+		};
+		B2F0AECA25E7B6210021FBDB /* Allocations */ = {
+			isa = PBXGroup;
+			children = (
+				B26BA08F25C8554B00C26B69 /* Calendar View.swift */,
+			);
+			name = Allocations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -45,7 +45,7 @@ struct CategoryValueEditView: View {
                     })
                 
                 ScrollView {
-                    Input(title: categoryValueNameTitle.capitalized, field: $categoryValue.name, topSpace: 0)
+                    Input(title: categoryValueNameTitle.capitalized, field: $categoryValue.name, message: $categoryValue.nameMessage, topSpace: 0)
                     
                     PickerInput(title: categoryValueFrequencyTitle.capitalized, field: $frequencyIndex, values: frequencies.map{$0.string.capitalized})
                         .onChange(of: frequencyIndex, perform: { index in

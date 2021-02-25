@@ -11,18 +11,19 @@ struct Input : View {
     
     var title: String?
     @Binding var field: String
+    var message: Binding<String>?
     var topSpace: CGFloat = 24
     var height: CGFloat = 40
     var onChange: ((String)->())?
     var keyboardType: UIKeyboardType = .default
     var autoCapitalize: UITextAutocapitalizationType = .sentences
     var autoCorrect: Bool = true
-    
+
     var body: some View {
 
         VStack(spacing: 0) {
             if title != nil {
-                InputTitle(title: title, topSpace: topSpace)
+                InputTitle(title: title, message: message, topSpace: topSpace)
                 Spacer().frame(height: 8)
             }
             HStack {

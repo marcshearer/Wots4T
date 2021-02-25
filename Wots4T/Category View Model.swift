@@ -34,6 +34,7 @@ public class CategoryViewModel : ObservableObject, Identifiable {
     // Linked managed objects - should only be referenced in this and the Data classes
     internal var categoryMO: CategoryMO?
     
+    @Published public var nameMessage: String = ""
     @Published private(set) var saveMessage: String = ""
     @Published private(set) var canSave: Bool = false
     
@@ -74,9 +75,17 @@ public class CategoryViewModel : ObservableObject, Identifiable {
         $name
             .receive(on: RunLoop.main)
             .map { (name) in
-                return (name == "" ? "\(categoryName.capitalized) \(categoryNameTitle) must not be left blank. Either enter a valid \(categoryName) \(categoryNameTitle) or delete this \(categoryName)." : "")
+                return (name == "" ? "\(categoryName.capitalized) \(categoryNameTitle) must not be left blank. Either enter a valid \(categoryName) \(categoryNameTitle) or delete this \(categoryName)." : (self.nameExists(name) ? "This \(categoryNameTitle) already exists on another \(categoryName)" : ""))
             }
         .assign(to: \.saveMessage, on: self)
+        .store(in: &cancellableSet)
+        
+        $name
+            .receive(on: RunLoop.main)
+            .map { (name) in
+                return (self.nameExists(name) ? "Duplicate \(categoryNameTitle)" : "")
+            }
+        .assign(to: \.nameMessage, on: self)
         .store(in: &cancellableSet)
         
         $saveMessage
@@ -110,5 +119,9 @@ public class CategoryViewModel : ObservableObject, Identifiable {
     
     public func remove() {
         DataModel.shared.remove(category: self)
+    }
+    
+    private func nameExists(_ name: String) -> Bool {
+        return !DataModel.shared.categories.compactMap{$1}.filter({$0.name == name && $0.categoryId != self.categoryId}).isEmpty
     }
 }
