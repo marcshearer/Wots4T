@@ -57,8 +57,8 @@ public class CategoryValueViewModel : ObservableObject, Identifiable {
     public var changed: Bool {
         var result = false
         if self.categoryValueMO == nil ||
-           self.categoryId == self.categoryValueMO!.categoryId ||
-           self.valueId == self.categoryValueMO!.valueId ||
+           self.categoryId != self.categoryValueMO!.categoryId ||
+           self.valueId != self.categoryValueMO!.valueId ||
            self.name != self.categoryValueMO!.name ||
            self.frequency != self.frequency {
             result = true

@@ -189,7 +189,7 @@ class DataModel: ObservableObject {
     /// Methods to sort the meals
     
     public func sortedMeals(dayNumber: DayNumber! = nil) -> [MealViewModel] {
-        let categories = self.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance, $0.name], [$1.importance, $1.name], [.int, .string])})
+        let categories = self.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
         var weightings: [UUID:[UUID:Int]] = [:] // categoryId/valueId
         
         // Flatten out allocation dictionaries - note this should be possible with a couple of compactMaps
@@ -240,9 +240,9 @@ class DataModel: ObservableObject {
         }
         
         // Now build a sort array from the category weightings for each meal and sort
-        var sort: [(weightings: [Int], meal: MealViewModel)] = []
+        var sort: [(weightings: [Any], meal: MealViewModel)] = []
         for (_, meal) in self.meals {
-            var mealWeightings: [Int] = []
+            var mealWeightings: [Any] = []
             for category in categories {
                 if let mealValueId = meal.categoryValues[category.categoryId]?.valueId {
                     mealWeightings.append(weightings[category.categoryId]?[mealValueId] ?? maxRetention + 1)
@@ -257,15 +257,18 @@ class DataModel: ObservableObject {
                     mealWeightings.append(maxRetention + 1)
                 }
             }
+            mealWeightings.append(meal.name)
             sort.append((weightings: mealWeightings, meal: meal))
-            meal.debugInfo = ""
-            for (index, category) in categories.enumerated() {
-                meal.debugInfo = meal.debugInfo + " \(meal.categoryValues[category.categoryId]?.frequency.rawValue ?? 0)->\(mealWeightings[index])"
-            }
-            meal.debugInfo += " \(mealWeightings.last!)"
         }
-                
-        let sorted = sort.sorted(by: { Utility.lessThan($1.weightings, $0.weightings) })
+        var types: [Utility.SortType] = []
+        for _ in categories {
+            types.append(.int)
+        }
+        if dayNumber != nil {
+            types.append(.int)
+        }
+        types.append(.string)
+        let sorted = sort.sorted(by: { Utility.lessThan($1.weightings, $0.weightings, types) })
         return sorted.map{$0.meal}
     }
     
@@ -310,11 +313,13 @@ class DataModel: ObservableObject {
     public func save(meal: MealViewModel) {
         assert(meal.mealMO != nil, "Cannot save a \(mealName) which doesn't already have managed objects")
         assert(self.meals[meal.mealId] != nil, "\(mealName) does not exist and cannot be updated")
-        CoreData.update(updateLogic: {
-            self.updateMO(meal: meal)
-            self.updateMealCategoryValuesMO(meal: meal)
-            self.updateMealAttachmentsMO(meal: meal)
-        })
+        if meal.changed {
+            CoreData.update(updateLogic: {
+                self.updateMO(meal: meal)
+                self.updateMealCategoryValuesMO(meal: meal)
+                self.updateMealAttachmentsMO(meal: meal)
+            })
+        }
     }
     
     private func updateMO(meal: MealViewModel) {
@@ -395,9 +400,11 @@ class DataModel: ObservableObject {
     public func save(allocation: AllocationViewModel) {
         assert(allocation.allocationMO != nil, "Cannot save a \(allocationName) which doesn't already have managed objects")
         assert(self.allocations[allocation.dayNumber]?[allocation.slot] == nil, "\(allocationName) does not exist and cannot be updated")
-        CoreData.update(updateLogic: {
-            self.updateMO(allocation: allocation)
-        })
+        if allocation.changed {
+            CoreData.update(updateLogic: {
+                self.updateMO(allocation: allocation)
+            })
+        }
     }
     
     private func updateMO(allocation: AllocationViewModel) {
@@ -454,9 +461,11 @@ class DataModel: ObservableObject {
     public func save(category: CategoryViewModel) {
         assert(category.categoryMO != nil, "Cannot save a \(categoryName) which doesn't already have managed objects")
         assert(self.categories[category.categoryId] != nil, "\(categoryName) does not exist and cannot be updated")
-        CoreData.update(updateLogic: {
-            self.updateMO(category: category)
-        })
+        if category.changed {
+            CoreData.update(updateLogic: {
+                self.updateMO(category: category)
+            })
+        }
     }
     
     private func updateMO(category: CategoryViewModel) {
@@ -489,9 +498,11 @@ class DataModel: ObservableObject {
     public func save(categoryValue: CategoryValueViewModel) {
         assert(categoryValue.categoryValueMO != nil, "Cannot save a \(categoryValueName) which doesn't already have managed objects")
         assert(self.categoryValues[categoryValue.categoryId]?[categoryValue.valueId] != nil, "\(categoryValueName) does not exist and cannot be updated")
-        CoreData.update(updateLogic: {
-            self.updateMO(categoryValue: categoryValue)
-        })
+        if categoryValue.changed {
+            CoreData.update(updateLogic: {
+                self.updateMO(categoryValue: categoryValue)
+            })
+        }
     }
     
     private func updateMO(categoryValue: CategoryValueViewModel) {

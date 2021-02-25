@@ -27,9 +27,10 @@ public class AllocationViewModel : ObservableObject, Identifiable {
     public var changed: Bool {
         var result = false
         if self.allocationMO == nil ||
-           self.dayNumber == self.allocationMO!.dayNumber ||
+           self.dayNumber != self.allocationMO!.dayNumber ||
            self.slot != self.allocationMO!.slot ||
-           self.meal.mealId != self.allocationMO?.mealId {
+           self.meal.mealId != self.allocationMO?.mealId ||
+           self.allocated != self.allocationMO?.allocated {
             result = true
         }
         return result

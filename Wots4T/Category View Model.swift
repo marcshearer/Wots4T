@@ -44,7 +44,7 @@ public class CategoryViewModel : ObservableObject, Identifiable {
     public var changed: Bool {
         var result = false
         if self.categoryMO == nil ||
-           self.categoryId == self.categoryMO!.categoryId ||
+           self.categoryId != self.categoryMO!.categoryId ||
            self.name != self.categoryMO!.name ||
            self.importance != self.importance {
             result = true

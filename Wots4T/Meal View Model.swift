@@ -41,6 +41,7 @@ public class MealViewModel : ObservableObject, Identifiable {
     public var changed: Bool {
         var result = false
         if self.mealMO == nil ||
+           self.mealId != self.mealMO?.mealId ||
            self.name != self.mealMO?.name ||
            self.desc != self.mealMO?.desc ||
            self.url != self.mealMO?.url ||

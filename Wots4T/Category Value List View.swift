@@ -37,7 +37,7 @@ struct CategoryValueListView: View {
                     Spacer().frame(height: 8)
                 }
                 LazyVStack {
-                    let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {!Utility.lessThan([$0.frequency, $0.name], [$1.frequency, $0.name], [.int, .string])})
+                    let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
                     ForEach(categoryValues) { categoryValue in
                         VStack {
                             HStack(alignment: .top) {

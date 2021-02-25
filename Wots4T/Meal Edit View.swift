@@ -150,11 +150,11 @@ struct MealEditView_Categories : View {
     }
     
     func getCategories() -> [CategoryViewModel] {
-        return DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance, $0.name], [$1.importance, $1.name], [.int, .string])})
+        return DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
     }
     
     func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {
-        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {!Utility.lessThan([$0.frequency, $0.name], [$1.frequency, $1.name], [.int, .string])})
+        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
     }
 }
 
