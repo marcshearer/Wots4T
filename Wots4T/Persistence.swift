@@ -39,7 +39,7 @@ struct PersistenceController {
         } else {
             container.viewContext.automaticallyMergesChangesFromParent = true
             let description = container.persistentStoreDescriptions.first
-            description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            // description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
             let remoteChangeKey = "NSPersistentStoreRemoteChangeNotificationOptionKey"
             description?.setOption(true as NSNumber, forKey: remoteChangeKey)
         }
@@ -61,20 +61,7 @@ struct PersistenceController {
         })
         
         if !inMemory {
-            let viewContext = container.viewContext
             
-            let request = NSFetchRequest<CategoryMO>(entityName: CategoryMO.tableName)
-            let read = try? viewContext.fetch(request)
-            
-            if read == nil || read!.isEmpty {
-                // DataModel.setupPreviewData(context: viewContext)
-            }
-            
-            do {
-                try viewContext.save()
-            } catch {
-                fatalError()
-            }
         }
     }
 }

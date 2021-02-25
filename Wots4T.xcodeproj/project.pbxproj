@@ -54,6 +54,10 @@
 		B2DC95AE25E02AC900FDE49D /* Attachment View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95AD25E02AC900FDE49D /* Attachment View.swift */; };
 		B2F0AEC225E6463E0021FBDB /* Swipe Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */; };
 		B2F0AEC525E6CFDF0021FBDB /* Utility Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEC425E6CFDF0021FBDB /* Utility Extension.swift */; };
+		B2F0AED025E7D39B0021FBDB /* iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AECF25E7D39B0021FBDB /* iCloud.swift */; };
+		B2F0AED325E7D3D80021FBDB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED225E7D3D80021FBDB /* Config.swift */; };
+		B2F0AED725E7DA3F0021FBDB /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED625E7DA3F0021FBDB /* MyApp.swift */; };
+		B2F0AEDC25E7E6F80021FBDB /* Database Utilties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEDB25E7E6F80021FBDB /* Database Utilties.swift */; };
 		B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FABBFD25D6EC760008859E /* Category List View.swift */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +112,10 @@
 		B2DC95AD25E02AC900FDE49D /* Attachment View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View.swift"; sourceTree = "<group>"; };
 		B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swipe Gestures.swift"; sourceTree = "<group>"; };
 		B2F0AEC425E6CFDF0021FBDB /* Utility Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utility Extension.swift"; sourceTree = "<group>"; };
+		B2F0AECF25E7D39B0021FBDB /* iCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloud.swift; sourceTree = "<group>"; };
+		B2F0AED225E7D3D80021FBDB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		B2F0AED625E7DA3F0021FBDB /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
+		B2F0AEDB25E7E6F80021FBDB /* Database Utilties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Database Utilties.swift"; sourceTree = "<group>"; };
 		B2FABBFD25D6EC760008859E /* Category List View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category List View.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +157,7 @@
 				B26BA07E25C8142700C26B69 /* Managed Object Models */,
 				B2DC95AB25E01D5D00FDE49D /* View Models */,
 				B2844F7525B5F6090010A04C /* Views */,
+				B2F0AEDA25E7E6E20021FBDB /* Utilities */,
 				B256F1C525CD4C7800EA1948 /* Reuseable UI Components */,
 				B2844FAA25B99F360010A04C /* Libraries */,
 				B212868125B1B29800557221 /* Preview Content */,
@@ -204,7 +213,9 @@
 		B26BA08325C82A7F00C26B69 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				B2F0AED625E7DA3F0021FBDB /* MyApp.swift */,
 				B26BA08425C82AAE00C26B69 /* Declarations.swift */,
+				B2F0AED225E7D3D80021FBDB /* Config.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -253,6 +264,7 @@
 				B256F1B225CAC3C300EA1948 /* Day Number.swift */,
 				B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */,
 				B256F1BE25CD451600EA1948 /* Utility.swift */,
+				B2F0AECF25E7D39B0021FBDB /* iCloud.swift */,
 				B2F0AEC425E6CFDF0021FBDB /* Utility Extension.swift */,
 				B2C678E925E26AA6003E5DE8 /* Palette.swift */,
 				B2C678EC25E26AD8003E5DE8 /* Themes.swift */,
@@ -298,6 +310,14 @@
 				B26BA08F25C8554B00C26B69 /* Calendar View.swift */,
 			);
 			name = Allocations;
+			sourceTree = "<group>";
+		};
+		B2F0AEDA25E7E6E20021FBDB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B2F0AEDB25E7E6F80021FBDB /* Database Utilties.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -374,6 +394,7 @@
 				B2844F9625B5FF010010A04C /* Meal Managed Object.swift in Sources */,
 				B26F5F5225D95197002B48EE /* Category Value List View.swift in Sources */,
 				B212868825B1B29800557221 /* Wots4T.xcdatamodeld in Sources */,
+				B2F0AEDC25E7E6F80021FBDB /* Database Utilties.swift in Sources */,
 				B26F5F6325DAC2CA002B48EE /* Meal Display View.swift in Sources */,
 				B26BA09025C8554B00C26B69 /* Calendar View.swift in Sources */,
 				B2C678ED25E26AD8003E5DE8 /* Themes.swift in Sources */,
@@ -398,18 +419,21 @@
 				B233B3B425D45425002EFB3A /* Add Image.swift in Sources */,
 				B26F5F4B25D921D9002B48EE /* Category Edit View.swift in Sources */,
 				B26F5F4725D92198002B48EE /* Category Value Edit View.swift in Sources */,
+				B2F0AED725E7DA3F0021FBDB /* MyApp.swift in Sources */,
 				B256F1C225CD4C4400EA1948 /* Banner.swift in Sources */,
 				B2844F7725B5F6370010A04C /* Meal View Model.swift in Sources */,
 				B2DC95AE25E02AC900FDE49D /* Attachment View.swift in Sources */,
 				B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */,
 				B212867E25B1B29700557221 /* Meal List View.swift in Sources */,
 				B26BA08D25C82F2400C26B69 /* Other Extensions.swift in Sources */,
+				B2F0AED325E7D3D80021FBDB /* Config.swift in Sources */,
 				B233B3CF25D6A22C002EFB3A /* Category Value Managed Object.swift in Sources */,
 				B26BA08125C827E500C26B69 /* Allocation Managed Object.swift in Sources */,
 				B26F5F5725D95649002B48EE /* Input Title.swift in Sources */,
 				B233B3BF25D5292B002EFB3A /* Image Capture.swift in Sources */,
 				B2844FA825B99F300010A04C /* Core Data.swift in Sources */,
 				B212867C25B1B29700557221 /* Wots4TApp.swift in Sources */,
+				B2F0AED025E7D39B0021FBDB /* iCloud.swift in Sources */,
 				B233B3CB25D6A21D002EFB3A /* Category Managed Object.swift in Sources */,
 				B2F0AEC225E6463E0021FBDB /* Swipe Gestures.swift in Sources */,
 				B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */,

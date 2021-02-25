@@ -9,14 +9,13 @@ import SwiftUI
 
 @main
 struct Wots4TApp: App {
-    let context = PersistenceController.shared.container.viewContext
+    public let context = PersistenceController.shared.container.viewContext
 
+    public static var database: String = "unknown"
+    
     init() {
         CoreData.context = context
-        DataModel.shared.load()
-        Themes.selectTheme(.standard)
-    
-        UITextView.appearance().backgroundColor = .clear
+        MyApp.shared.start()
     }
     
     var body: some Scene {

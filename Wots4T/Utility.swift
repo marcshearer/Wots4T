@@ -20,7 +20,6 @@ extension OSLog {
 
 class Utility {
     
-    static private var _isDevelopment: Bool!
     static private var _isSimulator: Bool!
     
     // MARK: - Execute closure after delay ===================================================================== -
@@ -67,12 +66,7 @@ class Utility {
     }
         
     public static var isDevelopment: Bool {
-        get {
-            if _isDevelopment == nil {
-                _isDevelopment = true // TODO (UserDefaults.standard.string(forKey: "database") == "development")
-            }
-            return _isDevelopment
-        }
+        get { MyApp.database == "development" }
     }
     
     // MARK: - String manipulation ============================================================================ -
