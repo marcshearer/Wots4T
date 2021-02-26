@@ -35,8 +35,11 @@ class MyApp {
         DataModel.shared.load()
         Themes.selectTheme(.standard)
         self.registerDefaults()
-        // Remove (CAREFULLY) if you want to clear the iCloud DB DatabaseUtilities.initialiseAll() {
-            self.setupDatabase()
+        // Remove (CAREFULLY) if you want to clear the Core Data DB
+        // DatabaseUtilities.initialiseAllCoreData()
+        // Remove (CAREFULLY) if you want to clear the iCloud DB
+        // DatabaseUtilities.initialiseAllCloud() {
+        self.setupDatabase()
         //}
     
         UITextView.appearance().backgroundColor = .clear
