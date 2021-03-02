@@ -20,6 +20,8 @@
 		B233B3BF25D5292B002EFB3A /* Image Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3BE25D5292B002EFB3A /* Image Capture.swift */; };
 		B233B3CB25D6A21D002EFB3A /* Category Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */; };
 		B233B3CF25D6A22C002EFB3A /* Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */; };
+		B24D196A25EE4772001D155E /* Standard View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24D196925EE4772001D155E /* Standard View.swift */; };
+		B24D197125EEAE56001D155E /* Notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = B24D197025EEAE56001D155E /* Notes.txt */; };
 		B256F1B325CAC3C300EA1948 /* Day Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B225CAC3C300EA1948 /* Day Number.swift */; };
 		B256F1B725CC3E1D00EA1948 /* Link Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */; };
 		B256F1BC25CC710700EA1948 /* Meal Summary View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BB25CC710700EA1948 /* Meal Summary View.swift */; };
@@ -49,7 +51,7 @@
 		B2C678ED25E26AD8003E5DE8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EC25E26AD8003E5DE8 /* Themes.swift */; };
 		B2C678F025E3AFC6003E5DE8 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EF25E3AFC6003E5DE8 /* Separator.swift */; };
 		B2C678FC25E4E7B2003E5DE8 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */; };
-		B2CC2CC025EE2220005BF542 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC2CBF25EE2220005BF542 /* About.swift */; };
+		B2CC2CC025EE2220005BF542 /* Message Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC2CBF25EE2220005BF542 /* Message Box.swift */; };
 		B2CC2CCB25EE2590005BF542 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC2CCA25EE2590005BF542 /* Version.swift */; };
 		B2DC95A525E019D500FDE49D /* Meal Attachment Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */; };
 		B2DC95A925E01CA600FDE49D /* Attachment View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */; };
@@ -60,60 +62,9 @@
 		B2F0AED325E7D3D80021FBDB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED225E7D3D80021FBDB /* Config.swift */; };
 		B2F0AED725E7DA3F0021FBDB /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED625E7DA3F0021FBDB /* MyApp.swift */; };
 		B2F0AEDC25E7E6F80021FBDB /* Database Utilties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEDB25E7E6F80021FBDB /* Database Utilties.swift */; };
-		B2F0AF0625E8D8BF0021FBDB /* Wots4TApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212867B25B1B29700557221 /* Wots4TApp.swift */; };
-		B2F0AF0925E8D8C50021FBDB /* Wots4T.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B212868625B1B29800557221 /* Wots4T.xcdatamodeld */; };
-		B2F0AF0C25E8D8C90021FBDB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212868425B1B29800557221 /* Persistence.swift */; };
-		B2F0AF0F25E8D8CD0021FBDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B212867F25B1B29800557221 /* Assets.xcassets */; };
-		B2F0AF1225E8D8D60021FBDB /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* DataModel.swift */; };
-		B2F0AF1525E8D8DA0021FBDB /* Preview Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F5F25DAC03D002B48EE /* Preview Data.swift */; };
-		B2F0AF1825E8D8E00021FBDB /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED625E7DA3F0021FBDB /* MyApp.swift */; };
-		B2F0AF1B25E8D8E40021FBDB /* Declarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08425C82AAE00C26B69 /* Declarations.swift */; };
-		B2F0AF1E25E8D8E70021FBDB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED225E7D3D80021FBDB /* Config.swift */; };
-		B2F0AF2125E8D8EC0021FBDB /* Category Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */; };
-		B2F0AF2425E8D8EF0021FBDB /* Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */; };
-		B2F0AF2725E8D8F20021FBDB /* Meal Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9425B5FF010010A04C /* Meal Managed Object.swift */; };
-		B2F0AF2A25E8D8F50021FBDB /* Meal Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */; };
-		B2F0AF2D25E8D8F90021FBDB /* Meal Attachment Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */; };
-		B2F0AF3025E8D8FC0021FBDB /* Allocation Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */; };
-		B2F0AF3325E8D9020021FBDB /* Category View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216445D25D6A84A00F19F4A /* Category View Model.swift */; };
-		B2F0AF3625E8D9050021FBDB /* Category Value View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216446025D6A86400F19F4A /* Category Value View Model.swift */; };
-		B2F0AF3925E8D9080021FBDB /* Meal View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F7625B5F6370010A04C /* Meal View Model.swift */; };
-		B2F0AF3C25E8D90B0021FBDB /* Attachment View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */; };
-		B2F0AF3F25E8D90E0021FBDB /* Allocation View Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */; };
-		B2F0AF4225E8D9130021FBDB /* Category List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FABBFD25D6EC760008859E /* Category List View.swift */; };
-		B2F0AF4525E8D9160021FBDB /* Category Edit View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F4A25D921D9002B48EE /* Category Edit View.swift */; };
-		B2F0AF4825E8D9190021FBDB /* Category Value List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F5125D95197002B48EE /* Category Value List View.swift */; };
-		B2F0AF4B25E8D91D0021FBDB /* Category Value Edit View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F4625D92198002B48EE /* Category Value Edit View.swift */; };
-		B2F0AF4E25E8D91F0021FBDB /* Meal List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212867D25B1B29700557221 /* Meal List View.swift */; };
-		B2F0AF5125E8D9220021FBDB /* Meal Summary View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BB25CC710700EA1948 /* Meal Summary View.swift */; };
-		B2F0AF5425E8D9250021FBDB /* Meal Display View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F6225DAC2CA002B48EE /* Meal Display View.swift */; };
-		B2F0AF5725E8D9270021FBDB /* Meal Edit View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1C825CDA42000EA1948 /* Meal Edit View.swift */; };
-		B2F0AF5A25E8D92A0021FBDB /* Attachment View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95AD25E02AC900FDE49D /* Attachment View.swift */; };
-		B2F0AF5D25E8D92D0021FBDB /* Calendar View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08F25C8554B00C26B69 /* Calendar View.swift */; };
-		B2F0AF6025E8D9320021FBDB /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1C125CD4C4400EA1948 /* Banner.swift */; };
-		B2F0AF6325E8D9340021FBDB /* Input Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F5625D95649002B48EE /* Input Title.swift */; };
-		B2F0AF6625E8D9370021FBDB /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3B025D453F4002EFB3A /* Input.swift */; };
-		B2F0AF6925E8D93A0021FBDB /* Picker Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F5F4E25D927A2002B48EE /* Picker Input.swift */; };
-		B2F0AF6C25E8D93D0021FBDB /* Add Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3B325D45425002EFB3A /* Add Image.swift */; };
-		B2F0AF7225E8D9430021FBDB /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EF25E3AFC6003E5DE8 /* Separator.swift */; };
-		B2F0AF7525E8D9460021FBDB /* Swipe Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */; };
-		B2F0AF7825E8D94B0021FBDB /* Core Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FA725B99F300010A04C /* Core Data.swift */; };
-		B2F0AF7B25E8D94E0021FBDB /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08825C82E9A00C26B69 /* String Extensions.swift */; };
-		B2F0AF7E25E8D9540021FBDB /* Other Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08C25C82F2400C26B69 /* Other Extensions.swift */; };
-		B2F0AF8125E8D9590021FBDB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B212868225B1B29800557221 /* Preview Assets.xcassets */; };
-		B2F0AF8425E8D95F0021FBDB /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA09425C861FC00C26B69 /* Date Extensions.swift */; };
-		B2F0AF8725E8D9610021FBDB /* Day Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B225CAC3C300EA1948 /* Day Number.swift */; };
-		B2F0AF8D25E8D9670021FBDB /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BE25CD451600EA1948 /* Utility.swift */; };
-		B2F0AF9025E8D96A0021FBDB /* iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AECF25E7D39B0021FBDB /* iCloud.swift */; };
-		B2F0AF9325E8D96D0021FBDB /* Utility Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEC425E6CFDF0021FBDB /* Utility Extension.swift */; };
 		B2F0AFA225E8DCCB0021FBDB /* Target View Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFA125E8DCCB0021FBDB /* Target View Modifiers.swift */; };
-		B2F0AFA525E8DD9C0021FBDB /* Target View Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFA125E8DCCB0021FBDB /* Target View Modifiers.swift */; };
-		B2F0AFAC25E8F1A20021FBDB /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678E925E26AA6003E5DE8 /* Palette.swift */; };
-		B2F0AFAF25E8F1A50021FBDB /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EC25E26AD8003E5DE8 /* Themes.swift */; };
 		B2F0AFB325E8F39F0021FBDB /* My Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFB225E8F39F0021FBDB /* My Color.swift */; };
-		B2F0AFB625E8F5150021FBDB /* My Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFB225E8F39F0021FBDB /* My Color.swift */; };
 		B2F0AFBA25E904860021FBDB /* My Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFB925E904860021FBDB /* My Image.swift */; };
-		B2F0AFBD25E904B80021FBDB /* My Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFB925E904860021FBDB /* My Image.swift */; };
 		B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FABBFD25D6EC760008859E /* Category List View.swift */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +84,8 @@
 		B233B3BE25D5292B002EFB3A /* Image Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image Capture.swift"; sourceTree = "<group>"; };
 		B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Managed Object.swift"; sourceTree = "<group>"; };
 		B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Value Managed Object.swift"; sourceTree = "<group>"; };
+		B24D196925EE4772001D155E /* Standard View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Standard View.swift"; sourceTree = "<group>"; };
+		B24D197025EEAE56001D155E /* Notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes.txt; sourceTree = "<group>"; };
 		B256F1B225CAC3C300EA1948 /* Day Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day Number.swift"; sourceTree = "<group>"; };
 		B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Link Presentation.swift"; sourceTree = "<group>"; };
 		B256F1BB25CC710700EA1948 /* Meal Summary View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Summary View.swift"; sourceTree = "<group>"; };
@@ -163,7 +116,7 @@
 		B2C678EF25E3AFC6003E5DE8 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		B2C678F825E4E7AA003E5DE8 /* Wots4T.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wots4T.entitlements; sourceTree = "<group>"; };
 		B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		B2CC2CBF25EE2220005BF542 /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		B2CC2CBF25EE2220005BF542 /* Message Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message Box.swift"; sourceTree = "<group>"; };
 		B2CC2CCA25EE2590005BF542 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Attachment Managed Object.swift"; sourceTree = "<group>"; };
 		B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View Model.swift"; sourceTree = "<group>"; };
@@ -174,7 +127,6 @@
 		B2F0AED225E7D3D80021FBDB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		B2F0AED625E7DA3F0021FBDB /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
 		B2F0AEDB25E7E6F80021FBDB /* Database Utilties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Database Utilties.swift"; sourceTree = "<group>"; };
-		B2F0AEE325E8D02E0021FBDB /* Wots4TMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wots4TMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2F0AFA125E8DCCB0021FBDB /* Target View Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Target View Modifiers.swift"; sourceTree = "<group>"; };
 		B2F0AFB225E8F39F0021FBDB /* My Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "My Color.swift"; sourceTree = "<group>"; };
 		B2F0AFB925E904860021FBDB /* My Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "My Image.swift"; sourceTree = "<group>"; };
@@ -187,13 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C678FC25E4E7B2003E5DE8 /* CloudKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B2F0AEE025E8D02E0021FBDB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				B212867825B1B29700557221 /* Wots4T.app */,
-				B2F0AEE325E8D02E0021FBDB /* Wots4TMac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,6 +165,7 @@
 		B212867A25B1B29700557221 /* Wots4T */ = {
 			isa = PBXGroup;
 			children = (
+				B24D197025EEAE56001D155E /* Notes.txt */,
 				B2844F6C25B5F3CB0010A04C /* Standard Components */,
 				B26BA08325C82A7F00C26B69 /* Shared */,
 				B26BA07E25C8142700C26B69 /* Managed Object Models */,
@@ -263,6 +208,8 @@
 				B2C678EF25E3AFC6003E5DE8 /* Separator.swift */,
 				B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */,
 				B2F0AFA125E8DCCB0021FBDB /* Target View Modifiers.swift */,
+				B24D196925EE4772001D155E /* Standard View.swift */,
+				B2CC2CBF25EE2220005BF542 /* Message Box.swift */,
 			);
 			name = "Reuseable UI Components";
 			sourceTree = "<group>";
@@ -357,7 +304,6 @@
 		B2CC2CC725EE2236005BF542 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
-				B2CC2CBF25EE2220005BF542 /* About.swift */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -423,23 +369,6 @@
 			productReference = B212867825B1B29700557221 /* Wots4T.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B2F0AEE225E8D02E0021FBDB /* Wots4TMac */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B2F0AEF725E8D02E0021FBDB /* Build configuration list for PBXNativeTarget "Wots4TMac" */;
-			buildPhases = (
-				B2F0AEDF25E8D02E0021FBDB /* Sources */,
-				B2F0AEE025E8D02E0021FBDB /* Frameworks */,
-				B2F0AEE125E8D02E0021FBDB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Wots4TMac;
-			productName = Wots4TMac;
-			productReference = B2F0AEE325E8D02E0021FBDB /* Wots4TMac.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -451,9 +380,6 @@
 				TargetAttributes = {
 					B212867725B1B29700557221 = {
 						CreatedOnToolsVersion = 12.3;
-					};
-					B2F0AEE225E8D02E0021FBDB = {
-						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
@@ -471,7 +397,6 @@
 			projectRoot = "";
 			targets = (
 				B212867725B1B29700557221 /* Wots4T */,
-				B2F0AEE225E8D02E0021FBDB /* Wots4TMac */,
 			);
 		};
 /* End PBXProject section */
@@ -482,16 +407,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B212868325B1B29800557221 /* Preview Assets.xcassets in Resources */,
+				B24D197125EEAE56001D155E /* Notes.txt in Resources */,
 				B212868025B1B29800557221 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B2F0AEE125E8D02E0021FBDB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2F0AF0F25E8D8CD0021FBDB /* Assets.xcassets in Resources */,
-				B2F0AF8125E8D9590021FBDB /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +431,7 @@
 				B26BA08525C82AAE00C26B69 /* Declarations.swift in Sources */,
 				B212868525B1B29800557221 /* Persistence.swift in Sources */,
 				B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */,
+				B24D196A25EE4772001D155E /* Standard View.swift in Sources */,
 				B26F5F6025DAC03D002B48EE /* Preview Data.swift in Sources */,
 				B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */,
 				B2F0AFBA25E904860021FBDB /* My Image.swift in Sources */,
@@ -532,7 +450,7 @@
 				B2F0AFB325E8F39F0021FBDB /* My Color.swift in Sources */,
 				B2CC2CCB25EE2590005BF542 /* Version.swift in Sources */,
 				B2DC95A525E019D500FDE49D /* Meal Attachment Managed Object.swift in Sources */,
-				B2CC2CC025EE2220005BF542 /* About.swift in Sources */,
+				B2CC2CC025EE2220005BF542 /* Message Box.swift in Sources */,
 				B233B3B425D45425002EFB3A /* Add Image.swift in Sources */,
 				B26F5F4B25D921D9002B48EE /* Category Edit View.swift in Sources */,
 				B26F5F4725D92198002B48EE /* Category Value Edit View.swift in Sources */,
@@ -556,62 +474,6 @@
 				B2F0AEC225E6463E0021FBDB /* Swipe Gestures.swift in Sources */,
 				B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */,
 				B2C678EA25E26AA6003E5DE8 /* Palette.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B2F0AEDF25E8D02E0021FBDB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2F0AF3925E8D9080021FBDB /* Meal View Model.swift in Sources */,
-				B2F0AF0C25E8D8C90021FBDB /* Persistence.swift in Sources */,
-				B2F0AF3625E8D9050021FBDB /* Category Value View Model.swift in Sources */,
-				B2F0AF2A25E8D8F50021FBDB /* Meal Category Value Managed Object.swift in Sources */,
-				B2F0AF6C25E8D93D0021FBDB /* Add Image.swift in Sources */,
-				B2F0AF2425E8D8EF0021FBDB /* Category Value Managed Object.swift in Sources */,
-				B2F0AFBD25E904B80021FBDB /* My Image.swift in Sources */,
-				B2F0AF1B25E8D8E40021FBDB /* Declarations.swift in Sources */,
-				B2F0AF6925E8D93A0021FBDB /* Picker Input.swift in Sources */,
-				B2F0AF5725E8D9270021FBDB /* Meal Edit View.swift in Sources */,
-				B2F0AF4B25E8D91D0021FBDB /* Category Value Edit View.swift in Sources */,
-				B2F0AF4525E8D9160021FBDB /* Category Edit View.swift in Sources */,
-				B2F0AF2125E8D8EC0021FBDB /* Category Managed Object.swift in Sources */,
-				B2F0AFAF25E8F1A50021FBDB /* Themes.swift in Sources */,
-				B2F0AF9325E8D96D0021FBDB /* Utility Extension.swift in Sources */,
-				B2F0AFB625E8F5150021FBDB /* My Color.swift in Sources */,
-				B2F0AF7525E8D9460021FBDB /* Swipe Gestures.swift in Sources */,
-				B2F0AF1225E8D8D60021FBDB /* DataModel.swift in Sources */,
-				B2F0AF4225E8D9130021FBDB /* Category List View.swift in Sources */,
-				B2F0AF3325E8D9020021FBDB /* Category View Model.swift in Sources */,
-				B2F0AF0925E8D8C50021FBDB /* Wots4T.xcdatamodeld in Sources */,
-				B2F0AF8425E8D95F0021FBDB /* Date Extensions.swift in Sources */,
-				B2F0AF0625E8D8BF0021FBDB /* Wots4TApp.swift in Sources */,
-				B2F0AF2725E8D8F20021FBDB /* Meal Managed Object.swift in Sources */,
-				B2F0AF5D25E8D92D0021FBDB /* Calendar View.swift in Sources */,
-				B2F0AF7825E8D94B0021FBDB /* Core Data.swift in Sources */,
-				B2F0AF6325E8D9340021FBDB /* Input Title.swift in Sources */,
-				B2F0AF7B25E8D94E0021FBDB /* String Extensions.swift in Sources */,
-				B2F0AFAC25E8F1A20021FBDB /* Palette.swift in Sources */,
-				B2F0AF6025E8D9320021FBDB /* Banner.swift in Sources */,
-				B2F0AF1E25E8D8E70021FBDB /* Config.swift in Sources */,
-				B2F0AF5425E8D9250021FBDB /* Meal Display View.swift in Sources */,
-				B2F0AF8725E8D9610021FBDB /* Day Number.swift in Sources */,
-				B2F0AF7E25E8D9540021FBDB /* Other Extensions.swift in Sources */,
-				B2F0AF3F25E8D90E0021FBDB /* Allocation View Model.swift in Sources */,
-				B2F0AF9025E8D96A0021FBDB /* iCloud.swift in Sources */,
-				B2F0AF6625E8D9370021FBDB /* Input.swift in Sources */,
-				B2F0AF3C25E8D90B0021FBDB /* Attachment View Model.swift in Sources */,
-				B2F0AF5A25E8D92A0021FBDB /* Attachment View.swift in Sources */,
-				B2F0AF3025E8D8FC0021FBDB /* Allocation Managed Object.swift in Sources */,
-				B2F0AF8D25E8D9670021FBDB /* Utility.swift in Sources */,
-				B2F0AF1525E8D8DA0021FBDB /* Preview Data.swift in Sources */,
-				B2F0AF5125E8D9220021FBDB /* Meal Summary View.swift in Sources */,
-				B2F0AF1825E8D8E00021FBDB /* MyApp.swift in Sources */,
-				B2F0AF4E25E8D91F0021FBDB /* Meal List View.swift in Sources */,
-				B2F0AF2D25E8D8F90021FBDB /* Meal Attachment Managed Object.swift in Sources */,
-				B2F0AF4825E8D9190021FBDB /* Category Value List View.swift in Sources */,
-				B2F0AFA525E8DD9C0021FBDB /* Target View Modifiers.swift in Sources */,
-				B2F0AF7225E8D9430021FBDB /* Separator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,56 +646,6 @@
 			};
 			name = Release;
 		};
-		B2F0AEF525E8D02E0021FBDB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Wots4TMac/Wots4TMac.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Wots4TMac/Preview Content\"";
-				DEVELOPMENT_TEAM = 3T7CT2S464;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Wots4TMac/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				PRODUCT_BUNDLE_IDENTIFIER = MarcShearer.Wots4TMac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		B2F0AEF625E8D02E0021FBDB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Wots4TMac/Wots4TMac.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Wots4TMac/Preview Content\"";
-				DEVELOPMENT_TEAM = 3T7CT2S464;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Wots4TMac/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
-				PRODUCT_BUNDLE_IDENTIFIER = MarcShearer.Wots4TMac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -851,15 +663,6 @@
 			buildConfigurations = (
 				B212868D25B1B29800557221 /* Debug */,
 				B212868E25B1B29800557221 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B2F0AEF725E8D02E0021FBDB /* Build configuration list for PBXNativeTarget "Wots4TMac" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B2F0AEF525E8D02E0021FBDB /* Debug */,
-				B2F0AEF625E8D02E0021FBDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

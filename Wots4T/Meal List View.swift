@@ -28,9 +28,7 @@ struct MealListView: View {
 
     var body: some View {
         let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber).filter({self.filter($0)})
-        ZStack {
-            Palette.background.background
-                .ignoresSafeArea()
+        StandardView {
             VStack {
                 MealListView_Banner(title: title, editMode: allocateDayNumber == nil)
                 ScrollView(showsIndicators: MyApp.target == .macOS) {
@@ -79,7 +77,6 @@ struct MealListView: View {
                     }
                 }
             }
-            .noNavigationBar
             NavigationLink(destination: MealEditView(meal: self.linkToEditMeal ?? MealViewModel(), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
     }

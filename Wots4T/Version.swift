@@ -20,6 +20,10 @@ class Version {
     public var minMessage = ""
     public var infoMessage = ""
     
+    public func load() {
+        // Dummy routine to trigger creation of singleton
+    }
+    
     init() {
         // Set up current version and build
         let dictionary = Bundle.main.infoDictionary!
@@ -27,30 +31,62 @@ class Version {
         self.build = Int(dictionary["CFBundleVersion"] as! String) ?? 0
         
         // Get previous version, build etc
-        self.lastVersion = UserDefault.lastVersion.string
-        self.lastBuild = UserDefault.lastBuild.int
-        self.minVersion = UserDefault.minVersion.string
-        self.minMessage = UserDefault.minMessage.string
-        self.infoMessage = UserDefault.infoMessage.string
+        lastVersion = UserDefault.lastVersion.string
+        lastBuild = UserDefault.lastBuild.int
+        minVersion = UserDefault.minVersion.string
+        minMessage = UserDefault.minMessage.string
+        infoMessage = UserDefault.infoMessage.string
         
         if Double(self.lastVersion) == 0.0 {
             // New install - just use current version
-            self.acceptVersion()
         } else if compare(self.lastVersion, self.version) == .lessThan {
             // Version has increased - check for upgrade
-            self.upgradeToVersion()
+            MessageBox.shared.show("Upgrading to latest version...", closeButton: false)
+            Utility.executeAfter(delay: 5) {
+                self.upgradeToVersion()
+                MessageBox.shared.show("Upgrade complete", closeButton: true)
+            }
+        }
+        accept()
+        
+        check()
+    }
+    
+    public func check() {
+        // Check this version is acceptable
+        if compare(version, minVersion) == .lessThan {
+            MessageBox.shared.show(minMessage) {
+                exit(1)
+            }
+        }
+        
+        // Show info message if it is setup
+        if infoMessage != "" {
+            MessageBox.shared.show(infoMessage)
         }
     }
     
     private func upgradeToVersion() {
-        if compare(self.lastVersion, "1.0") == .lessThan {
+        if compare(lastVersion, "1.0") == .lessThan {
             // Upgrade to version 1.0
         }
     }
     
-    private func acceptVersion() {
-        UserDefault.lastVersion.set(self.version)
-        UserDefault.lastVersion.set(self.build)
+    private func accept() {
+        UserDefault.lastVersion.set(version)
+        UserDefault.lastBuild.set(build)
+    }
+    
+    public func set(minVersion: String, minMessage: String, infoMessage: String) {
+        self.minVersion = minVersion
+        self.minMessage = minMessage
+        self.infoMessage = infoMessage
+        UserDefault.minVersion.set(minVersion)
+        UserDefault.minMessage.set(minMessage)
+        UserDefault.infoMessage.set(infoMessage)
+        if !MessageBox.shared.isShown {
+            check()
+        }
     }
     
     private func compare(_ version1: String, _ version2: String) -> Utility.CompareResult {

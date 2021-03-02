@@ -1,0 +1,28 @@
+List of current versions
+------------------------
+
+Currently on first 1.0 versoin
+
+Changes since last version
+--------------------------
+
+TODO
+----
+
+Bugs fix now
+------------
+
+Short-term
+----------
+
+Medium-term
+-----------
+
+Long-term
+---------
+
+Test release process
+--------------------
+Build an archive for 'Any iOS device' and then release this through Test Flight
+Build an archive for 'My Mac' and then export it by distributing the app to 'Development'
+                                  Then copy onto Mac. You might have to Ctrl-RightClick/Open it

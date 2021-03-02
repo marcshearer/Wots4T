@@ -20,57 +20,53 @@ struct CalendarView: View {
     @State private var displayedRemoteChanges: Int = 0
     
     @ObservedObject var data = DataModel.shared
-    
+    @ObservedObject var messageBox = MessageBox.shared
+
     var body: some View {
-        NavigationView {
-            ZStack {
-                Palette.background.background
-                    .ignoresSafeArea()
-                VStack(spacing: 0) {
-                    let today = DayNumber.today
-                    
-                    Banner(title: $title, back: false,
-                           optionMode: .menu,
-                           options: [BannerOption(text: "Setup \(editMealsName)",  action: { self.linkEditMeals = true }),
-                                     BannerOption(text: "Setup \(editCategoriesName)", action: { self.linkEditCategories = true }),
-                                     BannerOption(text: "About \(appName)", action: { self.linkAbout = true })])
-                    
-                    Spacer().frame(height: 10)
-                    ScrollView(showsIndicators: MyApp.target == .macOS) {
-                        ScrollViewReader { scrollViewProxy in
-                            VStack {
-                                ForEach(-14...28, id: \.self) { offset in
-                                    CalendarView_Entry(today: today, offset: offset)
-                                        .id(offset)
-                                }
-                                Spacer()
+        StandardView(navigation: true) {
+            VStack(spacing: 0) {
+                let today = DayNumber.today
+                
+                Banner(title: $title, back: false,
+                       optionMode: .menu,
+                       options: [BannerOption(text: "Setup \(editMealsName)",  action: { self.linkEditMeals = true }),
+                                 BannerOption(text: "Setup \(editCategoriesName)", action: { self.linkEditCategories = true }),
+                                 BannerOption(text: "About \(appName)", action: { messageBox.show("A \(mealName.capitalized) scheduling app from\nShearer Online Ltd") })])
+                
+                Spacer().frame(height: 10)
+                ScrollView(showsIndicators: MyApp.target == .macOS) {
+                    ScrollViewReader { scrollViewProxy in
+                        VStack {
+                            ForEach(-14...28, id: \.self) { offset in
+                                CalendarView_Entry(today: today, offset: offset)
+                                    .id(offset)
                             }
-                            .onChange(of: self.startAt) { (startAt) in
-                                if let startAt = startAt {
-                                    scrollViewProxy.scrollTo(startAt, anchor: .top)
-                                }
+                            Spacer()
+                        }
+                        .onChange(of: self.startAt) { (startAt) in
+                            if let startAt = startAt {
+                                scrollViewProxy.scrollTo(startAt, anchor: .top)
                             }
                         }
                     }
                 }
-                .onChange(of: DataModel.shared.publishedRemoteUpdates, perform: { value in
-                    // Remote data model has changed - refresh it
-                    if value > self.displayedRemoteChanges {
-                        self.displayedRemoteChanges = DataModel.shared.load()
-                    }
-                })
-                .onAppear {
-                    Utility.mainThread {
-                        self.startAt = 0
-                    }
-                }
-                NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
-                NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
-                NavigationLink(destination: AboutWots4TView(), isActive: $linkAbout) { EmptyView() }
             }
-            .noNavigationBar
+            .onChange(of: DataModel.shared.publishedRemoteUpdates, perform: { value in
+                // Remote data model has changed - refresh it
+                if value > self.displayedRemoteChanges {
+                    self.displayedRemoteChanges = DataModel.shared.load()
+                }
+            })
+            .onAppear {
+                Utility.mainThread {
+                    Version.current.load()
+                    self.startAt = 0
+                }
+            }
+            NavigationLink(destination: MealListView(title: editMealsName), isActive: $linkEditMeals) { EmptyView() }
+            NavigationLink(destination: CategoryListView(title: editCategoriesName), isActive: $linkEditCategories) { EmptyView() }
+            NavigationLink(destination: MessageBoxView(), isActive: $linkAbout) { EmptyView() }
         }
-        .navigationViewStyle(IosStackNavigationViewStyle())
     }
     
     func date(offset: Int) -> String {

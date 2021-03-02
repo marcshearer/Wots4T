@@ -349,22 +349,24 @@ class ICloud {
         return result
     }
     
-    public func getDatabaseIdentifier(completion: @escaping (Bool, String?, String?, String?, Int?)->()) {
+    public func getDatabaseIdentifier(completion: @escaping (Bool, String?, String?, String?, String?, String?)->()) {
         var database: String?
-        var version: String?
-        var build: Int?
+        var minVersion: String?
+        var minMessage: String?
+        var infoMessage: String?
         
         self.download(recordType: "Version",
                           downloadAction: { (record) in
                                 database = Utility.objectString(cloudObject: record, forKey: "database")
-                                version = Utility.objectString(cloudObject: record, forKey: "version")
-                                build = Int(Utility.objectInt(cloudObject: record, forKey: "build"))
+                                minVersion = Utility.objectString(cloudObject: record, forKey: "minVersion")
+                                minMessage = Utility.objectString(cloudObject: record, forKey: "minMessage")
+                                infoMessage = Utility.objectString(cloudObject: record, forKey: "infoMessage")
                           },
                           completeAction: {
-                                completion(true, nil, database, version, build)
+                                completion(true, nil, database, minVersion, minMessage, infoMessage)
                           },
                           failureAction: { (error) in
-                                completion(false, "Error downloading version \(self.errorMessage(error))", nil, nil, nil)
+                                completion(false, "Error downloading version \(self.errorMessage(error))", nil, nil, nil, nil)
                           })
     }
     

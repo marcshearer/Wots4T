@@ -63,13 +63,13 @@ class MyApp {
     static let shared = MyApp()
     
     public static var database: String = "unknown"
-    public static var dbVersion: String?
-    public static var dbBuild: Int?
+    
     #if targetEnvironment(macCatalyst)
     public static let target: Target = .macOS
     #else
     public static let target: Target = .iOS
     #endif
+    
     public static let cloudContainer = CKContainer.init(identifier: Config.iCloudIdentifier)
     public static let publicDatabase = cloudContainer.publicCloudDatabase
     public static let privateDatabase = cloudContainer.privateCloudDatabase
@@ -98,21 +98,20 @@ class MyApp {
     private func setupDatabase() {
         
         // Get saved database
-        MyApp.database = UserDefaults.standard.string(forKey: UserDefault.database.name) ?? "unknown"
+        MyApp.database = UserDefault.database.string
         
         // Check which database we are connected to
-        ICloud.shared.getDatabaseIdentifier { (success, errorMessage, database, dbVersion, dbBuild) in
+        ICloud.shared.getDatabaseIdentifier { (success, errorMessage, database, minVersion, minMessage, infoMessage) in
             
             if success {
                 Utility.mainThread {
                     
                     // Store database identifier
                     MyApp.database = database ?? "unknown"
-                    MyApp.dbVersion = dbVersion
-                    MyApp.dbBuild = dbBuild
-                    UserDefaults.standard.set(database, forKey: UserDefault.database.name)
+                    UserDefault.database.set(UserDefault.database.name)
+                    Version.current.set(minVersion: minVersion ?? "", minMessage: minMessage ?? "", infoMessage: infoMessage ?? "")
                 }
-            }
+            }	
         }
         
         // Check if this iCloud account has central data - if not then use default set
