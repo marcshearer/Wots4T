@@ -22,9 +22,7 @@ struct AttachmentView: View {
     
     var body: some View {
         
-        ZStack {
-            Palette.background.background
-                .ignoresSafeArea()
+        StandardView {
             VStack {
                 HStack {
                     Banner(title: $title)
@@ -58,7 +56,6 @@ struct AttachmentView: View {
                     .onMove(perform: onMove)
                 }
                 .editMode($editMode)
-                .noNavigationBar
                 Spacer()
             }
         }

@@ -18,9 +18,7 @@ struct MealEditView: View {
     @State var title: String
      
     var body: some View {
-        ZStack {
-            Palette.background.background
-                .ignoresSafeArea()
+        StandardView {
             VStack {
                 Banner(title: $title,
                        backCheck: self.save,
@@ -70,7 +68,6 @@ struct MealEditView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
             }
-            .noNavigationBar
         }
     }
     

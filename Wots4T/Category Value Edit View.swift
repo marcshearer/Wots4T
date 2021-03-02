@@ -22,9 +22,7 @@ struct CategoryValueEditView: View {
     @State private var frequencyIndex: Int = 0
         
     var body: some View {
-        ZStack {
-            Palette.background.background
-                .ignoresSafeArea()
+        StandardView {
             VStack {
                 Banner(title: $title,
                        backCheck: self.save,
@@ -65,7 +63,6 @@ struct CategoryValueEditView: View {
                 self.frequencyIndex = frequencies.firstIndex(where: {$0 == categoryValue.frequency}) ?? 0
             }
         }
-        .noNavigationBar
     }
     
     private func save() -> Bool {

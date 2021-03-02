@@ -13,9 +13,7 @@ struct MealDisplayView: View {
     @ObservedObject var meal: MealViewModel
     
     var body: some View {
-        ZStack {
-            Palette.background.background
-                .ignoresSafeArea()
+        StandardView {
             VStack(spacing: 0) {
                 MealDisplayView_Banner(meal: meal)
                 ScrollView(showsIndicators: MyApp.target == .macOS) {
@@ -29,7 +27,6 @@ struct MealDisplayView: View {
                 Spacer()
             }
             .edgesIgnoringSafeArea(.bottom)
-            .noNavigationBar
             .onSwipe(.right) {
                 presentationMode.wrappedValue.dismiss()
             }

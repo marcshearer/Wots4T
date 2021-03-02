@@ -22,9 +22,7 @@ struct CategoryValueListView: View {
     @State var linkToEditTitle: String?
 
     var body: some View {
-        ZStack {
-            Palette.background.background
-                .ignoresSafeArea()
+        StandardView {
             VStack(spacing: 0) {
                 if let title = title {
                     InputTitle(title: title,
@@ -61,7 +59,6 @@ struct CategoryValueListView: View {
                 }
                 Spacer()
             }
-            .noNavigationBar
             NavigationLink(destination: CategoryValueEditView(categoryValue: self.linkToEditCategoryValue, title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
     }

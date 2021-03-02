@@ -23,9 +23,7 @@ struct CategoryEditView: View {
     let importances = Importance.allCases
 
     var body: some View {
-        ZStack {
-            Palette.background.background
-                .ignoresSafeArea()
+        StandardView {
             VStack {
                 Banner(title: $title,
                        backCheck: self.save,
@@ -68,7 +66,6 @@ struct CategoryEditView: View {
                 self.importanceIndex = importances.firstIndex(where: {$0 == category.importance}) ?? 0
             }
         }
-        .noNavigationBar
     }
     
     private func save() -> Bool {
