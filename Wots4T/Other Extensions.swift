@@ -5,8 +5,9 @@
 //  Created by Marc Shearer on 01/02/2021.
 //
 
-import UIKit
+import SwiftUI
 
+#if canImport(UIKit)
 class SearchBar : UISearchBar {
     
     required init(coder aDecoder: NSCoder) {
@@ -45,7 +46,7 @@ extension UIView {
         }
     }
 }
-
+#endif
 extension CGPoint {
     
     func distance(to point: CGPoint) -> CGFloat {
@@ -85,6 +86,7 @@ extension CGPoint {
     }
 }
 
+#if canImport(UIKit)
 extension UIImage {
     convenience init(color: UIColor, size: CGSize) {
         UIGraphicsBeginImageContextWithOptions(size, false, 1)
@@ -120,6 +122,7 @@ extension UIImage {
         }
     }
 }
+#endif
 
 extension Array {
     
@@ -137,7 +140,7 @@ extension Array {
        self = leftPart + rightPart
     }
 }
-
+#if canImport(UIKit)
 extension NSAttributedString {
     
     convenience init(_ string: String, color: UIColor? = nil, font: UIFont? = nil) {
@@ -266,6 +269,7 @@ extension NSAttributedString {
         return label.frame.width
     }
 }
+#endif
 
 extension NSMutableAttributedString {
     

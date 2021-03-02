@@ -5,7 +5,7 @@
 //  Created by Marc Shearer on 01/02/2021.
 //
 
-import UIKit
+import SwiftUI
 
 extension String {
     
@@ -72,7 +72,7 @@ extension String {
         let leadingWhitespace = self.range(of: "^\\s*", options: .regularExpression)
         return self.replacingCharacters(in: leadingWhitespace!, with: "")
     }
-    
+    #if canImport(UIKit)
     func labelHeight(width: CGFloat? = nil, font: UIFont? = nil) -> CGFloat {
         return NSAttributedString(self).labelHeight(width: width, font: font)
     }
@@ -80,4 +80,5 @@ extension String {
     func labelWidth(height: CGFloat? = nil, font: UIFont? = nil) -> CGFloat {
         return NSAttributedString(self).labelWidth(height: height, font: font)
     }
+    #endif
 }

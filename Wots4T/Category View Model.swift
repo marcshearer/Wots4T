@@ -24,7 +24,7 @@ public enum Importance: Int, Comparable, CaseIterable {
     }
 }
 
-public class CategoryViewModel : ObservableObject, Identifiable {
+public class CategoryViewModel : ObservableObject, Identifiable, CustomDebugStringConvertible {
 
     // Properties in core data model
     @Published private(set) var categoryId: UUID!
@@ -124,4 +124,9 @@ public class CategoryViewModel : ObservableObject, Identifiable {
     private func nameExists(_ name: String) -> Bool {
         return !DataModel.shared.categories.compactMap{$1}.filter({$0.name == name && $0.categoryId != self.categoryId}).isEmpty
     }
+    
+    public var description: String {
+        "Category: \(self.name)"
+    }
+    public var debugDescription: String { self.description }
 }

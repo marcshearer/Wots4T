@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct MealSummaryView: View {
     
-    @State var urlImage: UIImage?
+    @State var urlImage: MyImage?
     @ObservedObject var meal: MealViewModel
     var imageWidth: CGFloat?
     var showInfo: Bool = false
@@ -21,12 +21,12 @@ public struct MealSummaryView: View {
             Spacer().frame(width: 16)
             VStack {
                 Spacer()
-                if let imageData = $meal.image.wrappedValue, let image = UIImage(data: imageData) {
-                    Image(uiImage: image)
+                if let imageData = $meal.image.wrappedValue, let image = MyImage(data: imageData) {
+                    Image(myImage: image)
                         .resizable()
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                 } else if let image = self.urlImage {
-                    Image(uiImage: image)
+                    Image(myImage: image)
                         .resizable()
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                 } else {
@@ -68,7 +68,7 @@ public struct MealSummaryView: View {
                     }
                     Spacer()
                 }
-                Spacer().frame(width: 4)
+                Spacer().rightSpacer
             }
             Spacer().frame(width: 4)
             NavigationLink(destination: MealDisplayView(meal: meal), isActive: $linkToDisplay) { EmptyView() }
@@ -76,9 +76,11 @@ public struct MealSummaryView: View {
             if meal.url != "" {
                 if let image = meal.urlImageCache {
                     // Used cached image
-                    self.urlImage = UIImage(data: image)
+                    self.urlImage = MyImage(data: image)
                 } else {
                     // No cached image - derive from URL
+                    #if canImport(UIKit)
+                    // TODO Need MacOS equivalent
                     LinkPresentation.getDetail(url: URL(string: meal.url)!, getImage: true) { (result) in
                         switch result {
                         case .success(let (image,_)):
@@ -90,6 +92,7 @@ public struct MealSummaryView: View {
                             break
                         }
                     }
+                    #endif
                 }
             }
         }

@@ -5,11 +5,14 @@
 //  Created by Marc Shearer on 10/02/2021.
 //
 
+// TODO Need macOS equivalent of ImagePicker
+
 enum ImageSource {
     case camera
     case photoLibrary
     case pasteboard
     
+    #if canImport(UIKit)
     var pickerType: UIImagePickerController.SourceType? {
         switch self {
         case .camera:
@@ -20,6 +23,7 @@ enum ImageSource {
             return nil
         }
     }
+    #endif
 }
 
 enum ImageButtonType {
@@ -80,10 +84,10 @@ struct ImageCaptureGroup : View {
                 if image == nil {
                     ImageCaptureButton(image: $image, text: ImageButtonType.add.text, type: .add, width: ImageButtonType.add.width)
                 } else {
-                    if let uiImage = UIImage(data: image!) {
+                    if let myImage = MyImage(data: image!) {
                         VStack {
                             Spacer()
-                            Image(uiImage: uiImage).resizable().aspectRatio(contentMode: .fit)
+                            Image(myImage: myImage).resizable().aspectRatio(contentMode: .fit)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             Spacer()
                         }.frame(maxWidth: 50)
@@ -131,7 +135,9 @@ struct ImageCaptureButton : View {
         }
         .sheet(isPresented: $captureImage) {
             if let source = source {
+                #if canImport(UIKit)
                 ImageCapture(image: $image, source: source.pickerType!)
+                #endif
             }
         }
     }
@@ -141,10 +147,17 @@ struct ImageCaptureButton : View {
             self.captureImage = false
             self.source = source
             if source == .pasteboard {
+                #if canImport(UIKit)
                 let pasteboard = UIPasteboard.general
                 if pasteboard.hasImages {
                     self.image = pasteboard.image?.pngData() ?? nil
                 }
+                #else
+                let pasteboard = NSPasteboard.general
+                if let image = pasteboard.data(forType: .png) {
+                    self.image = image
+                }
+                #endif
             } else {
                 self.captureImage = true
             }
@@ -161,10 +174,17 @@ fileprivate struct ImageCaptureButton_GetSource : View {
     
     var body: some View {
         
+        #if canImport(UIKit)
         let camera = ImageCapture.isCameraAvailable && capture
         let photoLibrary =  ImageCapture.isPhotoLibraryAvailable && capture
         let pasteboard = UIPasteboard.general
         let paste = pasteboard.hasImages && capture
+        #else
+        let camera = false
+        let photoLibrary = false
+        let pasteboard = NSPasteboard.general
+        let paste = pasteboard.data(forType: .png) != nil
+        #endif
         
         if (camera ? 1 : 0) + (photoLibrary ? 1 : 0) + (paste ? 1 : 0) > 1 {
             Menu {

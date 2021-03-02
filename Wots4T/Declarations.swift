@@ -53,3 +53,17 @@ public let categoryValuesTitle = "possible values"
 
 public let categoryValueNameTitle = "name"
 public let categoryValueFrequencyTitle = "frequency"
+
+public enum UIMode {
+    case uiKit
+    case appKit
+    case unknown
+}
+
+#if canImport(UIKit)
+public let target: UIMode = .uiKit
+#elseif canImport(appKit)
+public let target: UIMode = .appKit
+#else
+public let target: UIMode = .unknow
+#endif

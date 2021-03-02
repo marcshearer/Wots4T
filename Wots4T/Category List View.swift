@@ -37,42 +37,44 @@ struct CategoryListView: View {
                                     self.linkToEditTitle = "New \(categoryName.capitalized)"
                                     self.linkToEditCategory = CategoryViewModel()
                                 })])
-                    LazyVStack {
-                        let categories = DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
-                        ForEach(categories) { category in
-                            VStack {
-                                HStack(alignment: .top) {
-                                    Spacer().frame(width: 48)
-                                    Text(category.name)
-                                        .font(.title)
-                                        .foregroundColor(Palette.background.text)
-                                        .lineLimit(1)
-                                    Spacer()
-                                }
-                                Spacer().frame(height: 4)
-                                HStack(alignment: .top) {
-                                    Spacer().frame(width: 64)
-                                    let categoryValues =  DataModel.shared.categoryValues[category.categoryId] ?? [:]
-                                    if categoryValues.isEmpty {
-                                        Text("No values for \(categoryName)")
-                                            .font(.caption)
-                                            .foregroundColor(Palette.background.faintText)
-                                    } else {
-                                        let valueString = Utility.toString( categoryValues.map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])}).map{$0.name})
-                                        Text(valueString)
-                                            .font(.caption)
-                                            .foregroundColor(Palette.background.contrastText)
+                    ScrollView(showsIndicators: MyApp.target == .macOS) {
+                        LazyVStack {
+                            let categories = DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
+                            ForEach(categories) { category in
+                                VStack {
+                                    HStack(alignment: .top) {
+                                        Spacer().frame(width: 48)
+                                        Text(category.name)
+                                            .font(.title)
+                                            .foregroundColor(Palette.background.text)
                                             .lineLimit(1)
+                                        Spacer()
                                     }
-                                    Spacer()
+                                    Spacer().frame(height: 4)
+                                    HStack(alignment: .top) {
+                                        Spacer().frame(width: 64)
+                                        let categoryValues =  DataModel.shared.categoryValues[category.categoryId] ?? [:]
+                                        if categoryValues.isEmpty {
+                                            Text("No values for \(categoryName)")
+                                                .font(.caption)
+                                                .foregroundColor(Palette.background.faintText)
+                                        } else {
+                                            let valueString = Utility.toString( categoryValues.map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])}).map{$0.name})
+                                            Text(valueString)
+                                                .font(.caption)
+                                                .foregroundColor(Palette.background.contrastText)
+                                                .lineLimit(1)
+                                        }
+                                        Spacer()
+                                    }
+                                    Spacer().frame(height: 16)
                                 }
-                                Spacer().frame(height: 16)
-                            }
-                            .onTapGesture {
-                                self.linkToAdd = false
-                                self.linkToEditTitle = categoryName.capitalized
-                                self.linkToEditCategory = category
-                                self.linkToEdit = true
+                                .onTapGesture {
+                                    self.linkToAdd = false
+                                    self.linkToEditTitle = categoryName.capitalized
+                                    self.linkToEditCategory = category
+                                    self.linkToEdit = true
+                                }
                             }
                         }
                     }
@@ -86,9 +88,7 @@ struct CategoryListView: View {
         .onSwipe(.right) {
             presentationMode.wrappedValue.dismiss()
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+        .noNavigationBar
         NavigationLink(destination: CategoryEditView(category: self.linkToEditCategory, title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
     }
     

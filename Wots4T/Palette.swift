@@ -89,7 +89,7 @@ class Palette {
     var wrappedValue: Color
     
     fileprivate init(_ colorName: ThemeSpecificColorName) {
-        wrappedValue = Color(UIColor(dynamicProvider: { (_) in Themes.currentTheme.specific(colorName)}))
+        wrappedValue = Color(MyColor(dynamicProvider: { (_) in Themes.currentTheme.specific(colorName)}))
     }
 }
 
@@ -102,12 +102,12 @@ class PaletteColor {
     let themeText: Color
     
     init(_ colorName: ThemeBackgroundColorName) {
-        self.background = Color(UIColor(dynamicProvider: { (_) in Themes.currentTheme.background(colorName)}))
-        self.text = Color(UIColor(dynamicProvider: { (_) in Themes.currentTheme.text(colorName)}))
-        self.contrastText = Color(UIColor(dynamicProvider: { (_) in Themes.currentTheme.contrastText(colorName)}))
-        self.strongText = Color(UIColor(dynamicProvider: { (_) in Themes.currentTheme.strongText(colorName)}))
-        self.faintText = Color(UIColor(dynamicProvider: { (_) in Themes.currentTheme.faintText(colorName)}))
-        self.themeText = Color(UIColor(dynamicProvider: { (_) in Themes.currentTheme.themeText(colorName)}))
+        self.background = Color(MyColor(dynamicProvider: { (_) in Themes.currentTheme.background(colorName)}))
+        self.text = Color(MyColor(dynamicProvider: { (_) in Themes.currentTheme.text(colorName)}))
+        self.contrastText = Color(MyColor(dynamicProvider: { (_) in Themes.currentTheme.contrastText(colorName)}))
+        self.strongText = Color(MyColor(dynamicProvider: { (_) in Themes.currentTheme.strongText(colorName)}))
+        self.faintText = Color(MyColor(dynamicProvider: { (_) in Themes.currentTheme.faintText(colorName)}))
+        self.themeText = Color(MyColor(dynamicProvider: { (_) in Themes.currentTheme.themeText(colorName)}))
     }
     
     public func textColor(_ type: ThemeTextType) -> Color {
@@ -130,7 +130,7 @@ extension Color {
     func getRed(_ red: inout CGFloat, green: inout CGFloat, blue: inout CGFloat, alpha: inout CGFloat) {
 
         #if canImport(UIKit)
-        typealias NativeColor = UIColor
+        typealias NativeColor = MyColor
         #elseif canImport(AppKit)
         typealias NativeColor = NSColor
         #endif

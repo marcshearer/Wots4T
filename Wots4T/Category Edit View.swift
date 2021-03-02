@@ -44,22 +44,19 @@ struct CategoryEditView: View {
                     .alert(isPresented: $confirmDelete, content: {
                         self.delete()
                     })
-                ScrollView {
-                    VStack {
-                        Spacer().frame(height: 16)
-                        Input(title: categoryNameTitle.capitalized, field: $category.name, message: $category.nameMessage, topSpace: 0)
-                        PickerInput(title: categoryImportanceTitle.capitalized, field: $importanceIndex, values: importances.map{$0.string.capitalized})
-                            .onChange(of: importanceIndex, perform: { index in
-                                category.importance = importances[index]
-                            })
-                        
-                        CategoryValueListView(title: categoryValuesTitle.capitalized , addOption: true, category: category)
-                        Spacer()
-                            .alert(isPresented: $saveError, content: {
-                                Alert(title: Text("Error!"),
-                                      message: Text(category.saveMessage))
-                            })
-                    }
+                VStack(spacing: 0) {
+                    Spacer().frame(height: 16)
+                    Input(title: categoryNameTitle.capitalized, field: $category.name, message: $category.nameMessage, topSpace: 0)
+                    PickerInput(title: categoryImportanceTitle.capitalized, field: $importanceIndex, values: importances.map{$0.string.capitalized})
+                        .onChange(of: importanceIndex, perform: { index in
+                            category.importance = importances[index]
+                        })
+                    CategoryValueListView(title: categoryValuesTitle.capitalized , addOption: true, category: category)
+                        // Spacer()
+                        .alert(isPresented: $saveError, content: {
+                            Alert(title: Text("Error!"),
+                                  message: Text(category.saveMessage))
+                        })
                 }
             }
             .onSwipe(.right) {
@@ -71,9 +68,7 @@ struct CategoryEditView: View {
                 self.importanceIndex = importances.firstIndex(where: {$0 == category.importance}) ?? 0
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+        .noNavigationBar
     }
     
     private func save() -> Bool {

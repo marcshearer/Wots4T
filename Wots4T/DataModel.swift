@@ -13,10 +13,26 @@ class DataModel: ObservableObject {
     
     public static let shared = DataModel()
     
-    @Published private(set) var receivedRemoteUpdates = 0
-    @Published private(set) var publishedRemoteUpdates = 0 // Updated every 10 seconds (unless suspended)
-    @Published private(set) var loadedRemoteUpdates = 0
-    @Published private var remoteUpdatesSuspended = false
+    @Published private(set) var receivedRemoteUpdates = 0 {
+        didSet {
+            
+        }
+    }
+    @Published private(set) var publishedRemoteUpdates = 0  {
+        didSet {
+            
+        }
+    }// Updated every 10 seconds (unless suspended)
+    @Published private(set) var loadedRemoteUpdates = 0 {
+        didSet {
+            
+        }
+    }
+    @Published private var remoteUpdatesSuspended = false {
+        didSet {
+            
+        }
+    }
     private var observer: NSObjectProtocol?
     
     @Published private(set) var categories: [UUID:CategoryViewModel] = [:]                  // Category ID
@@ -35,7 +51,6 @@ class DataModel: ObservableObject {
                 self.receivedRemoteUpdates += 1
             }
         })
-        
         self.setupMappings()
     }
     
@@ -46,13 +61,17 @@ class DataModel: ObservableObject {
     }
     
     private func setupMappings() {
-        Publishers.CombineLatest3($receivedRemoteUpdates, $publishedRemoteUpdates, $remoteUpdatesSuspended)
+        Publishers.CombineLatest($receivedRemoteUpdates, $remoteUpdatesSuspended)
             .receive(on: RunLoop.main)
             .debounce(for: .seconds(1), scheduler: RunLoop.main)
-            .map { (receivedRemoteUpdates, publishedRemoteUpdates, remoteUpdatesSuspended) in
-                return (remoteUpdatesSuspended ? publishedRemoteUpdates :receivedRemoteUpdates)
+            .map { (receivedRemoteUpdates, remoteUpdatesSuspended) in
+                return (remoteUpdatesSuspended ? self.publishedRemoteUpdates : receivedRemoteUpdates)
             }
-        .assign(to: \.publishedRemoteUpdates, on: self)
+            .sink(receiveValue: { newValue in
+                if self.publishedRemoteUpdates != newValue {
+                    self.publishedRemoteUpdates = newValue
+                }
+            })
         .store(in: &cancellableSet)
     }
     
@@ -399,7 +418,6 @@ class DataModel: ObservableObject {
     
     public func save(allocation: AllocationViewModel) {
         assert(allocation.allocationMO != nil, "Cannot save a \(allocationName) which doesn't already have managed objects")
-        assert(self.allocations[allocation.dayNumber]?[allocation.slot] == nil, "\(allocationName) does not exist and cannot be updated")
         if allocation.changed {
             CoreData.update(updateLogic: {
                 self.updateMO(allocation: allocation)

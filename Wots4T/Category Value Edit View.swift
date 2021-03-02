@@ -44,19 +44,17 @@ struct CategoryValueEditView: View {
                         self.delete()
                     })
                 
-                ScrollView {
-                    Input(title: categoryValueNameTitle.capitalized, field: $categoryValue.name, message: $categoryValue.nameMessage, topSpace: 0)
-                    
-                    PickerInput(title: categoryValueFrequencyTitle.capitalized, field: $frequencyIndex, values: frequencies.map{$0.string.capitalized})
-                        .onChange(of: frequencyIndex, perform: { index in
-                            categoryValue.frequency = frequencies[index]
-                        })
-                    Spacer()
-                        .alert(isPresented: $saveError, content: {
-                            Alert(title: Text("Error!"),
-                                  message: Text(categoryValue.saveMessage))
-                        })
-                }
+                Input(title: categoryValueNameTitle.capitalized, field: $categoryValue.name, message: $categoryValue.nameMessage, topSpace: 0)
+                
+                PickerInput(title: categoryValueFrequencyTitle.capitalized, field: $frequencyIndex, values: frequencies.map{$0.string.capitalized})
+                    .onChange(of: frequencyIndex, perform: { index in
+                        categoryValue.frequency = frequencies[index]
+                    })
+                Spacer()
+                    .alert(isPresented: $saveError, content: {
+                        Alert(title: Text("Error!"),
+                              message: Text(categoryValue.saveMessage))
+                    })
             }
             .onSwipe(.right) {
                 if self.save() {
@@ -67,9 +65,7 @@ struct CategoryValueEditView: View {
                 self.frequencyIndex = frequencies.firstIndex(where: {$0 == categoryValue.frequency}) ?? 0
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+        .noNavigationBar
     }
     
     private func save() -> Bool {

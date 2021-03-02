@@ -7,10 +7,7 @@
 //
 
 import CloudKit
-
-#if os(macOS)
-import Cocoa
-#endif
+import SwiftUI
 
 class ICloud {
     
@@ -352,18 +349,22 @@ class ICloud {
         return result
     }
     
-    public func getDatabaseIdentifier(completion: @escaping (Bool, String?, String?)->()) {
-        var database: String!
+    public func getDatabaseIdentifier(completion: @escaping (Bool, String?, String?, String?, Int?)->()) {
+        var database: String?
+        var version: String?
+        var build: Int?
         
         self.download(recordType: "Version",
                           downloadAction: { (record) in
                                 database = Utility.objectString(cloudObject: record, forKey: "database")
+                                version = Utility.objectString(cloudObject: record, forKey: "version")
+                                build = Int(Utility.objectInt(cloudObject: record, forKey: "build"))
                           },
                           completeAction: {
-                                completion(true, nil, database)
+                                completion(true, nil, database, version, build)
                           },
                           failureAction: { (error) in
-                            completion(false, "Error downloading version \(self.errorMessage(error))", nil)
+                                completion(false, "Error downloading version \(self.errorMessage(error))", nil, nil, nil)
                           })
     }
     
@@ -388,8 +389,8 @@ class ICloud {
                 // No need to back up
             } else if let date = value! as? Date {
                 dictionary[key] = ["date" : Utility.dateString(date, format: Config.backupDateFormat, localized: false)]
-            } else if let asset = value as? CKAsset {
-#if os(macOS)
+            } else if let _ = value as? CKAsset {
+/*
                 if let data = try? Data.init(contentsOf: asset.fileURL!) {
                     let imageFileURL = assetsDirectory.appendingPathComponent(record.recordID.recordName).appendingPathExtension("jpeg")
                     if (try? FileManager.default.removeItem(at: imageFileURL)) == nil {
@@ -406,7 +407,7 @@ class ICloud {
                     }
                 }
                 // Failed - just insert and will probably crash
-#endif
+*/
                 dictionary[key] = value!
             } else {
                 dictionary[key] = value!

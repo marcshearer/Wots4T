@@ -45,7 +45,7 @@ struct MealEditView: View {
                         self.delete()
                     })
                 
-                ScrollView(showsIndicators: false) {
+                ScrollView(showsIndicators: (MyApp.target == .macOS)) {
                     Input(title: mealNameTitle.capitalized, field: $meal.name, message: $meal.nameMessage, topSpace: 0)
                     InputTitle(title: mealDescTitle.capitalized, buttonImage: AnyView(Image(systemName: "icloud.and.arrow.down").foregroundColor(Palette.background.themeText).font(.callout)), buttonAction: ($meal.url.wrappedValue == "" ? nil : { getDetail() }))
                     Input(field: $meal.desc, height: 60)
@@ -70,9 +70,7 @@ struct MealEditView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+            .noNavigationBar
         }
     }
     
@@ -87,6 +85,7 @@ struct MealEditView: View {
     }
     
     private func getDetail() {
+        #if canImport(UIKit)
         LinkPresentation.getDetail(url: URL(string: meal.url)!) { (result) in
             switch result {
             case .success(let (_,title)):
@@ -99,6 +98,7 @@ struct MealEditView: View {
                 break
             }
         }
+        #endif
     }
     
     private func delete() -> Alert {
@@ -119,34 +119,40 @@ struct MealEditView_Categories : View {
     @ObservedObject var meal: MealViewModel
 
     var width: CGFloat = 105
+    let extraHeight: CGFloat = (MyApp.target == .macOS ? 16 : 0)
     var height: CGFloat = 32
 
     var body: some View {
         InputTitle(title: "Categories")
-        ScrollView(.horizontal, showsIndicators: false) {
+        ScrollView(.horizontal, showsIndicators: MyApp.target == .macOS) {
             let categories = self.getCategories()
-            HStack {
-                Spacer().frame(width: 32)
-                ForEach(categories) { category in
-                    let value = meal.categoryValues[category.categoryId]
-                    let title = value?.name ?? category.name.uppercased()
-                    let values = self.getCategoryValues(categoryId: category.categoryId)
-                    let names = values.map{$0.name} + ["Not specified"]
-                    
-                    Menu(title) {
-                        ForEach(0..<(names.count)) { (index) in
-                            Button(names[index]) {
-                                meal.categoryValues[category.categoryId] = (index == names.count - 1 ? nil : values[index])
+            VStack {
+                HStack {
+                    ForEach(categories) { category in
+                        let value = meal.categoryValues[category.categoryId]
+                        let title = value?.name ?? category.name.uppercased()
+                        let values = self.getCategoryValues(categoryId: category.categoryId)
+                        let names = values.map{$0.name} + ["Not specified"]
+                        
+                        Menu(title) {
+                            ForEach(0..<(names.count)) { (index) in
+                                Button(names[index]) {
+                                    meal.categoryValues[category.categoryId] = (index == names.count - 1 ? nil : values[index])
+                                }
                             }
-                        }
-                    }.foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
-                    .font(value == nil ? .caption : .callout)
-                    .frame(width: width, height: height)
-                    .background(value == nil ? Palette.disabledButton.background : Palette.enabledButton.background)
-                    .cornerRadius(height/2)
+                        }.foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
+                        .font(value == nil ? .caption : .callout)
+                        .frame(width: width, height: height)
+                        .background(value == nil ? Palette.disabledButton.background : Palette.enabledButton.background)
+                        .cornerRadius(height/2)
+                    }
                 }
+                Spacer()
             }
         }
+        .frame(height: height + extraHeight)
+        .padding(.leading, 32)
+        .padding(.trailing, 16)
     }
     
     func getCategories() -> [CategoryViewModel] {

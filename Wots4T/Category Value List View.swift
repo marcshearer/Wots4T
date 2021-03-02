@@ -25,7 +25,7 @@ struct CategoryValueListView: View {
         ZStack {
             Palette.background.background
                 .ignoresSafeArea()
-            VStack {
+            VStack(spacing: 0) {
                 if let title = title {
                     InputTitle(title: title,
                                buttonImage: AnyView(Image(systemName: "plus.circle.fill").font(.title).foregroundColor(Palette.listButton.background)),
@@ -36,6 +36,7 @@ struct CategoryValueListView: View {
                                })
                     Spacer().frame(height: 8)
                 }
+                ScrollView(showsIndicators: MyApp.target == .macOS) {
                 LazyVStack {
                     let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
                     ForEach(categoryValues) { categoryValue in
@@ -57,11 +58,10 @@ struct CategoryValueListView: View {
                         }
                     }
                 }
+                }
                 Spacer()
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+            .noNavigationBar
             NavigationLink(destination: CategoryValueEditView(categoryValue: self.linkToEditCategoryValue, title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
     }

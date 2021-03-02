@@ -12,10 +12,12 @@ struct Separator : View {
     @State var padding = true
     
     var body : some View {
-        Rectangle()
-            .frame(height: 0.5)
-            .foregroundColor(Palette.separator.background)
-            .padding(.leading, padding ? 24 : 0)
-            .padding(.trailing, padding ? 12 : 0)
+        HStack(spacing: 0) {
+            Spacer().frame(width: 16)
+            Rectangle()
+                .frame(height: 0.5)
+                .foregroundColor(Palette.separator.background)
+            Spacer().rightSpacer
+        }
     }
 }

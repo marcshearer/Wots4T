@@ -14,7 +14,11 @@ struct AttachmentView: View {
     
     @State var title: String
     @State private var image: Data?
+    #if canImport(UIKit)
     @State private var editMode = EditMode.active
+    #else
+    @State private var editMode: Bool = true
+    #endif
     
     var body: some View {
         
@@ -45,7 +49,7 @@ struct AttachmentView: View {
                 }
                 List {
                     ForEach(meal.attachments) { (attachment) in
-                        Image(uiImage: UIImage(data: attachment.attachment!)!)
+                        Image(myImage: MyImage(data: attachment.attachment!)!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 80)
@@ -53,10 +57,8 @@ struct AttachmentView: View {
                     .onDelete(perform: onDelete)
                     .onMove(perform: onMove)
                 }
-                .environment(\.editMode, $editMode)
-                .navigationBarBackButtonHidden(true)
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
+                .editMode($editMode)
+                .noNavigationBar
                 Spacer()
             }
         }

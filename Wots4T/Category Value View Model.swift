@@ -36,7 +36,7 @@ public enum Frequency: Int, Comparable, CaseIterable {
     }
 }
 
-public class CategoryValueViewModel : ObservableObject, Identifiable {
+public class CategoryValueViewModel : ObservableObject, Identifiable, CustomDebugStringConvertible {
 
     // Properties in core data model
     @Published private(set) var categoryId: UUID!
@@ -141,4 +141,10 @@ public class CategoryValueViewModel : ObservableObject, Identifiable {
     private func nameExists(_ name: String) -> Bool {
         return !(DataModel.shared.categoryValues[self.categoryId ?? UUID()] ?? [:]).compactMap{$1}.filter({$0.name == name && $0.valueId != self.valueId}).isEmpty
     }
+    
+    public var description: String {
+        let categoryName = DataModel.shared.categories[self.categoryId]?.name ?? "Unknown"
+        return "Category: \(categoryName), Value: \(self.name)"
+    }
+    public var debugDescription: String { self.description }
 }

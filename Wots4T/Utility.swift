@@ -5,8 +5,7 @@
 //  Created by Marc Shearer on 20/12/2016.
 //  Copyright © 2016 Marc Shearer. All rights reserved.
 //
-
-import UIKit
+import SwiftUI
 import CoreData
 import CloudKit
 import os.log
@@ -266,15 +265,16 @@ class Utility {
     }
     
     //MARK: Cloud functions - prepare image to transmit to cloud ============================================
+    /*
     
     class func imageToObject(cloudObject: CKRecord, thumbnail: NSData?, name: String) {
         // Note that this will be asynchronous and hence temporary image should not be deleted until completion
         if thumbnail != nil {
             let imageData = thumbnail! as Data
             // Resize the image
-            let originalImage = UIImage(data: imageData)!
+            let originalImage = NSImage(data: imageData)!
             let scalingFactor = (originalImage.size.width > 1024) ? 1024 / originalImage.size.width : 1.0
-            let scaledImage = UIImage(data: imageData, scale: scalingFactor)!
+            let scaledImage = NSImage(data: imageData, scale: scalingFactor)!
             // Write the image to local file for temporary use
             let imageFilePath = NSTemporaryDirectory() + name
             let imageFileURL = URL(fileURLWithPath: imageFilePath)
@@ -284,6 +284,7 @@ class Utility {
             cloudObject.setValue(imageAsset, forKey: "thumbnail")
         }
     }
+    */
     
     class func tidyObject(name: String) {
         // Called to remove temporary file after completion
@@ -360,7 +361,7 @@ class Utility {
     }
     
     // MARK: - Animate ============================================================================== -
-    
+    #if canImport(UIKit)
     public static var _animating = false
     public static var animating:Bool { get { return _animating } }
     
@@ -386,6 +387,7 @@ class Utility {
             completion?()
         }
     }
+    #endif
     
     static public var sendingMessage = false
     
@@ -399,7 +401,7 @@ class Utility {
                 #if ContractWhist
                     outputMessage = outputMessage + " - Device:\(Scorecard.deviceName)"
                 #else
-                    outputMessage = outputMessage + UIDevice.current.name
+                outputMessage = outputMessage + Utility.deviceName()
                 #endif
             }
             outputMessage = outputMessage + " - \(message)"
@@ -431,7 +433,11 @@ class Utility {
     }
     
     public static func deviceName() -> String {
+        #if canImport(UIKit)
         var result = UIDevice.current.name
+        #else
+        var result = Host.current().localizedName!
+        #endif
         if result.left(7) == "Custom-" {
             result = result.mid(8,result.length-7)
         }

@@ -33,7 +33,7 @@ struct MealListView: View {
                 .ignoresSafeArea()
             VStack {
                 MealListView_Banner(title: title, editMode: allocateDayNumber == nil)
-                ScrollView(showsIndicators: false) {
+                ScrollView(showsIndicators: MyApp.target == .macOS) {
                     Spacer().frame(height: 8)
                     MealListView_FilterInput(categoryValues: $categoryValues)
                     ScrollViewReader { scrollViewProxy in
@@ -79,9 +79,7 @@ struct MealListView: View {
                     }
                 }
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+            .noNavigationBar
             NavigationLink(destination: MealEditView(meal: self.linkToEditMeal ?? MealViewModel(), title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
     }
@@ -155,31 +153,7 @@ struct MealListView_FilterInput: View {
                         GeometryReader { geometry in
                             let width: CGFloat = (geometry.size.width - 16) / 3
                             ScrollView(.horizontal, showsIndicators: false) {
-                                let categories = self.getCategories()
-                                HStack {
-                                    ForEach(categories) { category in
-                                        let categoryId = category.categoryId
-                                        let value = categoryValues[categoryId]
-                                        let title = value?.name ?? category.name.uppercased()
-                                        let values = self.getCategoryValues(categoryId: categoryId)
-                                        let names = ["No \(category.name.lowercased()) filter"] + values.map{$0.name}
-                                        
-                                        Menu(title) {
-                                            ForEach(0..<(names.count)) { (index) in
-                                                Button(action: {
-                                                    categoryValues[categoryId] = (index == 0 ? nil : values[index - 1])
-                                                }) {
-                                                    Text(names[index]).foregroundColor(index == 0 ? Palette.menuEntry.text : Palette.menuEntry.strongText)
-                                                }
-                                            }
-                                        }
-                                        .foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
-                                        .font(value == nil ? .caption : .callout)
-                                        .frame(width: width, height: height)
-                                        .background(value == nil ? Palette.disabledButton.background : .blue)
-                                        .cornerRadius(height/2)
-                                    }
-                                }
+                                MealListView_FilterInput_Categories(width: width, height: height, categoryValues: $categoryValues)
                             }
                         }
                         Spacer().frame(width: 8)
@@ -188,7 +162,48 @@ struct MealListView_FilterInput: View {
                 }
                 .frame(height: 80)
             }
-            Spacer().frame(width: 8)
+            Spacer().rightSpacer
+        }
+    }
+    
+}
+
+struct MealListView_FilterInput_Categories: View {
+    var width: CGFloat
+    var height: CGFloat
+    @Binding var categoryValues: [UUID: CategoryValueViewModel]
+    
+    var body: some View {
+        let categories = self.getCategories()
+        HStack {
+            ForEach(categories) { category in
+                let categoryId = category.categoryId
+                let value = categoryValues[categoryId]
+                let title = value?.name ?? category.name.uppercased()
+                let values = self.getCategoryValues(categoryId: categoryId)
+                let names = ["No \(category.name.lowercased()) filter"] + values.map{$0.name}
+                
+                Menu {
+                    ForEach(0..<(names.count)) { (index) in
+                        Button(action: {
+                            categoryValues[categoryId] = (index == 0 ? nil : values[index - 1])
+                        }) {
+                            Text(names[index]).foregroundColor(index == 0 ? Palette.menuEntry.text : Palette.menuEntry.strongText)
+                        }
+                    }
+                } label: {
+                    Label {
+                        Text(title).frame(width: width)
+                    } icon: {
+                        
+                    }
+                }
+                .foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
+                .font(value == nil ? .caption : .callout)
+                .frame(width: width, height: height)
+                .background(value == nil ? Palette.disabledButton.background : .blue)
+                .cornerRadius(height/2)
+            }
         }
     }
     
@@ -199,6 +214,7 @@ struct MealListView_FilterInput: View {
     func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {
         return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
     }
+
 }
 
 struct MealListView_Previews: PreviewProvider {

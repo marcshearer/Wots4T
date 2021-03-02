@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class AttachmentViewModel : Equatable, Hashable, Identifiable {
+public class AttachmentViewModel : Equatable, Hashable, Identifiable, CustomDebugStringConvertible {
     public var id: UUID { attachmentId }
     public var attachmentId: UUID
     public var sequence: Int
@@ -28,4 +28,9 @@ public class AttachmentViewModel : Equatable, Hashable, Identifiable {
         hasher.combine(self.sequence)
         hasher.combine(self.attachment)
     }
+    
+    public var description: String {
+        "Id: self.id.uuidString, Sequence: self.sequence"
+    }
+    public var debugDescription: String { self.description }
 }

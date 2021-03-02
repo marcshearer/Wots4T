@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 import CoreData
 
-public class MealViewModel : ObservableObject, Identifiable {
+public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringConvertible {
     
     // Properties in core data model
     public var id: UUID { self.mealId }
@@ -153,7 +153,7 @@ public class MealViewModel : ObservableObject, Identifiable {
         DataModel.shared.remove(meal: self)
     }
     
-    public func saveimageCache(image: UIImage?) {
+    internal func saveimageCache(image: MyImage?) {
         if let image = image, let imageData = image.pngData() {
             self.urlImageCache = imageData
         } else {
@@ -167,4 +167,9 @@ public class MealViewModel : ObservableObject, Identifiable {
     private func nameExists(_ name: String) -> Bool {
         return !DataModel.shared.meals.compactMap{$1}.filter({$0.name == name && $0.mealId != self.mealId}).isEmpty
     }
+    
+    public var description: String {
+        "Meal: \(self.name)"
+    }
+    public var debugDescription: String { self.description }
 }

@@ -57,9 +57,12 @@ struct Banner: View {
                         EmptyView()
                     }
                 }
+                if MyApp.target == .macOS {
+                    Spacer().frame(height: 20)
+                }
             }
         }
-        .frame(height: 70)
+        .frame(height: (MyApp.target == .macOS ? 60 : 70))
     }
     
     var backButton: some View {
@@ -82,6 +85,7 @@ struct Banner: View {
 struct Banner_Menu : View {
     var image: AnyView?
     var options: [BannerOption]
+    let menuStyle = DefaultMenuStyle()
 
     var body: some View {
         let menuLabel = image ?? AnyView(Image(systemName: "line.horizontal.3").foregroundColor(Palette.bannerMenuButton).font(.largeTitle))
@@ -101,7 +105,7 @@ struct Banner_Menu : View {
                         Text(option.text!)
                             .minimumScaleFactor(0.5)
                     }
-                }.menuStyle(DefaultMenuStyle())
+                }.menuStyle(menuStyle)
             }
         } label: {
             menuLabel

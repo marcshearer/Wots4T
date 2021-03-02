@@ -13,6 +13,7 @@ enum ThemeAppearance: Int {
     case dark = 2
     case device = 3
     
+    #if canImport(UIKit)
     public var userInterfaceStyle: UIUserInterfaceStyle {
         switch self {
         case .light:
@@ -22,7 +23,18 @@ enum ThemeAppearance: Int {
         default:
             return .unspecified
         }
+    }#else
+    public var appearanceStyle: NSAppearance {
+        switch self {
+        case .light:
+            return NSAppearance(named: .aqua)!
+        case .dark:
+            return NSAppearance(named: .darkAqua)!
+        default:
+            return NSAppearance(named: .aqua)!
+        }
     }
+    #endif
 }
 
 enum ThemeName: String, CaseIterable {
@@ -89,13 +101,13 @@ enum ThemeSpecificColorName: CaseIterable {
 class Theme {
     private var themeName: ThemeName
     private var textColorConfig: [ThemeTextColorSetName: ThemeTextColor] = [:]
-    private var backgroundColor: [ThemeBackgroundColorName : UIColor] = [:]
-    private var textColor: [ThemeBackgroundColorName : UIColor] = [:]
-    private var contrastTextColor: [ThemeBackgroundColorName : UIColor] = [:]
-    private var strongTextColor: [ThemeBackgroundColorName : UIColor] = [:]
-    private var faintTextColor: [ThemeBackgroundColorName : UIColor] = [:]
-    private var themeTextColor: [ThemeBackgroundColorName : UIColor] = [:]
-    private var specificColor: [ThemeSpecificColorName : UIColor] = [:]
+    private var backgroundColor: [ThemeBackgroundColorName : MyColor] = [:]
+    private var textColor: [ThemeBackgroundColorName : MyColor] = [:]
+    private var contrastTextColor: [ThemeBackgroundColorName : MyColor] = [:]
+    private var strongTextColor: [ThemeBackgroundColorName : MyColor] = [:]
+    private var faintTextColor: [ThemeBackgroundColorName : MyColor] = [:]
+    private var themeTextColor: [ThemeBackgroundColorName : MyColor] = [:]
+    private var specificColor: [ThemeSpecificColorName : MyColor] = [:]
     private var _icon: String?
     public var icon: String? { self._icon }
     
@@ -117,11 +129,11 @@ class Theme {
         }
     }
     
-    public func background(_ backgroundColorName: ThemeBackgroundColorName) -> UIColor {
-        return self.backgroundColor[backgroundColorName] ?? UIColor.clear
+    public func background(_ backgroundColorName: ThemeBackgroundColorName) -> MyColor {
+        return self.backgroundColor[backgroundColorName] ?? MyColor.clear
     }
     
-    public func text(_ backgroundColorName: ThemeBackgroundColorName, textType: ThemeTextType = .normal) -> UIColor {
+    public func text(_ backgroundColorName: ThemeBackgroundColorName, textType: ThemeTextType = .normal) -> MyColor {
         switch textType {
         case .contrast:
             return self.contrastText(backgroundColorName)
@@ -132,32 +144,32 @@ class Theme {
         case .theme:
             return self.themeText(backgroundColorName)
         default:
-            return self.textColor[backgroundColorName] ?? UIColor.clear
+            return self.textColor[backgroundColorName] ?? MyColor.clear
         }
     }
     
-    public func contrastText(_ backgroundColorName: ThemeBackgroundColorName) -> UIColor {
-        return self.contrastTextColor[backgroundColorName] ?? UIColor.clear
+    public func contrastText(_ backgroundColorName: ThemeBackgroundColorName) -> MyColor {
+        return self.contrastTextColor[backgroundColorName] ?? MyColor.clear
     }
     
-    public func strongText(_ backgroundColorName: ThemeBackgroundColorName) -> UIColor {
-        return self.strongTextColor[backgroundColorName] ?? UIColor.clear
+    public func strongText(_ backgroundColorName: ThemeBackgroundColorName) -> MyColor {
+        return self.strongTextColor[backgroundColorName] ?? MyColor.clear
     }
     
-    public func faintText(_ backgroundColorName: ThemeBackgroundColorName) -> UIColor {
-        return self.faintTextColor[backgroundColorName] ?? UIColor.clear
+    public func faintText(_ backgroundColorName: ThemeBackgroundColorName) -> MyColor {
+        return self.faintTextColor[backgroundColorName] ?? MyColor.clear
     }
     
-    public func themeText(_ backgroundColorName: ThemeBackgroundColorName) -> UIColor {
-        return self.themeTextColor[backgroundColorName] ?? UIColor.clear
+    public func themeText(_ backgroundColorName: ThemeBackgroundColorName) -> MyColor {
+        return self.themeTextColor[backgroundColorName] ?? MyColor.clear
     }
     
-    public func textColor(textColorSetName: ThemeTextColorSetName, textType: ThemeTextType) -> UIColor? {
-        return self.textColorConfig[textColorSetName]?.color(textType)?.uiColor
+    public func textColor(textColorSetName: ThemeTextColorSetName, textType: ThemeTextType) -> MyColor? {
+        return self.textColorConfig[textColorSetName]?.color(textType)?.myColor
     }
     
-    public func specific(_ specificColorName: ThemeSpecificColorName) -> UIColor {
-        return self.specificColor[specificColorName] ?? UIColor.black
+    public func specific(_ specificColorName: ThemeSpecificColorName) -> MyColor {
+        return self.specificColor[specificColorName] ?? MyColor.black
     }
     
     private func defaultTheme(from: ThemeConfig, all: Bool = false) {
@@ -173,7 +185,7 @@ class Theme {
             var anyTextColorName: ThemeTextColorSetName
             var darkTextColorName: ThemeTextColorSetName
             if all || self.backgroundColor[name] == nil {
-                self.backgroundColor[name] = themeBackgroundColor.backgroundColor.uiColor
+                self.backgroundColor[name] = themeBackgroundColor.backgroundColor.myColor
             }
             anyTextColorName = themeBackgroundColor.anyTextColorName
             darkTextColorName = themeBackgroundColor.darkTextColorName ?? anyTextColorName
@@ -198,25 +210,25 @@ class Theme {
         }
         for (name, themeSpecificColor) in from.specificColor {
             if all || self.specificColor[name] == nil {
-                self.specificColor[name] = themeSpecificColor.uiColor
+                self.specificColor[name] = themeSpecificColor.myColor
             }
         }
     }
     
-    private func color(any anyTextColor: ThemeTextColor, dark darkTextColor: ThemeTextColor?, _ textType: ThemeTextType) -> UIColor {
+    private func color(any anyTextColor: ThemeTextColor, dark darkTextColor: ThemeTextColor?, _ textType: ThemeTextType) -> MyColor {
         let anyTraitColor = anyTextColor.color(textType) ?? anyTextColor.normal!
         
         if let darkTraitColor = darkTextColor?.color(textType) {
             let darkColor = darkTraitColor.darkColor ?? darkTraitColor.anyColor
             return self.traitColor(anyTraitColor.anyColor, darkColor)
         } else {
-            return anyTraitColor.uiColor
+            return anyTraitColor.myColor
         }
     }
 
-    private func traitColor(_ anyColor: UIColor, _ darkColor: UIColor?) -> UIColor {
+    private func traitColor(_ anyColor: MyColor, _ darkColor: MyColor?) -> MyColor {
         if let darkColor = darkColor {
-            return UIColor(dynamicProvider: { (traitCollection) in
+            return MyColor(dynamicProvider: { (traitCollection) in
                 traitCollection.userInterfaceStyle == .dark ? darkColor : anyColor
                 
                 })
@@ -227,16 +239,16 @@ class Theme {
 }
 
 class ThemeTraitColor {
-    fileprivate let anyColor: UIColor
-    fileprivate let darkColor: UIColor?
+    fileprivate let anyColor: MyColor
+    fileprivate let darkColor: MyColor?
     
-    init(_ anyColor: UIColor, _ darkColor: UIColor? = nil) {
+    init(_ anyColor: MyColor, _ darkColor: MyColor? = nil) {
         self.anyColor = anyColor
         self.darkColor = darkColor
     }
     
-    public var uiColor: UIColor {
-        UIColor(dynamicProvider: { (traitCollection) in
+    public var myColor: MyColor {
+        MyColor(dynamicProvider: { (traitCollection) in
             if traitCollection.userInterfaceStyle == .dark {
                 return self.darkColor ?? self.anyColor
             } else {
@@ -251,7 +263,7 @@ class ThemeColor {
     fileprivate let anyTextColorName: ThemeTextColorSetName
     fileprivate let darkTextColorName: ThemeTextColorSetName?
     
-    init(_ anyColor: UIColor, _ darkColor: UIColor? = nil, _ anyTextColorName: ThemeTextColorSetName, _ darkTextColorName: ThemeTextColorSetName? = nil) {
+    init(_ anyColor: MyColor, _ darkColor: MyColor? = nil, _ anyTextColorName: ThemeTextColorSetName, _ darkTextColorName: ThemeTextColorSetName? = nil) {
         self.backgroundColor = ThemeTraitColor(anyColor, darkColor)
         self.anyTextColorName = anyTextColorName
         self.darkTextColorName = darkTextColorName
@@ -265,7 +277,7 @@ class ThemeTextColor {
     fileprivate var faint: ThemeTraitColor?
     fileprivate var theme: ThemeTraitColor?
 
-    init(normal normalAny: UIColor, _ normalDark: UIColor? = nil, contrast contrastAny: UIColor? = nil, _ contrastDark: UIColor? = nil, strong strongAny: UIColor? = nil, _ strongDark: UIColor? = nil, faint faintAny: UIColor? = nil, _ faintDark: UIColor? = nil, theme themeAny: UIColor? = nil, _ themeDark: UIColor? = nil) {
+    init(normal normalAny: MyColor, _ normalDark: MyColor? = nil, contrast contrastAny: MyColor? = nil, _ contrastDark: MyColor? = nil, strong strongAny: MyColor? = nil, _ strongDark: MyColor? = nil, faint faintAny: MyColor? = nil, _ faintDark: MyColor? = nil, theme themeAny: MyColor? = nil, _ themeDark: MyColor? = nil) {
         self.normal = self.traitColor(normalAny, normalDark)!
         self.contrast = self.traitColor(contrastAny, contrastDark)
         self.strong = self.traitColor(strongAny, strongDark)
@@ -288,7 +300,7 @@ class ThemeTextColor {
         }
     }
     
-    private func traitColor(_ anyColor: UIColor?, _ darkColor: UIColor? = nil) -> ThemeTraitColor? {
+    private func traitColor(_ anyColor: MyColor?, _ darkColor: MyColor? = nil) -> ThemeTraitColor? {
         if let anyColor = anyColor {
             return ThemeTraitColor(anyColor, darkColor)
         } else {
@@ -355,11 +367,14 @@ class Themes {
         let oldIcon = Themes.currentTheme?.icon
         Themes.currentTheme = Theme(themeName: themeName)
         let newIcon = Themes.currentTheme.icon
+        #if canImport(UIKit)
         if UIApplication.shared.supportsAlternateIcons && changeIcon && oldIcon != newIcon {
             Themes.setApplicationIconName(Themes.currentTheme.icon)
         }
+        #endif
     }
     
+    #if canImport(UIKit)
     private static func setApplicationIconName(_ iconName: String?) {
         if UIApplication.shared.responds(to: #selector(getter: UIApplication.supportsAlternateIcons)) && UIApplication.shared.supportsAlternateIcons {
             
@@ -373,4 +388,5 @@ class Themes {
             method(UIApplication.shared, selector, iconName as NSString?, { _ in })
         }
     }
+    #endif
 }

@@ -11,7 +11,7 @@ import SwiftUI
 
 class LinkPresentation {
     
-    static func getDetail(url: URL, getImage: Bool = false, completion: @escaping (Result<(image: UIImage?, title: String?), Error>)->()) {
+    static func getDetail(url: URL, getImage: Bool = false, completion: @escaping (Result<(image: MyImage?, title: String?), Error>)->()) {
         
         let provider = LPMetadataProvider()
         provider.startFetchingMetadata(for: url) { (metadata, error) in
@@ -21,11 +21,11 @@ class LinkPresentation {
                 if let metadata = metadata {
                     if getImage {
                         if let imageProvider = metadata.imageProvider {
-                            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                            imageProvider.loadObject(ofClass: MyImage.self) { (image, error) in
                                 if let error = error {
                                     completion(.failure(error))
                                 } else {
-                                    completion(.success((image: image as? UIImage ?? UIImage(), title: metadata.title)))
+                                    completion(.success((image: image as? MyImage ?? MyImage(), title: metadata.title)))
                                 }
                             }
                         } else {
@@ -57,9 +57,9 @@ struct LinkView: UIViewRepresentable {
         let imageView = UIImageView(frame: frame)
         
         if let metadata = metadata, let imageProvider = metadata.imageProvider {
-            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+            imageProvider.loadObject(ofClass: MyImage.self) { (image, error) in
                 if error == nil {
-                    if let image = image as? UIImage {
+                    if let image = image as? MyImage {
                         imageView.image = image
                     }
                 }

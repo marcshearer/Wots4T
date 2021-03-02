@@ -18,7 +18,7 @@ struct MealDisplayView: View {
                 .ignoresSafeArea()
             VStack(spacing: 0) {
                 MealDisplayView_Banner(meal: meal)
-                ScrollView {
+                ScrollView(showsIndicators: MyApp.target == .macOS) {
                     VStack(spacing: 0) {
                         MealDisplayView_Image(meal: meal)
                         MealDisplayView_Description(meal: meal)
@@ -29,9 +29,7 @@ struct MealDisplayView: View {
                 Spacer()
             }
             .edgesIgnoringSafeArea(.bottom)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+            .noNavigationBar
             .onSwipe(.right) {
                 presentationMode.wrappedValue.dismiss()
             }
@@ -42,9 +40,15 @@ struct MealDisplayView: View {
     }
     
     fileprivate static func browseUrl(url: String) {
+        #if canImport(UIKit)
         if let url = URL.init(string: url), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
+        #else
+        if let url = URL.init(string: url) {
+            NSWorkspace.shared.open(url)
+        }
+        #endif
     }
 }
 
@@ -74,15 +78,15 @@ struct MealDisplayView_Image: View {
     
     var body: some View {
         
-        if let imageData = $meal.image.wrappedValue, let image = UIImage(data: imageData) {
+        if let imageData = $meal.image.wrappedValue, let image = MyImage(data: imageData) {
             VStack {
-                Image(uiImage: image)
+                Image(myImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
-        } else if let imageData = meal.urlImageCache, let image = UIImage(data: imageData) {
+        } else if let imageData = meal.urlImageCache, let image = MyImage(data: imageData) {
             VStack {
-                Image(uiImage: image)
+                Image(myImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
@@ -141,7 +145,7 @@ struct MealDisplayView_Attachments: View {
         
         VStack {
             ForEach(meal.attachments) { (attachment) in
-                Image(uiImage: UIImage(data: attachment.attachment!)!)
+                Image(myImage: MyImage(data: attachment.attachment!)!)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
