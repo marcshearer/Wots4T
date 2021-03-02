@@ -96,6 +96,7 @@ enum ThemeTextColorSetName: CaseIterable {
 enum ThemeSpecificColorName: CaseIterable {
     case bannerBackButton
     case bannerMenuButton
+    case maskBackground
 }
 
 class Theme {
@@ -359,6 +360,7 @@ class Themes {
             specific: [
                 .bannerBackButton            : ThemeTraitColor(#colorLiteral(red: 0.0166248735, green: 0.4766505957, blue: 0.9990670085, alpha: 1), #colorLiteral(red: 0.0166248735, green: 0.4766505957, blue: 0.9990670085, alpha: 1)),
                 .bannerMenuButton            : ThemeTraitColor(#colorLiteral(red: 0.07842033356, green: 0.07843840867, blue: 0.07841635495, alpha: 1), #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)),
+                .maskBackground              : ThemeTraitColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.3003128759), #colorLiteral(red: 0.999904573, green: 1, blue: 0.9998808503, alpha: 0.2982953811))
                 ]
             )
     ]

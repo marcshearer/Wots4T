@@ -59,7 +59,7 @@ struct MessageBoxView: View {
                 VStack(alignment: .center) {
                     Spacer()
                     Text("Wots4T").font(.largeTitle).minimumScaleFactor(0.75)
-                    Text("Version \(Version.current.version) (\(Version.current.build))").minimumScaleFactor(0.5)
+                    Text("Version \(Version.current.version) (\(Version.current.build)) \(MyApp.database.capitalized)").minimumScaleFactor(0.5)
                     if let message = $values.text.wrappedValue {
                         Spacer().frame(height: 30)
                         Text(message).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true).font(.callout).minimumScaleFactor(0.5)

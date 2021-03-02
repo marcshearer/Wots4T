@@ -23,6 +23,6 @@ Long-term
 
 Test release process
 --------------------
-Build an archive for 'Any iOS device' and then release this through Test Flight
+Build an archive for 'Any iOS device' and then release this through Test Flight via App Store Connect
 Build an archive for 'My Mac' and then export it by distributing the app to 'Development'
                                   Then copy onto Mac. You might have to Ctrl-RightClick/Open it

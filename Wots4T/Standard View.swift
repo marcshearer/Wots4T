@@ -35,7 +35,7 @@ struct StandardView <Content> : View where Content : View {
                 .ignoresSafeArea()
             self.content
             if messageBox.isShown {
-                Color.black.opacity(0.3)
+                Palette.maskBackground
                 VStack() {
                     Spacer()
                     HStack {

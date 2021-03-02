@@ -30,6 +30,7 @@ class Palette {
     // Specific colors
     @SpecificColor(.bannerBackButton) static var bannerBackButton
     @SpecificColor(.bannerMenuButton) static var bannerMenuButton
+    @SpecificColor(.maskBackground) static var maskBackground
         
     class func colorDetail(color: Color) -> (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
         var red: CGFloat = 0
