@@ -59,7 +59,7 @@ struct CalendarView: View {
             })
             .onAppear {
                 Utility.mainThread {
-                    Version.current.load()
+                    Version.current.check(upgrade: true)
                     self.startAt = 0
                 }
             }

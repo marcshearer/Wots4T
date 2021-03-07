@@ -78,17 +78,15 @@ class MyApp {
         DataModel.shared.load()
         Themes.selectTheme(.standard)
         self.registerDefaults()
+        Version.current.load()
         // Remove (CAREFULLY) if you want to clear the iCloud DB
-        /*DatabaseUtilities.initialiseAllCloud() {
+        //DatabaseUtilities.initialiseAllCloud() {
             // Remove (CAREFULLY) if you want to clear the Core Data DB
-            DatabaseUtilities.initialiseAllCoreData()
-        */
+            //DatabaseUtilities.initialiseAllCoreData()
             self.setupDatabase()
-        /*}
-        while true {
-            sleep(5)
-        }
-        */
+            // self.setupPreviewData()
+        //}
+        
         
         #if canImport(UIKit)
         UITextView.appearance().backgroundColor = .clear
@@ -107,30 +105,19 @@ class MyApp {
                 Utility.mainThread {
                     
                     // Store database identifier
-                    MyApp.database = database ?? "unknown"
-                    UserDefault.database.set(UserDefault.database.name)
+                    let cloudDatabase = database ?? "unknown"
+                    if MyApp.database != "unknown" && MyApp.database != cloudDatabase {
+                        MessageBox.shared.show("This device was connected to the \(MyApp.database) database and is now trying to connect to the \(cloudDatabase) database") {
+                            exit(1)
+                        }
+                    }
+                    
+                    MyApp.database = cloudDatabase
+                    UserDefault.database.set(cloudDatabase)
                     Version.current.set(minVersion: minVersion ?? "", minMessage: minMessage ?? "", infoMessage: infoMessage ?? "")
                 }
-            }	
+            }
         }
-        
-        // Check if this iCloud account has central data - if not then use default set
-        var categories = 0
-        ICloud.shared.download(recordType: "CD_\(CategoryMO.tableName)", database: MyApp.privateDatabase,
-           downloadAction:
-                { (_) in
-                    categories += 1
-                },
-           completeAction: {
-                    if categories == 0 {
-                        // self.setupPreviewData()
-                    }
-                },
-           failureAction: { (error) in
-                    if categories == 0 {
-                        // self.setupPreviewData()
-                    }
-                })
     }
      
     private func setupPreviewData() {

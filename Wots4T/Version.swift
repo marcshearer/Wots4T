@@ -36,23 +36,25 @@ class Version {
         minVersion = UserDefault.minVersion.string
         minMessage = UserDefault.minMessage.string
         infoMessage = UserDefault.infoMessage.string
-        
-        if Double(self.lastVersion) == 0.0 {
-            // New install - just use current version
-        } else if compare(self.lastVersion, self.version) == .lessThan {
-            // Version has increased - check for upgrade
-            MessageBox.shared.show("Upgrading to latest version...", closeButton: false)
-            Utility.executeAfter(delay: 5) {
-                self.upgradeToVersion()
-                MessageBox.shared.show("Upgrade complete", closeButton: true)
-            }
-        }
-        accept()
-        
-        check()
     }
     
-    public func check() {
+    public func check(upgrade: Bool = false) {
+        if upgrade {
+            if Double(self.lastVersion) == 0.0 {
+                // New install - just use current version
+            } else if compare(self.lastVersion, self.version) == .lessThan {
+                // Version has increased - check for upgrade
+                MessageBox.shared.show("Upgrading to latest version...", closeButton: false)
+                Utility.executeAfter(delay: 5) {
+                    self.upgradeToVersion()
+                    MessageBox.shared.show("Upgrade complete", closeButton: true)
+                }
+            }
+            
+            // Update last version
+            updateLastVersion()
+        }
+        
         // Check this version is acceptable
         if compare(version, minVersion) == .lessThan {
             MessageBox.shared.show(minMessage) {
@@ -72,7 +74,7 @@ class Version {
         }
     }
     
-    private func accept() {
+    private func updateLastVersion() {
         UserDefault.lastVersion.set(version)
         UserDefault.lastBuild.set(build)
     }
