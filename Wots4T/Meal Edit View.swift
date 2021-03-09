@@ -21,7 +21,7 @@ struct MealEditView: View {
         StandardView {
             VStack {
                 Banner(title: $title,
-                       backCheck: backCheck,
+                       backEnabled: $meal.canExit,
                        backAction: save,
                        optionMode: .buttons,
                        options: [
@@ -65,20 +65,11 @@ struct MealEditView: View {
                 meal.urlImageCache = nil
             })
             .onSwipe(.right) {
-                if backCheck() {
+                if meal.canExit {
                     save()
                     presentationMode.wrappedValue.dismiss()
                 }
             }
-        }
-    }
-    
-    private func backCheck() -> Bool {
-        if meal.mealMO == nil && meal.name == "" {
-            return true
-        } else {
-            saveError = !self.meal.canSave
-            return !saveError
         }
     }
     

@@ -8,6 +8,7 @@ Changes since last version
 
 TODO
 ----
+Need to add messages to edits when values are invalid
 
 Bugs fix now
 ------------

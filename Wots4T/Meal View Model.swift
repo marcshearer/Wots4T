@@ -26,7 +26,7 @@ public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringCo
     @Published public var attachments: [AttachmentViewModel] = []
     
     // Linked managed objects - should only be referenced in this and the Data classes
-    internal var mealMO: MealMO?
+    @Published internal var mealMO: MealMO?
     internal var mealCategoryValueMO: [UUID : MealCategoryValueMO] = [:]            // categoryId
     internal var mealAttachmentMO: Set<MealAttachmentMO> = []
     
@@ -34,6 +34,7 @@ public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringCo
     @Published public var nameMessage: String = ""
     @Published private(set) var saveMessage: String = ""
     @Published private(set) var canSave: Bool = false
+    @Published internal var canExit: Bool = false
     
     // Auto-cleanup
     private var cancellableSet: Set<AnyCancellable> = []
@@ -114,6 +115,14 @@ public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringCo
                 return (saveMessage == "")
             }
         .assign(to: \.canSave, on: self)
+        .store(in: &cancellableSet)
+        
+        Publishers.CombineLatest3($name, $mealMO, $canSave)
+            .receive(on: RunLoop.main)
+            .map { (name, mealMO, canSave) in
+                return (canSave || (mealMO == nil && name == ""))
+            }
+        .assign(to: \.canExit, on: self)
         .store(in: &cancellableSet)
     }
     

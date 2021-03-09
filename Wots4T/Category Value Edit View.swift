@@ -25,7 +25,7 @@ struct CategoryValueEditView: View {
         StandardView {
             VStack {
                 Banner(title: $title,
-                       backCheck: backCheck,
+                       backEnabled: $categoryValue.canExit,
                        backAction: save,
                        optionMode: .buttons,
                        options: [
@@ -56,7 +56,7 @@ struct CategoryValueEditView: View {
                     })
             }
             .onSwipe(.right) {
-                if backCheck() {
+                if categoryValue.canExit {
                     save()
                     presentationMode.wrappedValue.dismiss()
                 }
@@ -64,15 +64,6 @@ struct CategoryValueEditView: View {
             .onAppear {
                 self.frequencyIndex = frequencies.firstIndex(where: {$0 == categoryValue.frequency}) ?? 0
             }
-        }
-    }
-    
-    private func backCheck() -> Bool {
-        if categoryValue.categoryValueMO == nil && categoryValue.name == "" {
-            return true
-        } else {
-            saveError = !self.categoryValue.canSave
-            return !saveError
         }
     }
     

@@ -30,7 +30,7 @@ struct Banner: View {
 
     @Binding var title: String
     var back: Bool = true
-    var backCheck: (()->(Bool))?
+    var backEnabled: Binding<Bool>?
     var backAction: (()->())?
     var optionMode: BannerOptionMode = .none
     var menuImage: AnyView? = nil
@@ -65,8 +65,9 @@ struct Banner: View {
     }
     
     var backButton: some View {
-        Button(action: {
-            if backCheck?() ?? false {
+        let enabled = backEnabled?.wrappedValue ?? true
+        return Button(action: {
+            if enabled {
                 backAction?()
                 self.presentationMode.wrappedValue.dismiss()
             }
@@ -74,9 +75,10 @@ struct Banner: View {
             HStack {
                 Image(systemName: "chevron.left")
                     .font(.largeTitle)
-                    .foregroundColor(Palette.banner.contrastText)
+                    .foregroundColor(Palette.bannerBackButton.opacity(enabled ? 1.0 : 0.5))
             }
         })
+        .disabled(!(enabled))
     }
 }
 

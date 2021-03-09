@@ -45,11 +45,12 @@ public class CategoryValueViewModel : ObservableObject, Identifiable, CustomDebu
     @Published public var frequency: Frequency = .often
     
     // Linked managed objects - should only be referenced in this and the Data classes
-    internal var categoryValueMO: CategoryValueMO?
+    @Published internal var categoryValueMO: CategoryValueMO?
     
     @Published public var nameMessage: String = ""
     @Published private(set) var saveMessage: String = ""
     @Published private(set) var canSave: Bool = false
+    @Published internal var canExit: Bool = false
 
     // Auto-cleanup
     private var cancellableSet: Set<AnyCancellable> = []
@@ -110,6 +111,14 @@ public class CategoryValueViewModel : ObservableObject, Identifiable, CustomDebu
                 return (nameError == "")
             }
         .assign(to: \.canSave, on: self)
+        .store(in: &cancellableSet)
+        
+        Publishers.CombineLatest3($name, $categoryValueMO, $canSave)
+            .receive(on: RunLoop.main)
+            .map { (name, categoryValueMO, canSave) in
+                return (canSave || (categoryValueMO == nil && name == ""))
+            }
+        .assign(to: \.canExit, on: self)
         .store(in: &cancellableSet)
     }
     

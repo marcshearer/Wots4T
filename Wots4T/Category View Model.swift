@@ -32,11 +32,12 @@ public class CategoryViewModel : ObservableObject, Identifiable, CustomDebugStri
     @Published public var importance: Importance = .other
     
     // Linked managed objects - should only be referenced in this and the Data classes
-    internal var categoryMO: CategoryMO?
+    @Published internal var categoryMO: CategoryMO?
     
     @Published public var nameMessage: String = ""
     @Published private(set) var saveMessage: String = ""
     @Published private(set) var canSave: Bool = false
+    @Published internal var canExit: Bool = false
     
     // Auto-cleanup
     private var cancellableSet: Set<AnyCancellable> = []
@@ -95,6 +96,15 @@ public class CategoryViewModel : ObservableObject, Identifiable, CustomDebugStri
             }
         .assign(to: \.canSave, on: self)
         .store(in: &cancellableSet)
+        
+        Publishers.CombineLatest3($name, $categoryMO, $canSave)
+            .receive(on: RunLoop.main)
+            .map { (name, categoryMO, canSave) in
+                return (canSave || (categoryMO == nil && name == ""))
+            }
+        .assign(to: \.canExit, on: self)
+        .store(in: &cancellableSet)
+ 
     }
     
     private func revert() {
