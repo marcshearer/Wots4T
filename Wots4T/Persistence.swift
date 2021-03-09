@@ -16,7 +16,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        // Setup preview data
+        DataModel.setupPreviewData(context: viewContext)
         
         do {
             try viewContext.save()
@@ -30,12 +30,18 @@ struct PersistenceController {
         return result
     }()
 
-    let container: NSPersistentContainer
+    let container: NSPersistentCloudKitContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "Shortcut_Menu")
+        container = NSPersistentCloudKitContainer(name: "Wots4T")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        } else {
+            container.viewContext.automaticallyMergesChangesFromParent = true
+            let description = container.persistentStoreDescriptions.first
+            // description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            let remoteChangeKey = "NSPersistentStoreRemoteChangeNotificationOptionKey"
+            description?.setOption(true as NSNumber, forKey: remoteChangeKey)
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

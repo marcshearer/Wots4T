@@ -5,7 +5,7 @@
 //  Created by Marc Shearer on 01/02/2021.
 //
 
-import Foundation
+import CoreGraphics
 
 // Parameters
 
@@ -53,6 +53,8 @@ public let categoryValuesTitle = "possible values"
 
 public let categoryValueNameTitle = "name"
 public let categoryValueFrequencyTitle = "frequency"
+
+let bannerHeight: CGFloat = (MyApp.target == .macOS ? 60 : 70)
 
 public enum UIMode {
     case uiKit

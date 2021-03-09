@@ -25,7 +25,8 @@ struct CategoryValueEditView: View {
         StandardView {
             VStack {
                 Banner(title: $title,
-                       backCheck: self.save,
+                       backCheck: backCheck,
+                       backAction: save,
                        optionMode: .buttons,
                        options: [
                         BannerOption(
@@ -55,7 +56,8 @@ struct CategoryValueEditView: View {
                     })
             }
             .onSwipe(.right) {
-                if self.save() {
+                if backCheck() {
+                    save()
                     presentationMode.wrappedValue.dismiss()
                 }
             }
@@ -65,15 +67,18 @@ struct CategoryValueEditView: View {
         }
     }
     
-    private func save() -> Bool {
+    private func backCheck() -> Bool {
         if categoryValue.categoryValueMO == nil && categoryValue.name == "" {
             return true
         } else {
-            if self.categoryValue.canSave {
-                self.categoryValue.save()
-            }
             saveError = !self.categoryValue.canSave
             return !saveError
+        }
+    }
+    
+    private func save() {
+        if self.categoryValue.canSave {
+            self.categoryValue.save()
         }
     }
     

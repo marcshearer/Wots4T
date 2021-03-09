@@ -30,7 +30,8 @@ struct Banner: View {
 
     @Binding var title: String
     var back: Bool = true
-    var backCheck: (()->(Bool))? = nil
+    var backCheck: (()->(Bool))?
+    var backAction: (()->())?
     var optionMode: BannerOptionMode = .none
     var menuImage: AnyView? = nil
     var options: [BannerOption]? = nil
@@ -57,26 +58,23 @@ struct Banner: View {
                         EmptyView()
                     }
                 }
-                if MyApp.target == .macOS {
-                    Spacer().frame(height: 20)
-                }
+                Spacer().frame(height: 20)
             }
         }
-        .frame(height: (MyApp.target == .macOS ? 60 : 70))
+        .frame(height: bannerHeight)
     }
     
     var backButton: some View {
         Button(action: {
-            var backOk = true
-            if let backCheck = self.backCheck {
-                backOk = backCheck()
-            }
-            if backOk {
+            if backCheck?() ?? false {
+                backAction?()
                 self.presentationMode.wrappedValue.dismiss()
             }
         }, label: {
             HStack {
-                Image(systemName: "chevron.left").font(.largeTitle)
+                Image(systemName: "chevron.left")
+                    .font(.largeTitle)
+                    .foregroundColor(Palette.banner.contrastText)
             }
         })
     }
@@ -88,7 +86,7 @@ struct Banner_Menu : View {
     let menuStyle = DefaultMenuStyle()
 
     var body: some View {
-        let menuLabel = image ?? AnyView(Image(systemName: "line.horizontal.3").foregroundColor(Palette.bannerMenuButton).font(.largeTitle))
+        let menuLabel = image ?? AnyView(Image(systemName: "line.horizontal.3").foregroundColor(Palette.banner.text).font(.largeTitle))
         Menu {
             ForEach(0..<(options.count)) { (index) in
                 let option = options[index]
@@ -105,7 +103,8 @@ struct Banner_Menu : View {
                         Text(option.text!)
                             .minimumScaleFactor(0.5)
                     }
-                }.menuStyle(menuStyle)
+                }
+                .menuStyle(menuStyle)
             }
         } label: {
             menuLabel

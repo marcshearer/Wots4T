@@ -23,7 +23,7 @@ struct CategoryListView: View {
         StandardView {
             VStack {
                 Banner(title: $title,
-                       backCheck: exit,
+                       backAction: exit,
                        optionMode: .buttons,
                        options: [
                         BannerOption(
@@ -87,9 +87,8 @@ struct CategoryListView: View {
         }
     }
     
-    private func exit() -> Bool {
+    private func exit() {
         DataModel.shared.suspendRemoteUpdates(false)
-        return true
     }
 }
 
