@@ -19,7 +19,7 @@ struct CalendarView: View {
     @State var title = appName
     @State private var displayedRemoteChanges: Int = 0
     
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
     @ObservedObject var messageBox = MessageBox.shared
 
     var body: some View {
@@ -51,10 +51,10 @@ struct CalendarView: View {
                     }
                 }
             }
-            .onChange(of: DataModel.shared.publishedRemoteUpdates, perform: { value in
+            .onChange(of: MasterData.shared.publishedRemoteUpdates, perform: { value in
                 // Remote data model has changed - refresh it
                 if value > self.displayedRemoteChanges {
-                    self.displayedRemoteChanges = DataModel.shared.load()
+                    self.displayedRemoteChanges = MasterData.shared.load()
                 }
             })
             .onAppear {
@@ -77,7 +77,7 @@ struct CalendarView: View {
 fileprivate struct CalendarView_Entry: View {
     var today: DayNumber
     var offset: Int
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
      
     init(today: DayNumber, offset: Int) {
         self.today = today
@@ -101,7 +101,7 @@ fileprivate struct CalendarView_Entry: View {
 fileprivate struct CalendarView_EntryContent: View {
     var today: DayNumber
     var offset: Int
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
     let identifier = AllocationItemProvider.readableTypeIdentifiersForItemProvider
     
     var body: some View {
@@ -126,7 +126,7 @@ fileprivate struct CalendarView_EntryContent: View {
     }
     
     func onDrop(on dayNumber: DayNumber, _ slot: Int, sourceAllocation: AllocationViewModel) {
-        if let destAllocation = DataModel.shared.allocations[dayNumber]?[slot] {
+        if let destAllocation = MasterData.shared.allocations[dayNumber]?[slot] {
             // Swap meals
             let destMeal = destAllocation.meal!
             destAllocation.change(meal: sourceAllocation.meal)
@@ -146,7 +146,7 @@ fileprivate struct CalendarView_AllocationTitle: View {
     fileprivate var highlight: Bool
     fileprivate var delete: Bool
 
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
 
     var body: some View {
         HStack {
@@ -195,7 +195,7 @@ struct CalendarView_Previews: PreviewProvider {
         }
         .onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

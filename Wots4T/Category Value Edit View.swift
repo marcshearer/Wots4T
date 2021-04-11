@@ -17,7 +17,7 @@ struct CategoryValueEditView: View {
     @State var title: String = ""
     let frequencies = Frequency.allCases
     
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
 
     @State private var frequencyIndex: Int = 0
         
@@ -92,7 +92,7 @@ struct CategoryValueEditView_Previews: PreviewProvider {
             CategoryValueEditView(categoryValue: CategoryValueViewModel(categoryId: UUID(), name: "Chicken", frequency: .often), title: "New \(categoryValueName)")
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

@@ -14,7 +14,7 @@ struct MealListView: View {
     var allocateDayNumber: DayNumber?
     var allocateSlot: Int?
     
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
 
     @State private var startAt: UUID?
     @State var linkToEdit = false
@@ -23,11 +23,11 @@ struct MealListView: View {
     @State var meals: [MealViewModel] = []
     @State private var displayedRemoteChanges: Int = 0
     
-    let categories = DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
+    let categories = MasterData.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
     @State private var categoryValues: [UUID: CategoryValueViewModel] = [:]
 
     var body: some View {
-        let meals = DataModel.shared.sortedMeals(dayNumber: allocateDayNumber).filter({self.filter($0)})
+        let meals = MasterData.shared.sortedMeals(dayNumber: allocateDayNumber).filter({self.filter($0)})
         StandardView {
             VStack {
                 MealListView_Banner(title: title, editMode: allocateDayNumber == nil)
@@ -61,10 +61,10 @@ struct MealListView: View {
                     Spacer()
                 }
             }
-            .onChange(of: DataModel.shared.publishedRemoteUpdates, perform: { value in
+            .onChange(of: MasterData.shared.publishedRemoteUpdates, perform: { value in
                 // Remote data model has changed - refresh it
                 if value > self.displayedRemoteChanges {
-                    self.displayedRemoteChanges = DataModel.shared.load()
+                    self.displayedRemoteChanges = MasterData.shared.load()
                 }
             })
             .onSwipe(.right) {
@@ -135,7 +135,7 @@ struct MealListView_FilterInput: View {
             Spacer().frame(width: 16)
             ZStack {
                 Palette.filter.background
-                    .ignoresSafeArea()
+                    .ignoresSafeArea(edges: .all)
                     .cornerRadius(10)
                 VStack(spacing: 0) {
                     Spacer().frame(height: 16)
@@ -205,11 +205,11 @@ struct MealListView_FilterInput_Categories: View {
     }
     
     func getCategories() -> [CategoryViewModel] {
-        return DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
+        return MasterData.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
     }
     
     func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {
-        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
+        return (MasterData.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
     }
 
 }
@@ -221,7 +221,7 @@ struct MealListView_Previews: PreviewProvider {
             MealListView(title: chooseName)
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

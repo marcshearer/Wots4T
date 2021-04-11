@@ -5,7 +5,7 @@
 //  Created by Marc Shearer on 24/02/2021.
 //
 
-import CoreGraphics
+import SwiftUI
 
 extension Utility {
 
@@ -13,6 +13,7 @@ extension Utility {
         case int
         case string
         case float
+        case uuid
     }
     
     public static func lessThan (_ lhs: [Int], _ rhs: [Int], element: Int = 0) -> Bool {
@@ -80,6 +81,16 @@ extension Utility {
                 if lhsString < rhsString {
                     return true
                 } else if lhsString > rhsString {
+                    return false
+                } else {
+                    return Utility.lessThan(lhs, rhs, type, element: element + 1)
+                }
+            case .uuid:
+                let lhsUuid = lhs[element] as! UUID
+                let rhsUuid = rhs[element] as! UUID
+                if lhsUuid.uuidString < rhsUuid.uuidString {
+                    return true
+                } else if lhsUuid.uuidString > rhsUuid.uuidString {
                     return false
                 } else {
                     return Utility.lessThan(lhs, rhs, type, element: element + 1)

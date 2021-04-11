@@ -60,9 +60,22 @@ class MyApp {
         case macOS
     }
     
+    enum Database: String {
+        case development = "Development"
+        case production = "Production"
+        case unknown = "Unknown"
+        
+        public var name: String {
+            return self.rawValue
+        }
+    }
+    
     static let shared = MyApp()
     
-    public static var database: String = "unknown"
+    /// Database to use - This  **MUST MUST MUST** match icloud entitlement
+    static let expectedDatabase: Database = .production
+    
+    public static var database: Database = .unknown
     
     #if targetEnvironment(macCatalyst)
     public static let target: Target = .macOS
@@ -75,7 +88,7 @@ class MyApp {
     public static let privateDatabase = cloudContainer.privateCloudDatabase
 
     public func start() {
-        DataModel.shared.load()
+        MasterData.shared.load()
         Themes.selectTheme(.standard)
         self.registerDefaults()
         Version.current.load()
@@ -96,7 +109,7 @@ class MyApp {
     private func setupDatabase() {
         
         // Get saved database
-        MyApp.database = UserDefault.database.string
+        MyApp.database = Database(rawValue: UserDefault.database.string) ?? .unknown
         
         // Check which database we are connected to
         ICloud.shared.getDatabaseIdentifier { (success, errorMessage, database, minVersion, minMessage, infoMessage) in
@@ -105,15 +118,16 @@ class MyApp {
                 Utility.mainThread {
                     
                     // Store database identifier
-                    let cloudDatabase = database ?? "unknown"
-                    if MyApp.database != "unknown" && MyApp.database != cloudDatabase {
+                    let cloudDatabase: Database = Database(rawValue: database ?? "") ?? .unknown
+                    
+                    if MyApp.database != .unknown && MyApp.database != cloudDatabase {
                         MessageBox.shared.show("This device was connected to the \(MyApp.database) database and is now trying to connect to the \(cloudDatabase) database") {
                             exit(1)
                         }
                     }
                     
                     MyApp.database = cloudDatabase
-                    UserDefault.database.set(cloudDatabase)
+                    UserDefault.database.set(cloudDatabase.name)
                     Version.current.set(minVersion: minVersion ?? "", minMessage: minMessage ?? "", infoMessage: infoMessage ?? "")
                 }
             }
@@ -129,7 +143,7 @@ class MyApp {
         
         if read == nil || read!.isEmpty {
             // No local data - get it from the cloud
-            DataModel.setupPreviewData(context: viewContext)
+            MasterData.setupPreviewData(context: viewContext)
         }
         
         do {

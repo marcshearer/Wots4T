@@ -13,13 +13,15 @@ class MessageBox : ObservableObject {
     
     @Published public var text: String?
     public var closeButton = false
+    public var showVersion = false
     public var completion: (()->())? = nil
     
     public var isShown: Bool { MessageBox.shared.text != nil }
     
-    public func show(_ text: String, closeButton: Bool = true, completion: (()->())? = nil) {
+    public func show(_ text: String, closeButton: Bool = true, showVersion: Bool = true, completion: (()->())? = nil) {
         MessageBox.shared.text = text
         MessageBox.shared.closeButton = closeButton
+        MessageBox.shared.showVersion = showVersion
         MessageBox.shared.completion = completion
     }
 
@@ -27,39 +29,48 @@ class MessageBox : ObservableObject {
         MessageBox.shared.closeButton = closeButton
     }
     
+    public func hide() {
+        MessageBox.shared.text = nil
+    }
 }
 
 struct MessageBoxView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var values = MessageBox.shared
+    @State var showIcon = true
 
     var body: some View {
         ZStack {
             Palette.background.background
-                .ignoresSafeArea()
+                .ignoresSafeArea(edges: .all)
             HStack(spacing: 0) {
-                Spacer().frame(width: 30)
-                VStack {
-                    Spacer()
-                    ZStack {
-                        Rectangle().foregroundColor(Palette.alternate.background).frame(width: 80, height: 80).cornerRadius(10)
-                        VStack {
-                            Spacer()
-                            HStack {
+                if showIcon {
+                    Spacer().frame(width: 30)
+                    VStack {
+                        Spacer()
+                        ZStack {
+                            Rectangle().foregroundColor(Palette.alternate.background).frame(width: 80, height: 80).cornerRadius(10)
+                            VStack {
                                 Spacer()
-                                Image("Wots4T").resizable().frame(width: 60, height: 60)
+                                HStack {
+                                    Spacer()
+                                    Image("Wots4T").resizable().frame(width: 60, height: 60)
+                                    Spacer()
+                                }
                                 Spacer()
                             }
-                            Spacer()
                         }
+                        Spacer()
                     }
-                    Spacer()
-                }.frame(width: 80)
+                    .frame(width: 80)
+                }
                 Spacer()
                 VStack(alignment: .center) {
                     Spacer()
                     Text("Wots4T").font(.largeTitle).minimumScaleFactor(0.75)
-                    Text("Version \(Version.current.version) (\(Version.current.build)) \(MyApp.database.capitalized)").minimumScaleFactor(0.5)
+                    if values.showVersion {
+                        Text("Version \(Version.current.version) (\(Version.current.build)) \(MyApp.database.name.capitalized)").minimumScaleFactor(0.5)
+                    }
                     if let message = $values.text.wrappedValue {
                         Spacer().frame(height: 30)
                         Text(message).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true).font(.callout).minimumScaleFactor(0.5)

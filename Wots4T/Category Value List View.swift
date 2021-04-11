@@ -15,7 +15,7 @@ struct CategoryValueListView: View {
     
     @State var category: CategoryViewModel
     
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
 
     @State var linkToEdit = false
     @State var linkToEditCategoryValue = CategoryValueViewModel()
@@ -36,7 +36,7 @@ struct CategoryValueListView: View {
                 }
                 ScrollView(showsIndicators: MyApp.target == .macOS) {
                 LazyVStack {
-                    let categoryValues = (DataModel.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
+                    let categoryValues = (MasterData.shared.categoryValues[category.categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
                     ForEach(categoryValues) { categoryValue in
                         VStack {
                             HStack(alignment: .top) {
@@ -68,10 +68,10 @@ struct CategoryValueListView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            CategoryValueListView(category: DataModel.shared.categories.first!.value)
+            CategoryValueListView(category: MasterData.shared.categories.first!.value)
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

@@ -8,7 +8,7 @@
 import CoreData
 
 @objc(AllocationMO)
-public class AllocationMO: NSManagedObject {
+public class AllocationMO: NSManagedObject, ManagedObject {
 
     public static let tableName = "Allocation"
     

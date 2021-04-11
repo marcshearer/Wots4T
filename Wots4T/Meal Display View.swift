@@ -156,7 +156,7 @@ struct MealDisplayView_Previews: PreviewProvider {
             MealDisplayView(meal: MealViewModel(name: "Macaroni Cheese", desc: "James Martin's ultimate macaroni cheese", url: "https://www.bbc.co.uk/food/recipes/james_martins_ultimate_60657", notes: ""))
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

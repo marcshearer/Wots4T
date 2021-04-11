@@ -133,26 +133,26 @@ public class CategoryValueViewModel : ObservableObject, Identifiable, CustomDebu
     
     public func save() {
         if self.categoryValueMO == nil {
-            DataModel.shared.insert(categoryValue: self)
+            MasterData.shared.insert(categoryValue: self)
         } else {
-            DataModel.shared.save(categoryValue: self)
+            MasterData.shared.save(categoryValue: self)
         }
     }
     
     public func insert() {
-        DataModel.shared.insert(categoryValue: self)
+        MasterData.shared.insert(categoryValue: self)
     }
     
     public func remove() {
-        DataModel.shared.remove(categoryValue: self)
+        MasterData.shared.remove(categoryValue: self)
     }
     
     private func nameExists(_ name: String) -> Bool {
-        return !(DataModel.shared.categoryValues[self.categoryId ?? UUID()] ?? [:]).compactMap{$1}.filter({$0.name == name && $0.valueId != self.valueId}).isEmpty
+        return !(MasterData.shared.categoryValues[self.categoryId ?? UUID()] ?? [:]).compactMap{$1}.filter({$0.name == name && $0.valueId != self.valueId}).isEmpty
     }
     
     public var description: String {
-        let categoryName = DataModel.shared.categories[self.categoryId]?.name ?? "Unknown"
+        let categoryName = MasterData.shared.categories[self.categoryId]?.name ?? "Unknown"
         return "Category: \(categoryName), Value: \(self.name)"
     }
     public var debugDescription: String { self.description }

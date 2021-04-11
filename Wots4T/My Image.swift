@@ -11,11 +11,27 @@ import SwiftUI
 
 class MyImage : UIImage {
     
+    convenience init?(image: Any?) {
+        if let image = image as? UIImage, let cgImage = image.cgImage {
+            self.init(cgImage: cgImage)
+        } else {
+            self.init(cgImage: UIImage().cgImage!)
+        }
+    }
+    
 }
 
 #else
 
 class MyImage : NSImage {
+    
+    convenience init?(image: Any?) {
+        if let image = image as? NSImage, let cgImage = image.cgImage {
+            self.init(cgImage: cgImage)
+        } else {
+            self.init(cgImage: UIImage().cgImage!)
+        }
+    }
         
     func pngData() -> Data? {
         return { self.tiffRepresentation?.bitmap?.png }()

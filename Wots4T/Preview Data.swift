@@ -7,7 +7,7 @@
 
 import CoreData
 
-extension DataModel {
+extension MasterData {
     
     public static func setupPreviewData(context: NSManagedObjectContext) {
                 

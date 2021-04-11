@@ -144,3 +144,7 @@ class CoreData {
         }
     }
 }
+
+protocol ManagedObject : NSManagedObject {
+    static var tableName: String {get}
+}

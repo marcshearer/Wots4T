@@ -10,13 +10,12 @@ import SwiftUI
 
 struct PersistenceController {
     static let shared = PersistenceController()
-    private(set) var remoteChange = false
     
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        DataModel.setupPreviewData(context: viewContext)
+        MasterData.setupPreviewData(context: viewContext)
         
         do {
             try viewContext.save()
@@ -38,10 +37,20 @@ struct PersistenceController {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         } else {
             container.viewContext.automaticallyMergesChangesFromParent = true
-            let description = container.persistentStoreDescriptions.first
-            // description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            // Get core data directory and append Development or Production
+            let storeDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            
+            // Create a store description for a local store
+            let storeLocation = storeDirectory.appendingPathComponent("Wots4T-\(MyApp.expectedDatabase.name).sqlite")
+            let storeDescription = NSPersistentStoreDescription(url: storeLocation)
+            storeDescription.cloudKitContainerOptions =
+                NSPersistentCloudKitContainerOptions(
+                    containerIdentifier: "iCloud.MarcShearer.Wots4T")
+            
             let remoteChangeKey = "NSPersistentStoreRemoteChangeNotificationOptionKey"
-            description?.setOption(true as NSNumber, forKey: remoteChangeKey)
+            storeDescription.setOption(true as NSNumber, forKey: remoteChangeKey)
+
+            container.persistentStoreDescriptions = [ storeDescription ]
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

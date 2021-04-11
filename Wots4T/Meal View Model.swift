@@ -140,7 +140,7 @@ public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringCo
         }
         // Set up dictionary of category values
         for (categoryId, mealCategoryValueMO) in self.mealCategoryValueMO {
-            self.categoryValues[categoryId] = DataModel.shared.categoryValues[mealCategoryValueMO.categoryId]?[mealCategoryValueMO.valueId]
+            self.categoryValues[categoryId] = MasterData.shared.categoryValues[mealCategoryValueMO.categoryId]?[mealCategoryValueMO.valueId]
         }
         // Set up array of attachments
         self.attachments = self.mealAttachmentMO.map({ AttachmentViewModel(attachmentId: $0.attachmentId, sequence: $0.sequence, attachment: $0.attachment) }).sorted(by: { $0.sequence < $1.sequence })
@@ -148,18 +148,18 @@ public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringCo
     
     public func save() {
         if self.mealMO == nil {
-            DataModel.shared.insert(meal: self)
+            MasterData.shared.insert(meal: self)
         } else {
-            DataModel.shared.save(meal: self)
+            MasterData.shared.save(meal: self)
         }
     }
     
     public func insert() {
-        DataModel.shared.insert(meal: self)
+        MasterData.shared.insert(meal: self)
     }
     
     public func remove() {
-        DataModel.shared.remove(meal: self)
+        MasterData.shared.remove(meal: self)
     }
     
     internal func saveimageCache(image: MyImage?) {
@@ -174,7 +174,7 @@ public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringCo
     }
     
     private func nameExists(_ name: String) -> Bool {
-        return !DataModel.shared.meals.compactMap{$1}.filter({$0.name == name && $0.mealId != self.mealId}).isEmpty
+        return !MasterData.shared.meals.compactMap{$1}.filter({$0.name == name && $0.mealId != self.mealId}).isEmpty
     }
     
     public var description: String {

@@ -117,22 +117,22 @@ public class CategoryViewModel : ObservableObject, Identifiable, CustomDebugStri
     
     public func save() {
         if self.categoryMO == nil {
-            DataModel.shared.insert(category: self)
+            MasterData.shared.insert(category: self)
         } else {
-            DataModel.shared.save(category: self)
+            MasterData.shared.save(category: self)
         }
     }
     
     public func insert() {
-        DataModel.shared.insert(category: self)
+        MasterData.shared.insert(category: self)
     }
     
     public func remove() {
-        DataModel.shared.remove(category: self)
+        MasterData.shared.remove(category: self)
     }
     
     private func nameExists(_ name: String) -> Bool {
-        return !DataModel.shared.categories.compactMap{$1}.filter({$0.name == name && $0.categoryId != self.categoryId}).isEmpty
+        return !MasterData.shared.categories.compactMap{$1}.filter({$0.name == name && $0.categoryId != self.categoryId}).isEmpty
     }
     
     public var description: String {

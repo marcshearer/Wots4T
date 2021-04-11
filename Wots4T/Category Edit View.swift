@@ -16,7 +16,7 @@ struct CategoryEditView: View {
     @State var saveError = false
     @State var title: String = ""
     
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
 
     @State private var importanceIndex: Int = 0
 
@@ -95,7 +95,7 @@ struct CategoryEditView_Previews: PreviewProvider {
             CategoryEditView(category: CategoryViewModel(name: "Carbs", importance: .highest), title: "New \(categoryName)")
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

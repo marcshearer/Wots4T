@@ -17,7 +17,7 @@ struct CategoryListView: View {
 
     @State var title: String = ""
     
-    @ObservedObject var data = DataModel.shared
+    @ObservedObject var data = MasterData.shared
 
     var body: some View {
         StandardView {
@@ -36,7 +36,7 @@ struct CategoryListView: View {
                             })])
                 ScrollView(showsIndicators: MyApp.target == .macOS) {
                     LazyVStack {
-                        let categories = DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
+                        let categories = MasterData.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
                         ForEach(categories) { category in
                             VStack {
                                 HStack(alignment: .top) {
@@ -50,7 +50,7 @@ struct CategoryListView: View {
                                 Spacer().frame(height: 4)
                                 HStack(alignment: .top) {
                                     Spacer().frame(width: 64)
-                                    let categoryValues =  DataModel.shared.categoryValues[category.categoryId] ?? [:]
+                                    let categoryValues =  MasterData.shared.categoryValues[category.categoryId] ?? [:]
                                     if categoryValues.isEmpty {
                                         Text("No values for \(categoryName)")
                                             .font(.caption)
@@ -80,7 +80,7 @@ struct CategoryListView: View {
             NavigationLink(destination: CategoryEditView(category: self.linkToEditCategory, title: self.linkToEditTitle ?? ""), isActive: $linkToEdit) { EmptyView() }
         }
         .onAppear() {
-            DataModel.shared.suspendRemoteUpdates(true)
+            MasterData.shared.suspendRemoteUpdates(true)
         }
         .onSwipe(.right) {
             presentationMode.wrappedValue.dismiss()
@@ -88,7 +88,7 @@ struct CategoryListView: View {
     }
     
     private func exit() {
-        DataModel.shared.suspendRemoteUpdates(false)
+        MasterData.shared.suspendRemoteUpdates(false)
     }
 }
 
@@ -99,7 +99,7 @@ struct CategoryListView_Previews: PreviewProvider {
             CategoryListView(title: editCategoriesName)
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

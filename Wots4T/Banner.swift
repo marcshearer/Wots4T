@@ -39,7 +39,7 @@ struct Banner: View {
     var body: some View {
         ZStack {
             Palette.banner.background
-                .ignoresSafeArea()
+                .ignoresSafeArea(edges: .all)
             VStack {
                 Spacer()
                 HStack {

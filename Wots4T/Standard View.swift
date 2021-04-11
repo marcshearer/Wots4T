@@ -32,19 +32,25 @@ struct StandardView <Content> : View where Content : View {
     private func contentView() -> some View {
         return ZStack {
             Palette.background.background
-                .ignoresSafeArea()
+                .ignoresSafeArea(edges: .all)
             self.content
             if messageBox.isShown {
                 Palette.maskBackground
-                VStack() {
-                    Spacer()
-                    HStack {
+                    .ignoresSafeArea(edges: .all)
+                GeometryReader { geometry in
+                    VStack() {
                         Spacer()
-                        MessageBoxView().frame(width: 400, height: 250)
-                            .cornerRadius(20)
+                        HStack {
+                            Spacer()
+                            let width = min(geometry.size.width - 40, 400)
+                            let height = min(geometry.size.height - 40, 250)
+                            MessageBoxView(showIcon: width >= 400)
+                                .frame(width: width, height: height)
+                                .cornerRadius(20)
+                            Spacer()
+                        }
                         Spacer()
                     }
-                    Spacer()
                 }
             }
         }

@@ -151,11 +151,11 @@ struct MealEditView_Categories : View {
     }
     
     func getCategories() -> [CategoryViewModel] {
-        return DataModel.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
+        return MasterData.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
     }
     
     func getCategoryValues(categoryId: UUID) -> [CategoryValueViewModel] {
-        return (DataModel.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
+        return (MasterData.shared.categoryValues[categoryId] ?? [:]).map{$1}.sorted(by: {Utility.lessThan([$1.frequency.rawValue, $1.name], [$0.frequency.rawValue, $0.name], [.int, .string])})
     }
 }
 
@@ -165,7 +165,7 @@ struct MealEditView_Previews: PreviewProvider {
             MealEditView(meal: MealViewModel(name: "Macaroni Cheese", desc: "James Martin's ultimate macaroni cheese", url: "https://www.bbc.co.uk/food/recipes/james_martins_ultimate_60657", notes: ""), title: "Meal")
         }.onAppear {
             CoreData.context = PersistenceController.preview.container.viewContext
-            DataModel.shared.load()
+            MasterData.shared.load()
         }
     }
 }

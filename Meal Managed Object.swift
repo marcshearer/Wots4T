@@ -9,7 +9,7 @@
 import CoreData
 
 @objc(MealMO)
-public class MealMO: NSManagedObject, Identifiable {
+public class MealMO: NSManagedObject, ManagedObject, Identifiable {
 
     public static let tableName = "Meal"
     

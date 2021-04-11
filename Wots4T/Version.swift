@@ -45,10 +45,8 @@ class Version {
             } else if compare(self.lastVersion, self.version) == .lessThan {
                 // Version has increased - check for upgrade
                 MessageBox.shared.show("Upgrading to latest version...", closeButton: false)
-                Utility.executeAfter(delay: 5) {
-                    self.upgradeToVersion()
-                    MessageBox.shared.show("Upgrade complete", closeButton: true)
-                }
+                self.upgradeToVersion()
+                MessageBox.shared.hide()
             }
             
             // Update last version
@@ -75,6 +73,8 @@ class Version {
     }
     
     private func updateLastVersion() {
+        self.lastVersion = version
+        self.lastBuild = build
         UserDefault.lastVersion.set(version)
         UserDefault.lastBuild.set(build)
     }

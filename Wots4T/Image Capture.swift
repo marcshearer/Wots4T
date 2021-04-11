@@ -49,7 +49,7 @@ class ImageCaptureCoordinator: NSObject, UINavigationControllerDelegate, UIImage
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? MyImage {
+        if let image = MyImage(image: info[.originalImage]) {
             let rotatedImage = self.rotateImage(image: image)
             self.source.image = rotatedImage.pngData()
             self.source.dismiss()

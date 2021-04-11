@@ -78,21 +78,21 @@ public class AllocationViewModel : ObservableObject, Identifiable, CustomDebugSt
         if let allocationMO = self.allocationMO {
             self.dayNumber = allocationMO.dayNumber
             self.slot = allocationMO.slot
-            self.meal = DataModel.shared.meals[allocationMO.mealId]
+            self.meal = MasterData.shared.meals[allocationMO.mealId]
             self.allocated = allocationMO.allocated
         }
     }
     
     public func save() {
-        DataModel.shared.save(allocation: self)
+        MasterData.shared.save(allocation: self)
     }
     
     public func insert() {
-        DataModel.shared.insert(allocation: self)
+        MasterData.shared.insert(allocation: self)
     }
     
     public func remove() {
-        DataModel.shared.remove(allocation: self)
+        MasterData.shared.remove(allocation: self)
     }
     
     public var description: String {
@@ -159,7 +159,7 @@ public class AllocationViewModel : ObservableObject, Identifiable, CustomDebugSt
         for item in items {
             _ = item.loadObject(ofClass: AllocationItemProvider.self) { (from, error) in
                 if error == nil {
-                    if let from = from as? AllocationItemProvider, let allocation = DataModel.shared.allocations[from.dayNumber]?[from.slot] {
+                    if let from = from as? AllocationItemProvider, let allocation = MasterData.shared.allocations[from.dayNumber]?[from.slot] {
                         action(toDayNumber, toSlot, allocation)
                     }
                 }

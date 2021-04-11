@@ -1,5 +1,5 @@
 //
-//  Data.swift
+//  Master Data.swift
 //  Wots4T
 //
 //  Created by Marc Shearer on 21/01/2021.
@@ -9,30 +9,16 @@ import Foundation
 import CoreData
 import Combine
 
-class DataModel: ObservableObject {
+class MasterData: ObservableObject {
     
-    public static let shared = DataModel()
+    public static let shared = MasterData()
     
-    @Published private(set) var receivedRemoteUpdates = 0 {
-        didSet {
-            
-        }
-    }
-    @Published private(set) var publishedRemoteUpdates = 0  {
-        didSet {
-            
-        }
-    }// Updated every 10 seconds (unless suspended)
-    @Published private(set) var loadedRemoteUpdates = 0 {
-        didSet {
-            
-        }
-    }
-    @Published private var remoteUpdatesSuspended = false {
-        didSet {
-            
-        }
-    }
+    @Published private(set) var receivedRemoteUpdates = 0
+    @Published private(set) var publishedRemoteUpdates = 0
+    // Updated every 10 seconds (unless suspended)
+    @Published private(set) var loadedRemoteUpdates = 0
+    @Published private var remoteUpdatesSuspended = false
+    
     private var observer: NSObjectProtocol?
     
     @Published private(set) var categories: [UUID:CategoryViewModel] = [:]                  // Category ID
@@ -79,7 +65,7 @@ class DataModel: ObservableObject {
         
         let startLoadreceivedRemoteUpdates = self.receivedRemoteUpdates
         
-        Utility.debugMessage("DataModel", "Loading \(startLoadreceivedRemoteUpdates)")
+        Utility.debugMessage("MasterData", "Loading \(startLoadreceivedRemoteUpdates)")
         
         /// **Builds in-memory mirror of categories, category value, meals and their category values with pointers to managed objects**
         /// Note that this infers that there will only ever be 1 instance of the app accessing the database

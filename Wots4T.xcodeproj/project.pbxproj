@@ -46,7 +46,7 @@
 		B2844F9625B5FF010010A04C /* Meal Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9425B5FF010010A04C /* Meal Managed Object.swift */; };
 		B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */; };
 		B2844FA825B99F300010A04C /* Core Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FA725B99F300010A04C /* Core Data.swift */; };
-		B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* DataModel.swift */; };
+		B2844FAC25B9A0220010A04C /* Master Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* Master Data.swift */; };
 		B2C678EA25E26AA6003E5DE8 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678E925E26AA6003E5DE8 /* Palette.swift */; };
 		B2C678ED25E26AD8003E5DE8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EC25E26AD8003E5DE8 /* Themes.swift */; };
 		B2C678F025E3AFC6003E5DE8 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EF25E3AFC6003E5DE8 /* Separator.swift */; };
@@ -110,7 +110,7 @@
 		B2844F9425B5FF010010A04C /* Meal Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Managed Object.swift"; sourceTree = SOURCE_ROOT; };
 		B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Category Value Managed Object.swift"; sourceTree = SOURCE_ROOT; };
 		B2844FA725B99F300010A04C /* Core Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Data.swift"; sourceTree = "<group>"; };
-		B2844FAB25B9A0220010A04C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		B2844FAB25B9A0220010A04C /* Master Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Master Data.swift"; sourceTree = "<group>"; };
 		B2C678E925E26AA6003E5DE8 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		B2C678EC25E26AD8003E5DE8 /* Themes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		B2C678EF25E3AFC6003E5DE8 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 				B212868425B1B29800557221 /* Persistence.swift */,
 				B212867F25B1B29800557221 /* Assets.xcassets */,
 				B212868925B1B29800557221 /* Info.plist */,
-				B2844FAB25B9A0220010A04C /* DataModel.swift */,
+				B2844FAB25B9A0220010A04C /* Master Data.swift */,
 				B26F5F5F25DAC03D002B48EE /* Preview Data.swift */,
 			);
 			name = "Standard Components";
@@ -430,7 +430,7 @@
 				B2C678ED25E26AD8003E5DE8 /* Themes.swift in Sources */,
 				B26BA08525C82AAE00C26B69 /* Declarations.swift in Sources */,
 				B212868525B1B29800557221 /* Persistence.swift in Sources */,
-				B2844FAC25B9A0220010A04C /* DataModel.swift in Sources */,
+				B2844FAC25B9A0220010A04C /* Master Data.swift in Sources */,
 				B24D196A25EE4772001D155E /* Standard View.swift in Sources */,
 				B26F5F6025DAC03D002B48EE /* Preview Data.swift in Sources */,
 				B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */,
@@ -603,7 +603,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Wots4T/Wots4T.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Wots4T/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T7CT2S464;
 				ENABLE_PREVIEWS = YES;
@@ -613,6 +613,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = MarcShearer.Wots4T;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -628,7 +629,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Wots4T/Wots4T.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Wots4T/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T7CT2S464;
 				ENABLE_PREVIEWS = YES;
@@ -638,6 +639,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = MarcShearer.Wots4T;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;

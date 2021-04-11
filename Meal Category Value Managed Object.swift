@@ -8,7 +8,7 @@
 import CoreData
 
 @objc(MealCategoryValueMO)
-public class MealCategoryValueMO: NSManagedObject, Identifiable {
+public class MealCategoryValueMO: NSManagedObject, ManagedObject, Identifiable {
 
     public static let tableName = "MealCategoryValue"
     
