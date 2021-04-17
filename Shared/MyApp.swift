@@ -37,23 +37,24 @@ enum UserDefault: String, CaseIterable {
     }
     
     public func set(_ value: Any) {
-        UserDefaults.standard.set(value, forKey: self.name)
+        MyApp.defaults.set(value, forKey: self.name)
     }
     
     public var string: String {
-        return UserDefaults.standard.string(forKey: self.name)!
+        return MyApp.defaults.string(forKey: self.name)!
     }
     
     public var int: Int {
-        return UserDefaults.standard.integer(forKey: self.name)
+        return MyApp.defaults.integer(forKey: self.name)
     }
     
     public var bool: Bool {
-        return UserDefaults.standard.bool(forKey: self.name)
+        return MyApp.defaults.bool(forKey: self.name)
     }
 }
 
 class MyApp {
+    
     
     enum Target {
         case iOS
@@ -72,8 +73,10 @@ class MyApp {
     
     static let shared = MyApp()
     
+    static let defaults = UserDefaults(suiteName: appGroup)!
+    
     /// Database to use - This  **MUST MUST MUST** match icloud entitlement
-    static let expectedDatabase: Database = .production
+    static let expectedDatabase: Database = .development
     
     public static var database: Database = .unknown
     
@@ -83,14 +86,19 @@ class MyApp {
     public static let target: Target = .iOS
     #endif
     
+    #if !widget
     public static let cloudContainer = CKContainer.init(identifier: Config.iCloudIdentifier)
     public static let publicDatabase = cloudContainer.publicCloudDatabase
     public static let privateDatabase = cloudContainer.privateCloudDatabase
+    #endif
 
     public func start() {
-        MasterData.shared.load()
+        #if !widget
+            MasterData.shared.load()
+        #endif
         Themes.selectTheme(.standard)
         self.registerDefaults()
+        #if !widget
         Version.current.load()
         // Remove (CAREFULLY) if you want to clear the iCloud DB
         //DatabaseUtilities.initialiseAllCloud() {
@@ -104,6 +112,7 @@ class MyApp {
         #if canImport(UIKit)
         UITextView.appearance().backgroundColor = .clear
         #endif
+        #endif
     }
     
     private func setupDatabase() {
@@ -111,6 +120,7 @@ class MyApp {
         // Get saved database
         MyApp.database = Database(rawValue: UserDefault.database.string) ?? .unknown
         
+        #if !widget
         // Check which database we are connected to
         ICloud.shared.getDatabaseIdentifier { (success, errorMessage, database, minVersion, minMessage, infoMessage) in
             
@@ -132,8 +142,10 @@ class MyApp {
                 }
             }
         }
+        #endif
     }
      
+    #if !widget
     private func setupPreviewData() {
         // Be careful with enabling (removing //s above) this as it ends up doubling up data!
         let viewContext = CoreData.context!
@@ -152,13 +164,14 @@ class MyApp {
             fatalError()
         }
     }
+    #endif
     
     private func registerDefaults() {
         var initial: [String:Any] = [:]
         for value in UserDefault.allCases {
             initial[value.name] = value.defaultValue
         }
-        UserDefaults.standard.register(defaults: initial)
+        MyApp.defaults.register(defaults: initial)
     }
 }
 

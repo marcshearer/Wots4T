@@ -290,7 +290,7 @@ class ICloud {
                     for (keyName, _) in keys {
                         if recordType == "Version" && keyName == "database" {
                             // Database flag - do not overwrite
-                            cloudObject.setValue(Wots4TApp.database, forKey: keyName)
+                            cloudObject.setValue(MyApp.database.name, forKey: keyName)
                         } else {
                             if let actualValue = self.value(forKey: keyName, keys: keys, assetsDirectory: assetsDirectory) {
                                 cloudObject.setValue(actualValue, forKey: keyName)

@@ -344,7 +344,7 @@ class Themes {
                 .separator                   : ThemeColor(#colorLiteral(red: 0.6666069031, green: 0.6667050123, blue: 0.6665856242, alpha: 1), nil, .midBackground),
                 .listButton                  : ThemeColor(#colorLiteral(red: 0.5560679436, green: 0.5578243136, blue: 0.5773752928, alpha: 1), nil, .midBackground),
                 .menuEntry                   : ThemeColor(#colorLiteral(red: 0.9569241405, green: 0.9567349553, blue: 0.9526277184, alpha: 1), #colorLiteral(red: 0.999904573, green: 1, blue: 0.9998808503, alpha: 1), .darkBackground,  .lightBackground),
-                .imagePlaceholder            : ThemeColor(#colorLiteral(red: 0.9215686275, green: 0.9215686275, blue: 0.9215686275, alpha: 1), #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1), .midBackground),
+                .imagePlaceholder            : ThemeColor(#colorLiteral(red: 0.9215686275, green: 0.9215686275, blue: 0.9215686275, alpha: 1), #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1), .lightBackground, .darkBackground),
                 .disabledButton              : ThemeColor(#colorLiteral(red: 0.6666069031, green: 0.6667050123, blue: 0.6665856242, alpha: 1), nil, .midBackground),
                 .enabledButton               : ThemeColor(#colorLiteral(red: 0.5560679436, green: 0.5578243136, blue: 0.5773752928, alpha: 1), nil, .midBackground),
                 .highlightButton             : ThemeColor(#colorLiteral(red: 0.0166248735, green: 0.4766505957, blue: 0.9990670085, alpha: 1), nil, .darkBackground),
@@ -367,13 +367,16 @@ class Themes {
         let oldIcon = Themes.currentTheme?.icon
         Themes.currentTheme = Theme(themeName: themeName)
         let newIcon = Themes.currentTheme.icon
+        #if !widget
         #if canImport(UIKit)
         if UIApplication.shared.supportsAlternateIcons && changeIcon && oldIcon != newIcon {
             Themes.setApplicationIconName(Themes.currentTheme.icon)
         }
         #endif
+        #endif
     }
     
+    #if !widget
     #if canImport(UIKit)
     private static func setApplicationIconName(_ iconName: String?) {
         if UIApplication.shared.responds(to: #selector(getter: UIApplication.supportsAlternateIcons)) && UIApplication.shared.supportsAlternateIcons {
@@ -388,5 +391,6 @@ class Themes {
             method(UIApplication.shared, selector, iconName as NSString?, { _ in })
         }
     }
+    #endif
     #endif
 }

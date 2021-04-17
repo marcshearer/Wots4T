@@ -79,7 +79,7 @@ class MasterData: ObservableObject {
         let mealAttachmentList = CoreData.fetch(from: MealAttachmentMO.tableName) as! [MealAttachmentMO]
         
         let dateFilter = NSPredicate(format: "dayNumber64 >= %d", DayNumber.today.value - maxRetention)
-        var allocationList = CoreData.fetch(from: AllocationMO.tableName, filter: dateFilter, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending), (key: #keyPath(AllocationMO.allocated), direction: .ascending)) as! [AllocationMO]
+        var allocationList = CoreData.fetch(from: AllocationMO.tableName, filter: dateFilter, sort: (key: #keyPath(AllocationMO.dayNumber64), direction: .ascending), (key: #keyPath(AllocationMO.slot16), direction: .ascending), (key: #keyPath(AllocationMO.allocated), direction: .ascending)) as! [AllocationMO]
         
         // Check duplicates
         self.checkDuplicates(categoryList, ["categoryId"], descKey: "name", recordName: CategoryMO.tableName)

@@ -7,6 +7,7 @@
 
 import Combine
 import SwiftUI
+import WidgetKit
 import CoreData
 import UniformTypeIdentifiers
 
@@ -85,10 +86,14 @@ public class AllocationViewModel : ObservableObject, Identifiable, CustomDebugSt
     
     public func save() {
         MasterData.shared.save(allocation: self)
+        WidgetCenter.shared.reloadAllTimelines()
+        Utility.debugMessage("save", "reloadTimeLines")
     }
     
     public func insert() {
         MasterData.shared.insert(allocation: self)
+        WidgetCenter.shared.reloadAllTimelines()
+        Utility.debugMessage("insert", "reloadTimeLines")
     }
     
     public func remove() {

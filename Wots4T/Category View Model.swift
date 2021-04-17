@@ -9,21 +9,6 @@ import Combine
 import SwiftUI
 import CoreData
 
-public enum Importance: Int, Comparable, CaseIterable {
-    case highest = 0
-    case high = 1
-    case medium = 2
-    case other = 3
-    
-    public static func < (lhs: Importance, rhs: Importance) -> Bool {
-        return (lhs.rawValue < rhs.rawValue)
-    }
-    
-    public var string: String {
-        return "\(self)"
-    }
-}
-
 public class CategoryViewModel : ObservableObject, Identifiable, CustomDebugStringConvertible {
 
     // Properties in core data model

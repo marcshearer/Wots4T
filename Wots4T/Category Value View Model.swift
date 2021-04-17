@@ -9,33 +9,6 @@ import Combine
 import SwiftUI
 import CoreData
 
-public enum Frequency: Int, Comparable, CaseIterable {
-    case veryOften = 4
-    case often = 3
-    case occasionally = 2
-    case rarely = 1
-    case never = 0
-    
-    public static func < (lhs: Frequency, rhs: Frequency) -> Bool {
-        return (lhs.rawValue < rhs.rawValue)
-    }
-
-    public var string: String {
-        switch self {
-        case .veryOften:
-            return "very often"
-        case .often:
-            return "often"
-        case .occasionally:
-            return "occasionally"
-        case .rarely:
-            return "rarely"
-        default:
-            return "never"
-        }
-    }
-}
-
 public class CategoryValueViewModel : ObservableObject, Identifiable, CustomDebugStringConvertible {
 
     // Properties in core data model

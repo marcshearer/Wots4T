@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Wots4T Widget ExtensionExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Wots4T Widget.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>Wots4T.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +28,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>B212867725B1B29700557221</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2ABAB5326280CC400DC98F2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

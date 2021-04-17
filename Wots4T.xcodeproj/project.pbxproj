@@ -47,6 +47,38 @@
 		B2844FA025B6DFAB0010A04C /* Meal Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */; };
 		B2844FA825B99F300010A04C /* Core Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FA725B99F300010A04C /* Core Data.swift */; };
 		B2844FAC25B9A0220010A04C /* Master Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FAB25B9A0220010A04C /* Master Data.swift */; };
+		B2ABAB5626280CC400DC98F2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2ABAB5526280CC400DC98F2 /* WidgetKit.framework */; };
+		B2ABAB5826280CC400DC98F2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2ABAB5726280CC400DC98F2 /* SwiftUI.framework */; };
+		B2ABAB5B26280CC400DC98F2 /* Wots4T Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABAB5A26280CC400DC98F2 /* Wots4T Widget.swift */; };
+		B2ABAB5D26280CC600DC98F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2ABAB5C26280CC600DC98F2 /* Assets.xcassets */; };
+		B2ABAB6126280CC600DC98F2 /* Wots4T Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B2ABAB5426280CC400DC98F2 /* Wots4T Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B2ABAB7D26280F8500DC98F2 /* Wots4T.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B212868625B1B29800557221 /* Wots4T.xcdatamodeld */; };
+		B2ABAB8026280F8800DC98F2 /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED625E7DA3F0021FBDB /* MyApp.swift */; };
+		B2ABAB8326280F8B00DC98F2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212868425B1B29800557221 /* Persistence.swift */; };
+		B2ABAB8626280F8E00DC98F2 /* Declarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08425C82AAE00C26B69 /* Declarations.swift */; };
+		B2ABAB8C26280F9300DC98F2 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678E925E26AA6003E5DE8 /* Palette.swift */; };
+		B2ABAB8F26280F9600DC98F2 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EC25E26AD8003E5DE8 /* Themes.swift */; };
+		B2ABAB9226280F9800DC98F2 /* My Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFB225E8F39F0021FBDB /* My Color.swift */; };
+		B2ABAB9526280FA900DC98F2 /* Category Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */; };
+		B2ABAB9826280FAC00DC98F2 /* Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */; };
+		B2ABAB9B26280FAE00DC98F2 /* Meal Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9425B5FF010010A04C /* Meal Managed Object.swift */; };
+		B2ABAB9E26280FB100DC98F2 /* Meal Category Value Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */; };
+		B2ABABA126280FB400DC98F2 /* Meal Attachment Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */; };
+		B2ABABA426280FB600DC98F2 /* Allocation Managed Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */; };
+		B2ABABA82628102B00DC98F2 /* Core Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2844FA725B99F300010A04C /* Core Data.swift */; };
+		B2ABABAB2628102E00DC98F2 /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08825C82E9A00C26B69 /* String Extensions.swift */; };
+		B2ABABAE2628103000DC98F2 /* Other Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA08C25C82F2400C26B69 /* Other Extensions.swift */; };
+		B2ABABB12628103300DC98F2 /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26BA09425C861FC00C26B69 /* Date Extensions.swift */; };
+		B2ABABB42628103500DC98F2 /* Day Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B225CAC3C300EA1948 /* Day Number.swift */; };
+		B2ABABB52628103700DC98F2 /* Link Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */; };
+		B2ABABB82628103B00DC98F2 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B256F1BE25CD451600EA1948 /* Utility.swift */; };
+		B2ABABBB2628103E00DC98F2 /* iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AECF25E7D39B0021FBDB /* iCloud.swift */; };
+		B2ABABBE2628104100DC98F2 /* Utility Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AEC425E6CFDF0021FBDB /* Utility Extension.swift */; };
+		B2ABABC12628104400DC98F2 /* My Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AFB925E904860021FBDB /* My Image.swift */; };
+		B2ABABDC2628112100DC98F2 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC2CCA25EE2590005BF542 /* Version.swift */; };
+		B2ABABF92628168A00DC98F2 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F0AED225E7D3D80021FBDB /* Config.swift */; };
+		B2ABAC02262832AD00DC98F2 /* Meal View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABAC01262832AD00DC98F2 /* Meal View.swift */; };
+		B2ABAC0526286E7000DC98F2 /* Meal View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABAC01262832AD00DC98F2 /* Meal View.swift */; };
 		B2C678EA25E26AA6003E5DE8 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678E925E26AA6003E5DE8 /* Palette.swift */; };
 		B2C678ED25E26AD8003E5DE8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EC25E26AD8003E5DE8 /* Themes.swift */; };
 		B2C678F025E3AFC6003E5DE8 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C678EF25E3AFC6003E5DE8 /* Separator.swift */; };
@@ -68,6 +100,30 @@
 		B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FABBFD25D6EC760008859E /* Category List View.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B2ABAB5F26280CC600DC98F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B212867025B1B29700557221 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2ABAB5326280CC400DC98F2;
+			remoteInfo = "Wots4T Widget ExtensionExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B2ABAB6326280CC600DC98F2 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B2ABAB6126280CC600DC98F2 /* Wots4T Widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B212867825B1B29700557221 /* Wots4T.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wots4T.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B212867B25B1B29700557221 /* Wots4TApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wots4TApp.swift; sourceTree = "<group>"; };
@@ -82,22 +138,22 @@
 		B233B3B025D453F4002EFB3A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		B233B3B325D45425002EFB3A /* Add Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Add Image.swift"; sourceTree = "<group>"; };
 		B233B3BE25D5292B002EFB3A /* Image Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image Capture.swift"; sourceTree = "<group>"; };
-		B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Managed Object.swift"; sourceTree = "<group>"; };
-		B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Value Managed Object.swift"; sourceTree = "<group>"; };
+		B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Category Managed Object.swift"; path = "../Wots4T/Category Managed Object.swift"; sourceTree = "<group>"; };
+		B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Category Value Managed Object.swift"; path = "../Wots4T/Category Value Managed Object.swift"; sourceTree = "<group>"; };
 		B24D196925EE4772001D155E /* Standard View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Standard View.swift"; sourceTree = "<group>"; };
 		B24D197025EEAE56001D155E /* Notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes.txt; sourceTree = "<group>"; };
-		B256F1B225CAC3C300EA1948 /* Day Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day Number.swift"; sourceTree = "<group>"; };
-		B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Link Presentation.swift"; sourceTree = "<group>"; };
+		B256F1B225CAC3C300EA1948 /* Day Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Day Number.swift"; path = "../Wots4T/Day Number.swift"; sourceTree = "<group>"; };
+		B256F1B625CC3E1D00EA1948 /* Link Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Link Presentation.swift"; path = "../Wots4T/Link Presentation.swift"; sourceTree = "<group>"; };
 		B256F1BB25CC710700EA1948 /* Meal Summary View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Summary View.swift"; sourceTree = "<group>"; };
-		B256F1BE25CD451600EA1948 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		B256F1BE25CD451600EA1948 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = ../Wots4T/Utility.swift; sourceTree = "<group>"; };
 		B256F1C125CD4C4400EA1948 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		B256F1C825CDA42000EA1948 /* Meal Edit View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Edit View.swift"; sourceTree = "<group>"; };
-		B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Allocation Managed Object.swift"; sourceTree = "<group>"; };
+		B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Allocation Managed Object.swift"; path = "../Wots4T/Allocation Managed Object.swift"; sourceTree = "<group>"; };
 		B26BA08425C82AAE00C26B69 /* Declarations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Declarations.swift; sourceTree = "<group>"; };
-		B26BA08825C82E9A00C26B69 /* String Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String Extensions.swift"; sourceTree = "<group>"; };
-		B26BA08C25C82F2400C26B69 /* Other Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Other Extensions.swift"; sourceTree = "<group>"; };
+		B26BA08825C82E9A00C26B69 /* String Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String Extensions.swift"; path = "../Wots4T/String Extensions.swift"; sourceTree = "<group>"; };
+		B26BA08C25C82F2400C26B69 /* Other Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Other Extensions.swift"; path = "../Wots4T/Other Extensions.swift"; sourceTree = "<group>"; };
 		B26BA08F25C8554B00C26B69 /* Calendar View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar View.swift"; sourceTree = "<group>"; };
-		B26BA09425C861FC00C26B69 /* Date Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date Extensions.swift"; sourceTree = "<group>"; };
+		B26BA09425C861FC00C26B69 /* Date Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Date Extensions.swift"; path = "../Wots4T/Date Extensions.swift"; sourceTree = "<group>"; };
 		B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Allocation View Model.swift"; sourceTree = "<group>"; };
 		B26F5F4625D92198002B48EE /* Category Value Edit View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Value Edit View.swift"; sourceTree = "<group>"; };
 		B26F5F4A25D921D9002B48EE /* Category Edit View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category Edit View.swift"; sourceTree = "<group>"; };
@@ -109,27 +165,35 @@
 		B2844F7625B5F6370010A04C /* Meal View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal View Model.swift"; sourceTree = "<group>"; };
 		B2844F9425B5FF010010A04C /* Meal Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Managed Object.swift"; sourceTree = SOURCE_ROOT; };
 		B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Category Value Managed Object.swift"; sourceTree = SOURCE_ROOT; };
-		B2844FA725B99F300010A04C /* Core Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Data.swift"; sourceTree = "<group>"; };
+		B2844FA725B99F300010A04C /* Core Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Core Data.swift"; path = "../Wots4T/Core Data.swift"; sourceTree = "<group>"; };
 		B2844FAB25B9A0220010A04C /* Master Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Master Data.swift"; sourceTree = "<group>"; };
+		B2ABAB5426280CC400DC98F2 /* Wots4T Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wots4T Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2ABAB5526280CC400DC98F2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B2ABAB5726280CC400DC98F2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B2ABAB5A26280CC400DC98F2 /* Wots4T Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wots4T Widget.swift"; sourceTree = "<group>"; };
+		B2ABAB5C26280CC600DC98F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B2ABAB5E26280CC600DC98F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2ABAB6226280CC600DC98F2 /* Wots4T Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wots4T Widget.entitlements"; sourceTree = "<group>"; };
+		B2ABAC01262832AD00DC98F2 /* Meal View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal View.swift"; sourceTree = "<group>"; };
 		B2C678E925E26AA6003E5DE8 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		B2C678EC25E26AD8003E5DE8 /* Themes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		B2C678EF25E3AFC6003E5DE8 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		B2C678F825E4E7AA003E5DE8 /* Wots4T.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wots4T.entitlements; sourceTree = "<group>"; };
 		B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B2CC2CBF25EE2220005BF542 /* Message Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message Box.swift"; sourceTree = "<group>"; };
-		B2CC2CCA25EE2590005BF542 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
-		B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Meal Attachment Managed Object.swift"; sourceTree = "<group>"; };
+		B2CC2CCA25EE2590005BF542 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Version.swift; path = ../Wots4T/Version.swift; sourceTree = "<group>"; };
+		B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Meal Attachment Managed Object.swift"; path = "../Wots4T/Meal Attachment Managed Object.swift"; sourceTree = "<group>"; };
 		B2DC95A825E01CA600FDE49D /* Attachment View Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View Model.swift"; sourceTree = "<group>"; };
 		B2DC95AD25E02AC900FDE49D /* Attachment View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attachment View.swift"; sourceTree = "<group>"; };
 		B2F0AEC125E6463E0021FBDB /* Swipe Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swipe Gestures.swift"; sourceTree = "<group>"; };
-		B2F0AEC425E6CFDF0021FBDB /* Utility Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utility Extension.swift"; sourceTree = "<group>"; };
-		B2F0AECF25E7D39B0021FBDB /* iCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloud.swift; sourceTree = "<group>"; };
+		B2F0AEC425E6CFDF0021FBDB /* Utility Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Utility Extension.swift"; path = "../Wots4T/Utility Extension.swift"; sourceTree = "<group>"; };
+		B2F0AECF25E7D39B0021FBDB /* iCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iCloud.swift; path = ../Wots4T/iCloud.swift; sourceTree = "<group>"; };
 		B2F0AED225E7D3D80021FBDB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		B2F0AED625E7DA3F0021FBDB /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
 		B2F0AEDB25E7E6F80021FBDB /* Database Utilties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Database Utilties.swift"; sourceTree = "<group>"; };
 		B2F0AFA125E8DCCB0021FBDB /* Target View Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Target View Modifiers.swift"; sourceTree = "<group>"; };
 		B2F0AFB225E8F39F0021FBDB /* My Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "My Color.swift"; sourceTree = "<group>"; };
-		B2F0AFB925E904860021FBDB /* My Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "My Image.swift"; sourceTree = "<group>"; };
+		B2F0AFB925E904860021FBDB /* My Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "My Image.swift"; path = "../Wots4T/My Image.swift"; sourceTree = "<group>"; };
 		B2FABBFD25D6EC760008859E /* Category List View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category List View.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,13 +206,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2ABAB5126280CC400DC98F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2ABAB5826280CC400DC98F2 /* SwiftUI.framework in Frameworks */,
+				B2ABAB5626280CC400DC98F2 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		B212866F25B1B29700557221 = {
 			isa = PBXGroup;
 			children = (
+				B2ABAB6A26280CF300DC98F2 /* Shared */,
 				B212867A25B1B29700557221 /* Wots4T */,
+				B2ABAB5926280CC400DC98F2 /* Wots4T Widget */,
 				B212867925B1B29700557221 /* Products */,
 				B2C678FA25E4E7B2003E5DE8 /* Frameworks */,
 			);
@@ -158,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				B212867825B1B29700557221 /* Wots4T.app */,
+				B2ABAB5426280CC400DC98F2 /* Wots4T Widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,15 +241,11 @@
 		B212867A25B1B29700557221 /* Wots4T */ = {
 			isa = PBXGroup;
 			children = (
-				B24D197025EEAE56001D155E /* Notes.txt */,
 				B2844F6C25B5F3CB0010A04C /* Standard Components */,
-				B26BA08325C82A7F00C26B69 /* Shared */,
-				B26BA07E25C8142700C26B69 /* Managed Object Models */,
-				B2DC95AB25E01D5D00FDE49D /* View Models */,
+				B2ABABF4262813B600DC98F2 /* View Models */,
 				B2844F7525B5F6090010A04C /* Views */,
 				B2F0AEDA25E7E6E20021FBDB /* Utilities */,
 				B256F1C525CD4C7800EA1948 /* Reuseable UI Components */,
-				B2844FAA25B99F360010A04C /* Libraries */,
 				B212868125B1B29800557221 /* Preview Content */,
 			);
 			path = Wots4T;
@@ -214,29 +286,6 @@
 			name = "Reuseable UI Components";
 			sourceTree = "<group>";
 		};
-		B26BA07E25C8142700C26B69 /* Managed Object Models */ = {
-			isa = PBXGroup;
-			children = (
-				B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */,
-				B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */,
-				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
-				B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */,
-				B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */,
-				B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */,
-			);
-			name = "Managed Object Models";
-			sourceTree = "<group>";
-		};
-		B26BA08325C82A7F00C26B69 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				B2F0AED625E7DA3F0021FBDB /* MyApp.swift */,
-				B26BA08425C82AAE00C26B69 /* Declarations.swift */,
-				B2F0AED225E7D3D80021FBDB /* Config.swift */,
-			);
-			name = Shared;
-			sourceTree = "<group>";
-		};
 		B26F5F4525D92170002B48EE /* Category Values */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,8 +300,6 @@
 			children = (
 				B2C678F825E4E7AA003E5DE8 /* Wots4T.entitlements */,
 				B212867B25B1B29700557221 /* Wots4TApp.swift */,
-				B212868625B1B29800557221 /* Wots4T.xcdatamodeld */,
-				B212868425B1B29800557221 /* Persistence.swift */,
 				B212867F25B1B29800557221 /* Assets.xcassets */,
 				B212868925B1B29800557221 /* Info.plist */,
 				B2844FAB25B9A0220010A04C /* Master Data.swift */,
@@ -268,12 +315,35 @@
 				B26F5F4525D92170002B48EE /* Category Values */,
 				B2F0AEC925E7B6040021FBDB /* Meals */,
 				B2F0AECA25E7B6210021FBDB /* Allocations */,
-				B2CC2CC725EE2236005BF542 /* Miscellaneous */,
 			);
 			name = Views;
 			sourceTree = "<group>";
 		};
-		B2844FAA25B99F360010A04C /* Libraries */ = {
+		B2ABAB5926280CC400DC98F2 /* Wots4T Widget */ = {
+			isa = PBXGroup;
+			children = (
+				B2ABAB6226280CC600DC98F2 /* Wots4T Widget.entitlements */,
+				B2ABAB5A26280CC400DC98F2 /* Wots4T Widget.swift */,
+				B2ABAB5C26280CC600DC98F2 /* Assets.xcassets */,
+				B2ABAB5E26280CC600DC98F2 /* Info.plist */,
+			);
+			path = "Wots4T Widget";
+			sourceTree = "<group>";
+		};
+		B2ABAB6A26280CF300DC98F2 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B24D197025EEAE56001D155E /* Notes.txt */,
+				B2ABABC42628104D00DC98F2 /* Standard Components */,
+				B2ABABCB262810CB00DC98F2 /* Managed Object Models */,
+				B2ABAC002628327B00DC98F2 /* Views */,
+				B2ABABDF2628112600DC98F2 /* Utilities */,
+				B2ABABA72628101100DC98F2 /* Libraries */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		B2ABABA72628101100DC98F2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				B2844FA725B99F300010A04C /* Core Data.swift */,
@@ -293,22 +363,40 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
-		B2C678FA25E4E7B2003E5DE8 /* Frameworks */ = {
+		B2ABABC42628104D00DC98F2 /* Standard Components */ = {
 			isa = PBXGroup;
 			children = (
-				B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */,
+				B212868625B1B29800557221 /* Wots4T.xcdatamodeld */,
+				B2F0AED625E7DA3F0021FBDB /* MyApp.swift */,
+				B212868425B1B29800557221 /* Persistence.swift */,
+				B26BA08425C82AAE00C26B69 /* Declarations.swift */,
+				B2F0AED225E7D3D80021FBDB /* Config.swift */,
 			);
-			name = Frameworks;
+			name = "Standard Components";
 			sourceTree = "<group>";
 		};
-		B2CC2CC725EE2236005BF542 /* Miscellaneous */ = {
+		B2ABABCB262810CB00DC98F2 /* Managed Object Models */ = {
 			isa = PBXGroup;
 			children = (
+				B233B3CA25D6A21D002EFB3A /* Category Managed Object.swift */,
+				B233B3CE25D6A22C002EFB3A /* Category Value Managed Object.swift */,
+				B2844F9425B5FF010010A04C /* Meal Managed Object.swift */,
+				B2844F9E25B6DFAB0010A04C /* Meal Category Value Managed Object.swift */,
+				B2DC95A425E019D500FDE49D /* Meal Attachment Managed Object.swift */,
+				B26BA08025C827E500C26B69 /* Allocation Managed Object.swift */,
 			);
-			name = Miscellaneous;
+			name = "Managed Object Models";
 			sourceTree = "<group>";
 		};
-		B2DC95AB25E01D5D00FDE49D /* View Models */ = {
+		B2ABABDF2628112600DC98F2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B2CC2CCA25EE2590005BF542 /* Version.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		B2ABABF4262813B600DC98F2 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
 				B216445D25D6A84A00F19F4A /* Category View Model.swift */,
@@ -318,6 +406,24 @@
 				B26BA09725C96E3E00C26B69 /* Allocation View Model.swift */,
 			);
 			name = "View Models";
+			sourceTree = "<group>";
+		};
+		B2ABAC002628327B00DC98F2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B2ABAC01262832AD00DC98F2 /* Meal View.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B2C678FA25E4E7B2003E5DE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B2C678FB25E4E7B2003E5DE8 /* CloudKit.framework */,
+				B2ABAB5526280CC400DC98F2 /* WidgetKit.framework */,
+				B2ABAB5726280CC400DC98F2 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B2F0AEC925E7B6040021FBDB /* Meals */ = {
@@ -344,7 +450,6 @@
 			isa = PBXGroup;
 			children = (
 				B2F0AEDB25E7E6F80021FBDB /* Database Utilties.swift */,
-				B2CC2CCA25EE2590005BF542 /* Version.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -359,15 +464,34 @@
 				B212867425B1B29700557221 /* Sources */,
 				B212867525B1B29700557221 /* Frameworks */,
 				B212867625B1B29700557221 /* Resources */,
+				B2ABAB6326280CC600DC98F2 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B2ABAB6026280CC600DC98F2 /* PBXTargetDependency */,
 			);
 			name = Wots4T;
 			productName = Wots4T;
 			productReference = B212867825B1B29700557221 /* Wots4T.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B2ABAB5326280CC400DC98F2 /* Wots4T Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2ABAB6626280CC600DC98F2 /* Build configuration list for PBXNativeTarget "Wots4T Widget" */;
+			buildPhases = (
+				B2ABAB5026280CC400DC98F2 /* Sources */,
+				B2ABAB5126280CC400DC98F2 /* Frameworks */,
+				B2ABAB5226280CC400DC98F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Wots4T Widget";
+			productName = "Wots4T Widget ExtensionExtension";
+			productReference = B2ABAB5426280CC400DC98F2 /* Wots4T Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -380,6 +504,9 @@
 				TargetAttributes = {
 					B212867725B1B29700557221 = {
 						CreatedOnToolsVersion = 12.3;
+					};
+					B2ABAB5326280CC400DC98F2 = {
+						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
@@ -397,6 +524,7 @@
 			projectRoot = "";
 			targets = (
 				B212867725B1B29700557221 /* Wots4T */,
+				B2ABAB5326280CC400DC98F2 /* Wots4T Widget */,
 			);
 		};
 /* End PBXProject section */
@@ -409,6 +537,14 @@
 				B212868325B1B29800557221 /* Preview Assets.xcassets in Resources */,
 				B24D197125EEAE56001D155E /* Notes.txt in Resources */,
 				B212868025B1B29800557221 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2ABAB5226280CC400DC98F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2ABAB5D26280CC600DC98F2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +567,7 @@
 				B26BA08525C82AAE00C26B69 /* Declarations.swift in Sources */,
 				B212868525B1B29800557221 /* Persistence.swift in Sources */,
 				B2844FAC25B9A0220010A04C /* Master Data.swift in Sources */,
+				B2ABAC02262832AD00DC98F2 /* Meal View.swift in Sources */,
 				B24D196A25EE4772001D155E /* Standard View.swift in Sources */,
 				B26F5F6025DAC03D002B48EE /* Preview Data.swift in Sources */,
 				B2FABBFE25D6EC760008859E /* Category List View.swift in Sources */,
@@ -477,7 +614,49 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2ABAB5026280CC400DC98F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2ABAC0526286E7000DC98F2 /* Meal View.swift in Sources */,
+				B2ABAB8626280F8E00DC98F2 /* Declarations.swift in Sources */,
+				B2ABAB7D26280F8500DC98F2 /* Wots4T.xcdatamodeld in Sources */,
+				B2ABAB9526280FA900DC98F2 /* Category Managed Object.swift in Sources */,
+				B2ABABB52628103700DC98F2 /* Link Presentation.swift in Sources */,
+				B2ABABAE2628103000DC98F2 /* Other Extensions.swift in Sources */,
+				B2ABAB9B26280FAE00DC98F2 /* Meal Managed Object.swift in Sources */,
+				B2ABAB8326280F8B00DC98F2 /* Persistence.swift in Sources */,
+				B2ABABA126280FB400DC98F2 /* Meal Attachment Managed Object.swift in Sources */,
+				B2ABABDC2628112100DC98F2 /* Version.swift in Sources */,
+				B2ABABAB2628102E00DC98F2 /* String Extensions.swift in Sources */,
+				B2ABAB5B26280CC400DC98F2 /* Wots4T Widget.swift in Sources */,
+				B2ABAB8026280F8800DC98F2 /* MyApp.swift in Sources */,
+				B2ABAB9226280F9800DC98F2 /* My Color.swift in Sources */,
+				B2ABAB8F26280F9600DC98F2 /* Themes.swift in Sources */,
+				B2ABABB82628103B00DC98F2 /* Utility.swift in Sources */,
+				B2ABABB12628103300DC98F2 /* Date Extensions.swift in Sources */,
+				B2ABABB42628103500DC98F2 /* Day Number.swift in Sources */,
+				B2ABABA426280FB600DC98F2 /* Allocation Managed Object.swift in Sources */,
+				B2ABABBB2628103E00DC98F2 /* iCloud.swift in Sources */,
+				B2ABABF92628168A00DC98F2 /* Config.swift in Sources */,
+				B2ABABBE2628104100DC98F2 /* Utility Extension.swift in Sources */,
+				B2ABAB8C26280F9300DC98F2 /* Palette.swift in Sources */,
+				B2ABABA82628102B00DC98F2 /* Core Data.swift in Sources */,
+				B2ABAB9E26280FB100DC98F2 /* Meal Category Value Managed Object.swift in Sources */,
+				B2ABABC12628104400DC98F2 /* My Image.swift in Sources */,
+				B2ABAB9826280FAC00DC98F2 /* Category Value Managed Object.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B2ABAB6026280CC600DC98F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2ABAB5326280CC400DC98F2 /* Wots4T Widget */;
+			targetProxy = B2ABAB5F26280CC600DC98F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B212868A25B1B29800557221 /* Debug */ = {
@@ -599,11 +778,13 @@
 		B212868D25B1B29800557221 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Wots4T/Wots4T.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Wots4T/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T7CT2S464;
 				ENABLE_PREVIEWS = YES;
@@ -625,11 +806,13 @@
 		B212868E25B1B29800557221 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Wots4T/Wots4T.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Wots4T/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T7CT2S464;
 				ENABLE_PREVIEWS = YES;
@@ -642,6 +825,60 @@
 				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = MarcShearer.Wots4T;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B2ABAB6426280CC600DC98F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Wots4T Widget/Wots4T Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Wots4T Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				OTHER_SWIFT_FLAGS = "-D widget";
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Wots4T.Wots4T-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B2ABAB6526280CC600DC98F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Wots4T Widget/Wots4T Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Wots4T Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				OTHER_SWIFT_FLAGS = "-D widget";
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Wots4T.Wots4T-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -665,6 +902,15 @@
 			buildConfigurations = (
 				B212868D25B1B29800557221 /* Debug */,
 				B212868E25B1B29800557221 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2ABAB6626280CC600DC98F2 /* Build configuration list for PBXNativeTarget "Wots4T Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2ABAB6426280CC600DC98F2 /* Debug */,
+				B2ABAB6526280CC600DC98F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

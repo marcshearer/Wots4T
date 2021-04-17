@@ -15,7 +15,9 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
+        #if !widget
         MasterData.setupPreviewData(context: viewContext)
+        #endif
         
         do {
             try viewContext.save()
@@ -38,7 +40,7 @@ struct PersistenceController {
         } else {
             container.viewContext.automaticallyMergesChangesFromParent = true
             // Get core data directory and append Development or Production
-            let storeDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            let storeDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)!
             
             // Create a store description for a local store
             let storeLocation = storeDirectory.appendingPathComponent("Wots4T-\(MyApp.expectedDatabase.name).sqlite")

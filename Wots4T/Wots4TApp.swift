@@ -14,8 +14,6 @@ struct Wots4TApp: App {
     
     public let context = PersistenceController.shared.container.viewContext
 
-    public static var database: String = "unknown"
-    
     init() {
         CoreData.context = context
         MyApp.shared.start()

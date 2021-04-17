@@ -19,47 +19,7 @@ public struct MealSummaryView: View {
     public var body: some View {
         HStack(alignment: .top) {
             Spacer().frame(width: 16)
-            VStack {
-                Spacer()
-                if let imageData = $meal.image.wrappedValue, let image = MyImage(data: imageData) {
-                    Image(myImage: image)
-                        .resizable()
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                } else if let image = self.urlImage {
-                    Image(myImage: image)
-                        .resizable()
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                } else {
-                    Rectangle().foregroundColor(Palette.imagePlaceholder.background)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                }
-                Spacer()
-            }.frame(maxWidth: self.imageWidth ?? 80)
-            Spacer()
-            VStack(spacing: 0) {
-                Spacer().frame(height: 4)
-                HStack {
-                    Spacer()
-                        .frame(width: 8)
-                    Text(meal.name)
-                        .font(.title2)
-                        .foregroundColor(Palette.background.text)
-                        .lineLimit(1)
-                    Spacer()
-                }
-                HStack {
-                    Spacer()
-                        .frame(width: 8)
-                    Text(meal.desc) // + "\n\(meal.debugInfo)")
-                        .font(.subheadline)
-                        .foregroundColor(Palette.background.contrastText)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(2)
-                        .frame(height: 50, alignment: .top)
-                    Spacer()
-                }
-                Spacer()
-            }
+            MealView(name: meal.name, desc: meal.desc, imageData: meal.image, urlImageData: meal.urlImageCache, imageWidth: imageWidth ?? 80)
             if showInfo {
                 VStack {
                     Spacer()

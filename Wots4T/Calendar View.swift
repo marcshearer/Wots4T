@@ -150,8 +150,8 @@ fileprivate struct CalendarView_AllocationTitle: View {
 
     var body: some View {
         HStack {
-            Spacer().frame(width: 32)
-            Text(dayNumber.date.toString(format: dateFormat))
+            Spacer().frame(width: 16)
+            Text(dayNumber.toNearbyString())
                 .font(.headline)
                 .foregroundColor(self.highlight ? Palette.background.strongText : Palette.background.themeText)
             Spacer()
