@@ -86,7 +86,7 @@ struct MealListView: View {
     }
     
     private func allocate(meal: MealViewModel) {
-        let allocation = AllocationViewModel(dayNumber: self.allocateDayNumber!, slot: self.allocateSlot!, meal: meal, allocated: Date())
+        let allocation = AllocationViewModel(dayNumber: self.allocateDayNumber!, slot: self.allocateSlot!, meal: meal, allocated: Date.today)
         allocation.insert()
     }
     

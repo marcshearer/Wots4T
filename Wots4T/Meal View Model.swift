@@ -168,7 +168,7 @@ public class MealViewModel : ObservableObject, Identifiable, CustomDebugStringCo
         } else {
             self.urlImageCache = nil
         }
-        CoreData.update() {
+        CoreData.update {
             self.mealMO?.urlImageCache = self.urlImageCache
         }
     }

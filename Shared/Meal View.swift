@@ -16,6 +16,7 @@ struct MealView : View {
     var imageOnly = false
     var height: CGFloat = 80
     var imageWidth: CGFloat = 80
+    var cornerRadius: CGFloat = 8
 
     var body: some View {
         HStack {
@@ -28,13 +29,13 @@ struct MealView : View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: imageWidth)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
                 } else if let imageData = urlImageData, let image = MyImage(data: imageData) {
                     Image(myImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: imageWidth)
-                        .clipShape(RoundedRectangle(cornerRadius: (imageOnly ? 0 : 5)))
+                        .clipShape(RoundedRectangle(cornerRadius: (imageOnly ? 0 : cornerRadius)))
                 } else {
                     if imageOnly {
                         VStack {
@@ -52,7 +53,7 @@ struct MealView : View {
                     } else {
                         Rectangle()
                             .foregroundColor(Palette.imagePlaceholder.background)
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
                     }
                 }
                 if !imageOnly {

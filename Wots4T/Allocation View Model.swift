@@ -64,14 +64,14 @@ public class AllocationViewModel : ObservableObject, Identifiable, CustomDebugSt
         if self.dayNumber != dayNumber || self.slot != slot {
             self.dayNumber = dayNumber
             self.slot = slot
-            self.allocated = Date()
+            self.allocated = Date.today
         }
     }
     
     public func change(meal: MealViewModel) {
         if self.meal.mealId != meal.mealId {
             self.meal = meal
-            self.allocated = Date()
+            self.allocated = Date.today
         }
     }
     

@@ -364,33 +364,35 @@ class Themes {
     ]
     
     public static func selectTheme(_ themeName: ThemeName, changeIcon: Bool = false) {
-        let oldIcon = Themes.currentTheme?.icon
-        Themes.currentTheme = Theme(themeName: themeName)
-        let newIcon = Themes.currentTheme.icon
         #if !widget
-        #if canImport(UIKit)
-        if UIApplication.shared.supportsAlternateIcons && changeIcon && oldIcon != newIcon {
-            Themes.setApplicationIconName(Themes.currentTheme.icon)
-        }
+            let oldIcon = Themes.currentTheme?.icon
         #endif
+        Themes.currentTheme = Theme(themeName: themeName)
+        #if !widget
+            let newIcon = Themes.currentTheme.icon
+            #if canImport(UIKit)
+                if UIApplication.shared.supportsAlternateIcons && changeIcon && oldIcon != newIcon {
+                    Themes.setApplicationIconName(Themes.currentTheme.icon)
+                }
+            #endif
         #endif
     }
     
     #if !widget
-    #if canImport(UIKit)
-    private static func setApplicationIconName(_ iconName: String?) {
-        if UIApplication.shared.responds(to: #selector(getter: UIApplication.supportsAlternateIcons)) && UIApplication.shared.supportsAlternateIcons {
-            
-            typealias setAlternateIconName = @convention(c) (NSObject, Selector, NSString?, @escaping (NSError) -> ()) -> ()
-            
-            let selectorString = "_setAlternateIconName:completionHandler:"
-            
-            let selector = NSSelectorFromString(selectorString)
-            let imp = UIApplication.shared.method(for: selector)
-            let method = unsafeBitCast(imp, to: setAlternateIconName.self)
-            method(UIApplication.shared, selector, iconName as NSString?, { _ in })
-        }
-    }
-    #endif
+        #if canImport(UIKit)
+            private static func setApplicationIconName(_ iconName: String?) {
+                if UIApplication.shared.responds(to: #selector(getter: UIApplication.supportsAlternateIcons)) && UIApplication.shared.supportsAlternateIcons {
+                    
+                    typealias setAlternateIconName = @convention(c) (NSObject, Selector, NSString?, @escaping (NSError) -> ()) -> ()
+                    
+                    let selectorString = "_setAlternateIconName:completionHandler:"
+                    
+                    let selector = NSSelectorFromString(selectorString)
+                    let imp = UIApplication.shared.method(for: selector)
+                    let method = unsafeBitCast(imp, to: setAlternateIconName.self)
+                    method(UIApplication.shared, selector, iconName as NSString?, { _ in })
+                }
+            }
+        #endif
     #endif
 }

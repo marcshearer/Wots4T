@@ -31,7 +31,7 @@ struct Provider: TimelineProvider {
     }
     
     func placeholder(in context: Context) -> Wots4TWidgetEntry {
-        Wots4TWidgetEntry(date: Date(), allocations: [])
+        Wots4TWidgetEntry(date: Date.today, allocations: [])
     }
 
     func getSnapshot(in context: Context, completion: @escaping (Wots4TWidgetEntry) -> ()) {
@@ -65,7 +65,7 @@ struct Provider: TimelineProvider {
                 }
             }
         }
-        return Wots4TWidgetEntry(date: Date(), allocations: allocations)
+        return Wots4TWidgetEntry(date: Date.today, allocations: allocations)
     }
 }
 
@@ -173,20 +173,30 @@ struct Wots4TWidgetLargeView : View {
                 Spacer()
             }
         } else {
-            Wots4TWidgetNoMealsPlanned()
+            Wots4TWidgetNoMealsPlanned(offset: 40)
         }
     }
 }
 
 struct Wots4TWidgetNoMealsPlanned : View {
 
+    var offset: CGFloat?
+    var fontSize: CGFloat = 20
+    
     var body: some View {
         VStack {
-            Spacer()
+            if let offset = offset {
+                Spacer().frame(height: offset)
+            } else {
+                Spacer()
+            }
             HStack {
-                Spacer()
                 Text("No Meals Planned")
-                Spacer()
+                    .font(.system(size: fontSize))
+                    .lineLimit(3)
+                    .multilineTextAlignment(.center)
+                    .padding(.all, 30)
+                
             }
             Spacer()
         }
@@ -198,7 +208,7 @@ struct Wots4TWidgetNoMealsPlanned : View {
 
 struct Wots4T_Widget_Extension_Previews: PreviewProvider {
     static var previews: some View {
-        Wots4TWidgetEntryView(entry: Wots4TWidgetEntry(date: Date(), allocations: []))
+        Wots4TWidgetEntryView(entry: Wots4TWidgetEntry(date: Date.today, allocations: []))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

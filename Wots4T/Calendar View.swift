@@ -18,20 +18,27 @@ struct CalendarView: View {
     @State private var linkDisplayMeal: MealViewModel?
     @State var title = appName
     @State private var displayedRemoteChanges: Int = 0
+    @State var today: DayNumber = DayNumber.today
     
     @ObservedObject var data = MasterData.shared
     @ObservedObject var messageBox = MessageBox.shared
+    
+    let timer = Timer.publish(every: 60*60, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        StandardView(navigation: true) {
+        var menuOptions = [BannerOption(text: "Setup \(editMealsName)",  action: { self.linkEditMeals = true }),
+                       BannerOption(text: "Setup \(editCategoriesName)", action: { self.linkEditCategories = true }),
+                       BannerOption(text: "About \(appName)", action: { messageBox.show("A \(mealName.capitalized) scheduling app from\nShearer Online Ltd") })]
+        if Utility.isDevelopment {
+            menuOptions.append(BannerOption(text: "Advance date", action: {Date.offset += 1 }))
+        }
+        
+        return StandardView(navigation: true) {
             VStack(spacing: 0) {
-                let today = DayNumber.today
                 
                 Banner(title: $title, back: false,
                        optionMode: .menu,
-                       options: [BannerOption(text: "Setup \(editMealsName)",  action: { self.linkEditMeals = true }),
-                                 BannerOption(text: "Setup \(editCategoriesName)", action: { self.linkEditCategories = true }),
-                                 BannerOption(text: "About \(appName)", action: { messageBox.show("A \(mealName.capitalized) scheduling app from\nShearer Online Ltd") })])
+                       options: menuOptions)
                 
                 Spacer().frame(height: 10)
                 ScrollView(showsIndicators: MyApp.target == .macOS) {
@@ -50,6 +57,9 @@ struct CalendarView: View {
                         }
                     }
                 }
+            }
+            .onReceive(timer) { _ in
+                today = DayNumber.today
             }
             .onChange(of: MasterData.shared.publishedRemoteUpdates, perform: { value in
                 // Remote data model has changed - refresh it

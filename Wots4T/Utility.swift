@@ -395,7 +395,7 @@ class Utility {
         
         func closure() {
             var outputMessage: String
-            let timestamp = Utility.dateString(Date(), format: "HH:mm:ss.SS", localized: false)
+            let timestamp = Utility.dateString(Date.today, format: "HH:mm:ss.SS", localized: false)
             outputMessage = "DEBUG(\(from)): \(timestamp)"
             if showDevice {
                 #if ContractWhist

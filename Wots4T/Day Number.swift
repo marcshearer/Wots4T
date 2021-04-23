@@ -9,7 +9,7 @@ import Foundation
 
 public class DayNumber: CustomStringConvertible, Equatable, Comparable, Hashable {
  
-    static let today = DayNumber(from: Date())
+    static var today: DayNumber { DayNumber(from: Date.today) }
     static let dayNumber1Jan1970: Int = 2440587
     static let secondsPerDay: Int = 24*60*60
     
