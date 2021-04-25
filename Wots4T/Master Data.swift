@@ -252,7 +252,7 @@ class MasterData: ObservableObject {
                 if let mealValueId = meal.categoryValues[category.categoryId]?.valueId {
                     mealWeightings.append(weightings[category.categoryId]?[mealValueId] ?? maxRetention + 1)
                 } else {
-                    mealWeightings.append(maxRetention + 1)
+                    mealWeightings.append(0)
                 }
             }
             if dayNumber != nil {

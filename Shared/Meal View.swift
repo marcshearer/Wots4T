@@ -28,13 +28,13 @@ struct MealView : View {
                     Image(myImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: imageWidth)
+                        .frame(maxWidth: imageWidth, maxHeight: height - 12)
                         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
                 } else if let imageData = urlImageData, let image = MyImage(data: imageData) {
                     Image(myImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: imageWidth)
+                        .frame(maxWidth: imageWidth, maxHeight: height - 12)
                         .clipShape(RoundedRectangle(cornerRadius: (imageOnly ? 0 : cornerRadius)))
                 } else {
                     if imageOnly {
