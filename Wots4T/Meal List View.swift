@@ -174,36 +174,37 @@ struct MealListView_FilterInput_Categories: View {
         let categories = self.getCategories()
         HStack {
             ForEach(categories) { category in
-                let categoryId = category.categoryId
-                let value = categoryValues[categoryId]
-                let title = value?.name ?? category.name.uppercased()
-                let values = self.getCategoryValues(categoryId: categoryId)
-                let names = ["No \(category.name.lowercased()) filter"] + values.map{$0.name}
-                
-                Menu {
-                    ForEach(0..<(names.count)) { (index) in
-                        Button(action: {
-                            categoryValues[categoryId] = (index == 0 ? nil : values[index - 1])
-                        }) {
-                            Text(names[index]).foregroundColor(index == 0 ? Palette.menuEntry.text : Palette.menuEntry.strongText)
+                if let categoryId = category.categoryId {
+                    let value = categoryValues[categoryId]
+                    let title = value?.name ?? category.name.uppercased()
+                    let values = self.getCategoryValues(categoryId: categoryId)
+                    let names = ["No \(category.name.lowercased()) filter"] + values.map{$0.name}
+                    
+                    Menu {
+                        ForEach(0..<(names.count)) { (index) in
+                            Button(action: {
+                                categoryValues[categoryId] = (index == 0 ? nil : values[index - 1])
+                            }) {
+                                Text(names[index]).foregroundColor(index == 0 ? Palette.menuEntry.text : Palette.menuEntry.strongText)
+                            }
+                        }
+                    } label: {
+                        Label {
+                            Text(title).frame(width: width)
+                        } icon: {
+                            
                         }
                     }
-                } label: {
-                    Label {
-                        Text(title).frame(width: width)
-                    } icon: {
-                        
-                    }
+                     .foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
+                     .font(value == nil ? .caption : .callout)
+                     .frame(width: width, height: height)
+                     .background(value == nil ? Palette.disabledButton.background : .blue)
+                     .cornerRadius(height/2)
                 }
-                .foregroundColor(value == nil ? Palette.disabledButton.faintText : Palette.enabledButton.text)
-                .font(value == nil ? .caption : .callout)
-                .frame(width: width, height: height)
-                .background(value == nil ? Palette.disabledButton.background : .blue)
-                .cornerRadius(height/2)
             }
         }
     }
-    
+        
     func getCategories() -> [CategoryViewModel] {
         return MasterData.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
     }
