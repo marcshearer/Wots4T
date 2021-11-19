@@ -25,6 +25,7 @@ struct MealListView: View {
     
     let categories = MasterData.shared.categories.map{$1}.sorted(by: {Utility.lessThan([$0.importance.rawValue, $0.name], [$1.importance.rawValue, $1.name], [.int, .string])})
     @State private var categoryValues: [UUID: CategoryValueViewModel] = [:]
+    @State private var searchText: String = ""
 
     var body: some View {
         let meals = MasterData.shared.sortedMeals(dayNumber: allocateDayNumber).filter({self.filter($0)})
@@ -33,7 +34,7 @@ struct MealListView: View {
                 MealListView_Banner(title: title, editMode: allocateDayNumber == nil)
                 ScrollView(showsIndicators: MyApp.target == .macOS) {
                     Spacer().frame(height: 8)
-                    MealListView_FilterInput(categoryValues: $categoryValues)
+                    MealListView_FilterInput(categoryValues: $categoryValues, searchText: $searchText)
                     ScrollViewReader { scrollViewProxy in
                         LazyVStack {
                             ForEach(meals) { meal in
@@ -92,6 +93,9 @@ struct MealListView: View {
     
     private func filter(_ meal: MealViewModel) -> Bool {
         var include = true
+        if searchText != "" {
+            include = self.wordSearch(for: searchText, in: meal.name + " " + meal.desc)
+        }
         for category in categories {
             if let filterValue = categoryValues[category.categoryId]?.valueId {
                 if filterValue != meal.categoryValues[category.categoryId]?.valueId {
@@ -101,6 +105,27 @@ struct MealListView: View {
             }
         }
         return include
+    }
+    
+    private func wordSearch(for searchWords: String, in target: String) -> Bool {
+        var result = true
+        let searchList = searchWords.uppercased().components(separatedBy: " ")
+        let targetList = target.uppercased().components(separatedBy: " ")
+        
+        for searchWord in searchList {
+            var found = false
+            for targetWord in targetList {
+                if targetWord.starts(with: searchWord) {
+                    found = true
+                }
+            }
+            if !found {
+                result = false
+            }
+        }
+        
+        return result
+        
     }
 }
 
@@ -127,6 +152,7 @@ struct MealListView_Banner: View {
 struct MealListView_FilterInput: View {
 
     @Binding var categoryValues: [UUID: CategoryValueViewModel]
+    @Binding var searchText: String
     
     private let height: CGFloat = 32
     
@@ -155,14 +181,37 @@ struct MealListView_FilterInput: View {
                         }
                         Spacer().frame(width: 8)
                     }
+                    Spacer().frame(height: 8)
+                    HStack {
+                        Spacer().frame(width: 16)
+                        ZStack {
+                            Rectangle()
+                                .foregroundColor(Palette.input.background)
+                                .cornerRadius(20)
+                            if searchText.isEmpty {
+                                HStack {
+                                    Spacer().frame(width: 20)
+                                    Text("Search words")
+                                        .foregroundColor(Palette.input.faintText)
+                                    Spacer()
+                                }
+                            }
+                            HStack {
+                                Spacer().frame(width: 16)
+                                TextEditor(text: $searchText)
+                                    .foregroundColor(Palette.input.text)
+                                Spacer().frame(width: 16)
+                            }
+                        }
+                        Spacer().frame(width: 8)
+                    }
                     Spacer().frame(height: 16)
                 }
-                .frame(height: 80)
+                .frame(height: 136)
             }
             Spacer().rightSpacer
         }
     }
-    
 }
 
 struct MealListView_FilterInput_Categories: View {
